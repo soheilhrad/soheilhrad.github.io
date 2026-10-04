@@ -129,7 +129,7 @@ es:
   arrow: "→"
   back_arrow: "←"
   footer_notes: Notas
-  footer_about: Sobre nosotros
+  footer_about: Sobre mí
   footer_label: Pie de página
   lang_label: Idioma
   projects: Proyectos
@@ -250,7 +250,7 @@ fa:
   arrow: "←"
   back_arrow: "→"
   footer_notes: یادداشت‌ها
-  footer_about: درباره ما
+  footer_about: درباره من
   footer_label: پایین صفحه
   lang_label: زبان
   projects: پروژه‌ها
