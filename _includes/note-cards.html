@@ -1,0 +1,37 @@
+{%- comment -%}
+The latest notes as cards, for the home page: a cover image, the date, the title and one line.
+Same language rule as post-list.html: a post's own-language version is shown, and another
+language's version (tagged) only when there is no translation. `limit` caps how many.
+{%- endcomment -%}
+{%- assign t = site.data.i18n[page.lang] -%}
+{%- assign shown = 0 -%}
+{%- capture items -%}
+  {%- for post in site.posts -%}
+    {%- if include.limit and shown >= include.limit -%}{%- break -%}{%- endif -%}
+    {%- if post.lang != page.lang and post.ref -%}
+      {%- assign own = site.posts | where: "ref", post.ref | where: "lang", page.lang | first -%}
+      {%- if own -%}{%- continue -%}{%- endif -%}
+    {%- endif -%}
+    {%- assign shown = shown | plus: 1 %}
+  <li class="note-card"{% if post.lang != page.lang %} lang="{{ post.lang }}" dir="{{ site.data.i18n[post.lang].dir }}"{% endif %}>
+    {%- if post.image %}
+    <a class="note-cover" href="{{ post.url | relative_url }}" tabindex="-1" aria-hidden="true"><img src="{{ post.image | relative_url }}" alt="" loading="lazy" decoding="async"></a>
+    {%- endif %}
+    <div class="note-body">
+      <p class="note-meta">{% include date.html date=post.date short=true %}{% if post.lang != page.lang and post.lang == "en" %} · <span class="tag">{{ t.in_english }}</span>{% endif %}</p>
+      <h3 class="note-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+      {%- if post.description %}
+      <p class="note-line">{{ post.description }}</p>
+      {%- endif %}
+    </div>
+  </li>
+  {%- endfor -%}
+{%- endcapture -%}
+{%- if shown > 0 %}
+<section class="notes-home" aria-labelledby="notes-home-title">
+  <h2 class="works-heading" id="notes-home-title">{{ t.home_notes }}</h2>
+  <ul class="note-cards">{{ items }}
+  </ul>
+  <p class="note-all"><a href="{{ t.prefix | append: '/blog/' | relative_url }}">{{ t.all_posts }} {{ t.arrow }}</a></p>
+</section>
+{%- endif -%}

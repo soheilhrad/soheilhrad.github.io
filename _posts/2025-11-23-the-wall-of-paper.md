@@ -47,3 +47,5 @@ of self, one capable of holding my dignity intact while navigating a system desi
 me out.
 
 **How can you maintain your identity when the world labels you as a liability?**
+
+This is the question behind our [Acculturation model](/projects/acculturation/).

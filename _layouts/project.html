@@ -12,6 +12,9 @@ else is folded in <details>, closed by default, with no script. Front matter:
   images      a list of {src, alt}: screenshots in a swipeable strip under the video
   clip        a short silent looping .mp4 under /assets/video/ (a screen recording); plays only when
               visible and never for people who prefer reduced motion. Needs `poster` and `clip_alt`
+  clip_narrow, poster_narrow   optional second clip for phones (shown instead of `clip` under 600px)
+  ask         true: an "Ask for it" button that opens an email to the site address (for work not public yet)
+  related     a list of note `ref`s shown as "Related note" links
   clip_alt    what the clip shows, for screen readers
   cta_label / cta_url   the button (empty = no button)
 Nothing is requested from a third party until the visitor clicks play.
@@ -25,7 +28,7 @@ Nothing is requested from a third party until the visitor clicks play.
   {%- if page.lede %}
   <p class="lede">{{ page.lede }}</p>
   {%- endif %}
-  {%- if video != "" or page.clip or page.cta_url %}
+  {%- if video != "" or page.clip or page.cta_url or page.ask %}
   <div class="project-media">
     {%- if video != "" and local_video %}
     <video class="project-video" controls preload="none"{% if page.poster %} poster="{{ page.poster | relative_url }}"{% endif %}>
@@ -44,22 +47,33 @@ Nothing is requested from a third party until the visitor clicks play.
     <script src="{{ '/assets/js/video.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
     {%- endif %}
     {%- if page.clip %}
-    <video class="project-clip" muted loop playsinline controls preload="none" aria-label="{{ page.clip_alt | escape }}"{% if page.poster %} poster="{{ page.poster | relative_url }}"{% endif %}>
+    <video class="project-clip{% if page.clip_narrow %} project-clip--wide{% endif %}" muted loop playsinline controls preload="none" aria-label="{{ page.clip_alt | escape }}"{% if page.poster %} poster="{{ page.poster | relative_url }}"{% endif %}>
       <source src="{{ page.clip | relative_url }}" type="video/mp4">
     </video>
+    {%- if page.clip_narrow %}
+    <video class="project-clip project-clip--narrow" muted loop playsinline controls preload="none" aria-label="{{ page.clip_alt | escape }}"{% if page.poster_narrow %} poster="{{ page.poster_narrow | relative_url }}"{% endif %}>
+      <source src="{{ page.clip_narrow | relative_url }}" type="video/mp4">
+    </video>
+    {%- endif %}
     <script>
     (function () {
-      var v = document.querySelector('.project-clip');
-      if (!v || !('IntersectionObserver' in window)) return;
+      var clips = document.querySelectorAll('.project-clip');
+      if (!clips.length || !('IntersectionObserver' in window)) return;
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      new IntersectionObserver(function (e) {
-        e.forEach(function (x) { if (x.isIntersecting) { v.play().catch(function () {}); } else { v.pause(); } });
-      }, { threshold: 0.5 }).observe(v);
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (x) {
+          var v = x.target;
+          if (x.isIntersecting && v.offsetParent !== null) { v.play().catch(function () {}); } else { v.pause(); }
+        });
+      }, { threshold: 0.5 });
+      clips.forEach(function (v) { io.observe(v); });
     })();
     </script>
     {%- endif %}
     {%- if page.cta_url and page.cta_label %}
     <p class="project-cta"><a class="button" href="{{ page.cta_url }}">{{ page.cta_label }} {{ t.arrow }}</a></p>
+    {%- elsif page.ask %}
+    <p class="project-cta"><a class="button" href="mailto:{{ site.email }}?subject={{ t.ask_subject | append: ' ' | append: page.title | url_encode | replace: '+', '%20' }}">{{ t.ask_for_it }} {{ t.arrow }}</a></p>
     {%- endif %}
   </div>
   {%- endif %}
@@ -77,5 +91,15 @@ Nothing is requested from a third party until the visitor clicks play.
   </details>
   {%- endif %}
   {{ content }}
+  {%- if page.related %}
+  {%- assign all_notes = site.posts | concat: site.pages %}
+  {%- for r in page.related %}
+    {%- assign rel = all_notes | where: "ref", r | where: "lang", page.lang | first -%}
+    {%- unless rel %}{% assign rel = all_notes | where: "ref", r | where: "lang", "en" | first %}{% endunless -%}
+    {%- if rel %}
+  <p class="related">{{ t.related_note }}: <a href="{{ rel.url | relative_url }}"{% if rel.lang != page.lang %} hreflang="{{ rel.lang }}" lang="{{ rel.lang }}" dir="{{ site.data.i18n[rel.lang].dir }}"{% endif %}>{{ rel.title }}</a>{% if rel.lang != page.lang and rel.lang == "en" %} <span class="tag">{{ t.in_english }}</span>{% endif %}</p>
+    {%- endif %}
+  {%- endfor %}
+  {%- endif %}
   <p class="back"><a href="{{ t.prefix | append: '/projects/' | relative_url }}">{{ t.back_arrow }} {{ t.all_projects }}</a></p>
 </article>

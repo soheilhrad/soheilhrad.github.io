@@ -9,7 +9,11 @@ ref: camino
 clip: /assets/video/camino-demo.mp4
 poster: /assets/img/projects/camino-poster.jpg
 image: /assets/img/projects/camino-poster.jpg
-clip_alt: "Camino en un móvil, tres momentos en paralelo: una tarjeta de lección sobre ortografía, la tutora explicando la tilde y un ejercicio respondido correctamente."
+clip_narrow: /assets/video/camino-demo-phone.mp4
+poster_narrow: /assets/img/projects/camino-poster-phone.jpg
+ask: true
+related: [cut-off]
+clip_alt: "Camino en un móvil, tres momentos en paralelo: una tarjeta de lección sobre ortografía, el tutor explicando la tilde y un ejercicio respondido correctamente."
 ---
 {%- assign t = site.data.i18n[page.lang] -%}
 
@@ -19,7 +23,7 @@ clip_alt: "Camino en un móvil, tres momentos en paralelo: una tarjeta de lecci�
 - **25 lecciones** para principiantes absolutos, explicadas en persa, inglés o español.
 - **1.180 ejercicios**, corregidos por la propia aplicación, y un tutor con quien hablar.
 - **Cada palabra en voz alta**, y una historia: cada lección dominada abre una escena de un año en Salamanca.
-- **Sin conexión y privado**: sin cuenta y sin internet después de la instalación.
+- **Totalmente sin conexión**: sin cuenta y sin internet después de la instalación.
 
 </details>
 

@@ -48,3 +48,5 @@ nueva capa de mí mismo, capaz de mantener intacta mi dignidad mientras me muevo
 sistema diseñado para dejarme fuera.
 
 **¿Cómo mantener tu identidad cuando el mundo te etiqueta como un riesgo?**
+
+Esta es la pregunta detrás de nuestro [modelo Acculturation](/es/projects/acculturation/).

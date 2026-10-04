@@ -15,16 +15,23 @@ en:
   all_projects: All projects
   home: Home
   crumbs_label: You are here
-  writing: Writing
+  writing: Notes
   nothing_yet: Nothing yet.
-  all_posts: All posts
+  all_posts: All notes
   in_english: in English
   play_video: Play video
   detail_design: The design decision
   shots_label: Screenshots
   detail_does: What it does
   detail_built: "How it's built"
+  detail_result: What a run shows
   footer_rss: RSS
+  nav_label: Main
+  ask_for_it: Ask for it
+  ask_subject: "Request from the dos website:"
+  related_note: Related note
+  home_notes: Latest notes
+  read_note: Read the note
   write_to_us: Write to us
   slides_label: Slides
   slides_hint: "%n slides. Swipe, scroll sideways or use the arrow keys."
@@ -51,7 +58,11 @@ en:
     share: "Copy link"
     copied: "Copied"
     unknown: "I don't know that feeling yet. Try another word: longing, calm, fear."
-    note: "Known words are matched on your device. Other words go to an AI model at Cloudflare to be classified; this site stores nothing. Based on music-emotion research, mostly with Western listeners."
+    note: "Known words are matched on your device. Other words go to an AI model at Cloudflare to be classified; this site stores nothing."
+    research: "The research behind it"
+    research_intro: "Where a feeling sits on the map follows Russell's circumplex model (valence and arousal, 1980). The feelings themselves draw on the Geneva Emotional Music Scale (Zentner and colleagues, 2008) and Hevner's adjective clusters (1936). The musical cues (mode, tempo, register, brightness, articulation) follow the reviews by Juslin and Laukka (2003) and Gabrielsson and Lindström (2010)."
+    research_caveat: "This is a design built from published findings, not a tested instrument. The settings for each feeling are our reading of those findings, and most of the studies used Western listeners and Western tonal music. We compiled the Spanish and Persian word lists ourselves, and they are not validated. We have not yet checked it with listeners."
+    references: "References"
     sound: "Sound"
     timbre_auto: "Auto"
     timbre_keys: "Keys"
@@ -85,6 +96,21 @@ en:
       hope:
         name: "Hope"
         cue: "A major line that keeps climbing, and lands only at the very end."
+      nostalgia:
+        name: "Nostalgia"
+        cue: "Slow and warm: a gentle arch of notes with a soft echo, like a tune remembered. Sweetness with a trace of loss."
+      power:
+        name: "Power"
+        cue: "Strong, steady and loud, low in register, with a rising line that lands firmly. The cues of strength and triumph."
+      tension:
+        name: "Tension"
+        cue: "Fast, uneven and unresolved: a restless line that keeps pressing and never settles."
+      transcendence:
+        name: "Transcendence"
+        cue: "Very slow and wide: long held tones, a high register, a steady drone and a large echo. A sense of space."
+      playfulness:
+        name: "Playfulness"
+        cue: "Light, quick, detached notes that skip and leap, in a major key. Lightness with a bounce."
     modes:
       major: "major"
       minor: "minor"
@@ -103,23 +129,30 @@ es:
   arrow: "→"
   back_arrow: "←"
   footer_notes: Notas
-  footer_about: Sobre mí
+  footer_about: Sobre nosotros
   footer_label: Pie de página
   lang_label: Idioma
   projects: Proyectos
   all_projects: Todos los proyectos
   home: Inicio
   crumbs_label: Dónde estás
-  writing: Escritos
+  writing: Notas
   nothing_yet: Todavía nada.
-  all_posts: Todas las entradas
+  all_posts: Todas las notas
   in_english: en inglés
   play_video: Reproducir vídeo
   detail_design: La decisión de diseño
   shots_label: Capturas de pantalla
   detail_does: Qué hace
   detail_built: "Cómo se construye"
+  detail_result: Qué muestra una simulación
   footer_rss: RSS
+  nav_label: Principal
+  ask_for_it: Pídelo
+  ask_subject: "Solicitud desde el sitio de dos:"
+  related_note: Nota relacionada
+  home_notes: Últimas notas
+  read_note: Leer la nota
   write_to_us: Escríbenos
   slides_label: Diapositivas
   slides_hint: "%n diapositivas. Desliza, desplázate a un lado o usa las flechas."
@@ -146,7 +179,11 @@ es:
     share: "Copiar enlace"
     copied: "Copiado"
     unknown: "Todavía no conozco ese sentimiento. Prueba con otra palabra: añoranza, calma, miedo."
-    note: "Las palabras conocidas se reconocen en tu dispositivo. Las demás se envían a un modelo de IA de Cloudflare para clasificarlas; este sitio no guarda nada. Se basa en investigación sobre música y emoción, sobre todo con oyentes occidentales."
+    note: "Las palabras conocidas se reconocen en tu dispositivo. Las demás se envían a un modelo de IA de Cloudflare para clasificarlas; este sitio no guarda nada."
+    research: "La investigación detrás"
+    research_intro: "La posición de cada sentimiento en el mapa sigue el modelo circumplejo de Russell (valencia y activación, 1980). Los sentimientos se apoyan en la Escala Ginebrina de Emociones Musicales (Zentner y colaboradores, 2008) y en los grupos de adjetivos de Hevner (1936). Las señales musicales (modo, tempo, registro, brillo, articulación) siguen las revisiones de Juslin y Laukka (2003) y de Gabrielsson y Lindström (2010)."
+    research_caveat: "Es un diseño construido a partir de hallazgos publicados, no un instrumento validado. Los ajustes de cada sentimiento son nuestra lectura de esos hallazgos, y la mayoría de los estudios usaron oyentes occidentales y música tonal occidental. Las listas de palabras en español y persa las hemos compilado nosotros y no están validadas. Aún no lo hemos probado con oyentes."
+    references: "Referencias"
     sound: "Sonido"
     timbre_auto: "Auto"
     timbre_keys: "Teclas"
@@ -180,6 +217,21 @@ es:
       hope:
         name: "Esperanza"
         cue: "Una línea mayor que sigue subiendo y solo aterriza al final."
+      nostalgia:
+        name: "Nostalgia"
+        cue: "Lento y cálido: un arco suave de notas con un eco tenue, como una melodía recordada. Dulzura con un rastro de pérdida."
+      power:
+        name: "Poder"
+        cue: "Fuerte, firme y sonoro, en registro grave, con una línea ascendente que aterriza con seguridad. Las señales de la fuerza y el triunfo."
+      tension:
+        name: "Tensión"
+        cue: "Rápida, irregular y sin resolver: una línea inquieta que presiona y nunca se asienta."
+      transcendence:
+        name: "Trascendencia"
+        cue: "Muy lento y amplio: notas largas, registro agudo, un bordón constante y mucho eco. Una sensación de espacio."
+      playfulness:
+        name: "Juego"
+        cue: "Notas ligeras, rápidas y picadas que saltan y brincan, en modo mayor. Ligereza con rebote."
     modes:
       major: "mayor"
       minor: "menor"
@@ -198,23 +250,30 @@ fa:
   arrow: "←"
   back_arrow: "→"
   footer_notes: یادداشت‌ها
-  footer_about: درباره من
+  footer_about: درباره ما
   footer_label: پایین صفحه
   lang_label: زبان
   projects: پروژه‌ها
   all_projects: همه پروژه‌ها
   home: خانه
   crumbs_label: مسیر صفحه
-  writing: نوشته‌ها
+  writing: یادداشت‌ها
   nothing_yet: هنوز چیزی نیست.
-  all_posts: همه نوشته‌ها
+  all_posts: همه یادداشت‌ها
   in_english: به انگلیسی
   play_video: پخش ویدیو
   detail_design: تصمیم طراحی
-  shots_label: تصاویر برنامه
+  shots_label: تصاویر اپلیکیشن
   detail_does: چه کار می‌کند
   detail_built: "چطور ساخته شده"
+  detail_result: یک اجرا چه نشان می‌دهد
   footer_rss: RSS
+  nav_label: منوی اصلی
+  ask_for_it: درخواست دسترسی
+  ask_subject: "درخواست از سایت dos:"
+  related_note: یادداشت مرتبط
+  home_notes: تازه‌ترین یادداشت‌ها
+  read_note: خواندن یادداشت
   write_to_us: برای ما بنویسید
   slides_label: اسلایدها
   slides_hint: "%n اسلاید. بکشید، به پهلو اسکرول کنید یا از کلیدهای جهت‌نما استفاده کنید."
@@ -241,7 +300,11 @@ fa:
     share: "کپی پیوند"
     copied: "کپی شد"
     unknown: "این احساس را هنوز نمی‌شناسم. کلمهٔ دیگری امتحان کنید: دلتنگی، آرامش، ترس."
-    note: "واژه‌های آشنا روی دستگاه شما شناسایی می‌شوند. واژه‌های دیگر برای دسته‌بندی به یک مدل هوش مصنوعی در Cloudflare می‌روند؛ این سایت چیزی ذخیره نمی‌کند. بر پایهٔ پژوهش‌های موسیقی و هیجان، بیشتر با شنوندگان غربی."
+    note: "واژه‌های آشنا روی دستگاه شما شناسایی می‌شوند. واژه‌های دیگر برای دسته‌بندی به یک مدل هوش مصنوعی در Cloudflare می‌روند؛ این سایت چیزی ذخیره نمی‌کند."
+    research: "پژوهشی که پشت آن است"
+    research_intro: "جای هر احساس روی نقشه از مدل دایره‌ای راسل (ظرفیت و برانگیختگی، ۱۹۸۰) پیروی می‌کند. خود احساس‌ها از مقیاس هیجان‌های موسیقایی ژنو (زنتنر و همکاران، ۲۰۰۸) و خوشه‌های صفت هونر (۱۹۳۶) گرفته شده‌اند. نشانه‌های موسیقایی (گام، ضرب، بم و زیری، روشنی و شیوهٔ اجرای نت‌ها) از مرورهای یوسلین و لائوکا (۲۰۰۳) و گابریلسون و لیندستروم (۲۰۱۰) می‌آیند."
+    research_caveat: "این یک طراحی بر پایهٔ یافته‌های منتشرشده است، نه یک ابزار آزموده‌شده. تنظیم هر احساس برداشت خودمان از آن یافته‌هاست و بیشتر پژوهش‌ها با شنوندگان غربی و موسیقی تونال غربی انجام شده‌اند. فهرست واژه‌های اسپانیایی و فارسی را خودمان گردآورده‌ایم و اعتبارسنجی نشده‌اند. هنوز با شنوندگان آزمایش نکرده‌ایم."
+    references: "منابع"
     sound: "صدا"
     timbre_auto: "خودکار"
     timbre_keys: "کلید"
@@ -275,6 +338,21 @@ fa:
       hope:
         name: "امید"
         cue: "خطی ماژور که پیوسته بالا می‌رود و فقط در پایان فرود می‌آید."
+      nostalgia:
+        name: "نوستالژی"
+        cue: "کند و گرم: قوسی ملایم از نت‌ها با پژواکی نرم، مثل ملودی‌ای که به یاد می‌آوریم. شیرینی همراه با ردپایی از فقدان."
+      power:
+        name: "قدرت"
+        cue: "قوی، استوار و بلند، در ناحیهٔ بم، با خطی صعودی که محکم فرود می‌آید. نشانه‌های توان و پیروزی."
+      tension:
+        name: "تنش"
+        cue: "تند، نامنظم و حل‌نشده: خطی بی‌قرار که فشار می‌آورد و هرگز آرام نمی‌گیرد."
+      transcendence:
+        name: "تعالی"
+        cue: "بسیار کند و گسترده: نت‌های کشیده، صدای زیر، یک زمینهٔ پیوسته و پژواکی بزرگ. حس فضا."
+      playfulness:
+        name: "بازیگوشی"
+        cue: "نت‌های سبک، تند و جدا از هم که می‌جهند و می‌پرند، در گام ماژور. سبکی با جَست‌وخیز."
     modes:
       major: "ماژور"
       minor: "مینور"
