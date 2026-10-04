@@ -27,7 +27,9 @@ jobs:
           bundler-cache: true
 
       - name: Build
+        shell: bash
         run: |
+          set -eo pipefail
           bundle exec jekyll build 2>&1 | tee build.log
           if grep -i "warning" build.log; then echo "::error::The build printed warnings (see above)"; exit 1; fi
 
