@@ -112,7 +112,7 @@ pre { overflow-x: auto; background: var(--surface); border: 1px solid var(--bord
 pre code { background: none; padding: 0; }
 
 .site-header { }
-// The header is the wordmark and the language switcher, nothing else. Links are at least
+// The header is the wordmark, the three sections and the language switcher. Links are at least
 // 44px tall so they are easy to tap.
 .bar {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
@@ -134,7 +134,22 @@ pre code { background: none; padding: 0; }
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
+.bar-end { display: flex; flex-wrap: wrap; align-items: center; gap: 0 var(--space-2); }
 .bar nav { display: flex; }
+.mainnav a {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 0.6rem;
+  font-size: 0.95rem; font-weight: 500; color: var(--text); text-decoration: none;
+}
+.mainnav a:hover { color: var(--accent); }
+.mainnav a[aria-current="page"] { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 0.3em; }
+.bar .langs { padding-inline-start: var(--space-2); border-inline-start: 1px solid var(--border); }
+// On a phone the three sections get their own line under the wordmark and the language switch.
+@media (max-width: 560px) {
+  .bar { gap: 0 0.75rem; }
+  .bar-end { display: contents; }
+  .mainnav { order: 3; flex-basis: 100%; margin-inline-start: -0.6rem; }
+  .bar .langs { order: 2; border-inline-start: 0; padding-inline-start: 0; }
+}
 .bar .langs a {
   display: inline-flex; align-items: center; min-height: 44px; padding: 0 0.5rem;
   font-size: 0.9rem; color: var(--muted); text-decoration: none;
@@ -219,10 +234,10 @@ pre code { background: none; padding: 0; }
 
 // "Type a feeling" (_includes/type-a-feeling.html). Colours are the site's own tokens.
 // One input first; the answer under it; the map and the details folded for whoever wants more.
-.feeling { margin: 0 0 var(--space-4); padding: var(--space-3); background: var(--accent-soft); border-radius: calc(var(--radius) + 6px); }
+.feeling { margin: 0 0 var(--space-3); padding: var(--space-2) var(--space-3); background: var(--accent-soft); border-radius: calc(var(--radius) + 6px); }
 @media (max-width: 520px) { .feeling { padding: var(--space-2); } }
 // The heading is the instruction and the field's label: what to do, and what you get back.
-.feeling-title { display: block; margin: 0 0 var(--space-2); font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
+.feeling-title { display: block; margin: 0 0 var(--space-1); font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em; }
 .feeling-title label { cursor: text; }
 [lang="fa"] .feeling-title { letter-spacing: 0; }
 .feeling-field {
@@ -232,13 +247,13 @@ pre code { background: none; padding: 0; }
 }
 .feeling-field:focus-within { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
 .feeling input[type="text"] {
-  flex: 1; min-width: 0; min-height: 44px; background: transparent; border: 0; outline: 0; color: var(--text);
-  font: inherit; font-size: 1.2rem; padding: 0;
+  flex: 1; min-width: 0; min-height: 40px; background: transparent; border: 0; outline: 0; color: var(--text);
+  font: inherit; font-size: 1.1rem; padding: 0;
 }
 .feeling input::placeholder { color: var(--muted); opacity: 1; font-size: 1rem; }
 // The button says what it does ("Hear it") next to a speaker, so it reads as "listen", not "send".
 .feeling-go {
-  flex: none; display: inline-flex; align-items: center; gap: 0.45rem; height: 48px; padding: 0 1.1rem;
+  flex: none; display: inline-flex; align-items: center; gap: 0.45rem; height: 42px; padding: 0 1rem;
   border-radius: 999px; border: 0; background: var(--accent); color: var(--bg);
   font: inherit; font-size: 1rem; font-weight: 600; cursor: pointer; white-space: nowrap;
 }
@@ -250,11 +265,11 @@ pre code { background: none; padding: 0; }
 .feeling-go:focus-visible { outline-offset: 3px; }
 @media (max-width: 380px) { .feeling-go { padding: 0 0.85rem; } .feeling-field { padding-inline-start: var(--space-2); } }
 // Three examples, one per language: the tool understands all three, like the site.
-.feeling-chips { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1); margin: var(--space-2) 0 0; }
+.feeling-chips { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1); margin: var(--space-1) 0 0; }
 .feeling-try { color: var(--muted); font-size: 0.9rem; }
 .taf-chip {
   font: inherit; font-size: 0.95rem; color: var(--text); background: var(--surface); cursor: pointer;
-  border: 1px solid var(--border); border-radius: 999px; padding: 0 1rem; min-height: 44px;
+  border: 1px solid var(--border); border-radius: 999px; padding: 0 0.85rem; min-height: 36px;
 }
 .taf-chip:hover { border-color: var(--text); }
 .feeling-status { margin: var(--space-2) 0 0; color: var(--muted); font-size: 0.9rem; }
@@ -268,7 +283,7 @@ pre code { background: none; padding: 0; }
 #taf-result[hidden] { display: none; }
 @media (max-width: 520px) { #taf-result { padding: var(--space-2); } }
 .feeling-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); margin-bottom: var(--space-2); }
-.feeling-emo { margin: 0; font-size: 1.75rem; line-height: 1.2; }
+.feeling-emo { margin: 0; font-size: 1.4rem; line-height: 1.2; }
 // "strong" / "light" belongs to the name but reads as a detail; it never breaks away from it.
 .feeling-emo-mod { font-size: 1rem; font-weight: 500; color: var(--muted); white-space: nowrap; }
 .feeling-play {
@@ -280,7 +295,7 @@ pre code { background: none; padding: 0; }
 .feeling-play[data-playing="true"] { background: var(--text); color: var(--surface); }
 .feeling-play .i-stop, .feeling-play[data-playing="true"] .i-play { display: none; }
 .feeling-play[data-playing="true"] .i-stop { display: inline; }
-.feeling-roll { width: 100%; height: 3.5rem; display: block; }
+.feeling-roll { width: 100%; height: 2.5rem; display: block; }
 .feeling-roll rect { fill: var(--accent-2); opacity: 0.5; transition: opacity 0.12s; }
 .feeling-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0 var(--space-3); margin-top: var(--space-1); }
 .feeling-link {
@@ -319,13 +334,13 @@ pre code { background: none; padding: 0; }
 .feeling-map { margin-top: var(--space-2); }
 .feeling-map-hint { margin: 0 0 var(--space-2); color: var(--muted); font-size: 0.9rem; max-width: 40rem; }
 .feeling-pad {
-  position: relative; direction: ltr; width: 100%; aspect-ratio: 4 / 3;
+  position: relative; direction: ltr; width: 100%; aspect-ratio: 16 / 9; max-height: 22rem;
   border-radius: var(--radius); border: 1px solid var(--border); cursor: crosshair; touch-action: manipulation;
   background:
     linear-gradient(to top, color-mix(in srgb, var(--surface) 70%, transparent), transparent 55%),
     linear-gradient(to right, color-mix(in srgb, var(--accent-2) 30%, var(--surface)), color-mix(in srgb, var(--accent) 30%, var(--surface)));
 }
-@media (max-width: 520px) { .feeling-pad { aspect-ratio: 1 / 1.05; } }
+@media (max-width: 520px) { .feeling-pad { aspect-ratio: 1 / 1.1; max-height: none; } }
 .feeling-pad:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .feeling-legend {
   direction: ltr; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 var(--space-2);
@@ -336,8 +351,8 @@ pre code { background: none; padding: 0; }
 // On a phone, left and right stay on one line (as on the map); up and down get their own line.
 @media (max-width: 520px) { .feeling-legend > span:nth-child(2) { order: 3; flex-basis: 100%; text-align: center; } }
 .taf-dot {
-  position: absolute; translate: -50% -50%; min-width: 44px; min-height: 44px; padding: 0.25rem 0.6rem;
-  display: grid; place-items: center; font: inherit; font-size: 0.95rem; font-weight: 600; color: var(--text);
+  position: absolute; translate: -50% -50%; min-width: 32px; min-height: 32px; padding: 0.1rem 0.5rem;
+  display: grid; place-items: center; font: inherit; font-size: 0.85rem; font-weight: 600; color: var(--text);
   background: color-mix(in srgb, var(--surface) 88%, transparent); border: 1px solid var(--border); border-radius: 999px; cursor: pointer;
 }
 .taf-dot:hover { border-color: var(--text); }
@@ -347,7 +362,7 @@ pre code { background: none; padding: 0; }
   position: absolute; translate: -50% -50%; width: 22px; height: 22px; border-radius: 50%; pointer-events: none;
   border: 3px solid var(--accent); background: color-mix(in srgb, var(--accent) 18%, transparent); transition: left 0.25s, top 0.25s;
 }
-.feeling-note { margin: var(--space-3) 0 0; font-size: 0.8rem; line-height: 1.55; color: var(--muted); max-width: 60ch; }
+.feeling-note { margin: var(--space-1) 0 0; font-size: 0.8rem; line-height: 1.55; color: var(--muted); max-width: 60ch; }
 
 // Nothing moves for visitors who ask for less motion, except the opacity of the note bars
 // while a phrase plays (it is the only way to see which note is sounding).
@@ -403,3 +418,41 @@ video.project-video { background: #000; }
 .crumbs a { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; color: var(--muted); text-decoration: none; }
 .crumbs a:first-child { color: var(--text); font-weight: 600; }
 .crumbs a:hover { color: var(--accent); text-decoration: underline; }
+
+// The research fold: a short account of where the feelings and cues come from, and the sources.
+.feeling-research { margin-top: 0; }
+.feeling-research > summary { color: var(--muted); font-weight: 500; }
+.feeling-research p { margin: 0 0 var(--space-1); color: var(--muted); font-size: 0.9rem; max-width: 60ch; }
+.feeling-refs-title { font-weight: 600; color: var(--text); }
+.feeling-refs { margin: 0 0 var(--space-1); padding-inline-start: 1.1rem; color: var(--muted); font-size: 0.8rem; line-height: 1.5; text-align: left; }
+.feeling-refs li { margin-bottom: 0.35rem; }
+@media (max-width: 520px) { .taf-dot { font-size: 0.75rem; padding: 0.1rem 0.35rem; min-width: 28px; min-height: 28px; } }
+
+// Latest notes on the home page: a cover, the date, the title and a line. Two across, one on a phone.
+.notes-home { margin: 0 0 var(--space-3); }
+.note-cards { list-style: none; margin: 0 0 var(--space-1); padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-2); }
+@media (max-width: 560px) { .note-cards { grid-template-columns: 1fr; } }
+.note-card { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.note-card:hover { border-color: var(--accent); }
+.note-cover { display: block; aspect-ratio: 16 / 9; background: var(--accent-soft); overflow: hidden; }
+.note-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.note-body { padding: var(--space-2); }
+.note-meta { margin: 0 0 0.25rem; color: var(--muted); font-size: 0.85rem; }
+.note-title { margin: 0 0 0.35rem; font-family: var(--font-display); font-size: 1.15rem; line-height: 1.25; letter-spacing: -0.01em; }
+[lang="fa"] .note-title { letter-spacing: 0; }
+.note-title a { color: var(--text); text-decoration: none; }
+.note-title a::after { content: ""; position: absolute; inset: 0; }
+.note-card { position: relative; }
+.note-title a:hover { color: var(--accent); }
+.note-line { margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.note-all { margin: 0; }
+.note-all a { display: inline-flex; align-items: center; min-height: 44px; color: var(--muted); }
+.note-all a:hover { color: var(--text); }
+
+// Camino's phone recording: a wide clip (phones side by side) on large screens, a single phone on small ones.
+.project-clip--narrow { display: none; }
+@media (max-width: 600px) {
+  .project-clip--wide { display: none; }
+  .project-clip--narrow { display: block; width: auto; max-width: 100%; max-height: 75vh; margin-inline: auto; }
+}
+.related { margin: var(--space-3) 0 0; color: var(--muted); }

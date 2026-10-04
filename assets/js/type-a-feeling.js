@@ -46,7 +46,27 @@ const EMO = {
     rhythm:[.5,.5,1,.5,.5,1.5],contour:'leap',range:[0,12],startDeg:0,ending:'high',vel:[.45,.9],rest:0,echo:.42},
   hope:{
     scale:'major',root:55,bpm:84,wave:'triangle',bright:4200,gain:.22,legato:.85,attack:.03,decay:.2,sustain:.6,release:.5,
-    rhythm:[1,.5,.5,1,1,.5,.5,2],contour:'up',range:[0,10],startDeg:0,ending:'high',vel:[.5,.9],rest:0,echo:.15}
+    rhythm:[1,.5,.5,1,1,.5,.5,2],contour:'up',range:[0,10],startDeg:0,ending:'high',vel:[.5,.9],rest:0,echo:.15},
+  /* Five more, after the Geneva Emotional Music Scale (nostalgia, power, tension, transcendence) and
+     Hevner's adjective clusters (playful). Same method: the cue numbers are our reading of the
+     published findings on mode, tempo, register, loudness and articulation. */
+  nostalgia:{
+    scale:'major',root:53,bpm:62,wave:'triangle',bright:2600,gain:.23,legato:.95,attack:.05,decay:.25,sustain:.65,release:.6,
+    rhythm:[1,1,.5,.5,1,2],contour:'arch',range:[-2,7],startDeg:2,ending:'tonic',vel:[.5,.85],rest:0,
+    vib:{rate:5,cents:10},echo:.3},
+  power:{
+    scale:'major',root:48,bpm:112,wave:'sawtooth',bright:3200,gain:.16,legato:.6,attack:.01,decay:.08,sustain:.7,release:.15,
+    rhythm:[1,.5,.5,1,1,.5,.5,1],contour:'up',range:[0,9],startDeg:0,ending:'dominant',vel:[.8,1],rest:.03},
+  tension:{
+    scale:'minor',root:50,bpm:120,wave:'sawtooth',bright:2600,q:2,gain:.13,legato:.5,attack:.01,decay:.08,sustain:.6,release:.12,
+    rhythm:[.25,.25,.5,.25,.25,.75,.25],contour:'wander',range:[-2,6],startDeg:0,ending:'none',vel:[.4,1],crescendo:true,
+    rest:.08,cluster:4,clusterProb:.2,vib:{rate:7,cents:18}},
+  transcendence:{
+    scale:'pentaMaj',root:57,bpm:44,wave:'sine',bright:3500,gain:.2,legato:1,attack:.5,decay:.6,sustain:.75,release:1.6,
+    rhythm:[3,3,4],contour:'up',range:[0,12],startDeg:0,ending:'high',vel:[.4,.7],rest:0,echo:.55,drone:true,target:7},
+  playfulness:{
+    scale:'major',root:64,bpm:140,wave:'triangle',bright:7000,gain:.2,legato:.3,attack:.004,decay:.05,sustain:.3,release:.08,
+    rhythm:[.5,.25,.25,.5,.5,.25,.25,.5],contour:'wander',range:[0,9],startDeg:2,ending:'tonic',vel:[.55,.95],rest:.08}
 };
 
 /* Where each feeling sits on the map: valence (dark to bright, left to right) and arousal (calm to
@@ -54,8 +74,9 @@ const EMO = {
    for that point: tempo, mode, register and brightness follow the position, so there are as many
    tracks as there are places to touch. */
 const POS = {
-  anger:{v:-.8,a:.85}, fear:{v:-.55,a:.5}, sadness:{v:-.7,a:-.6}, longing:{v:-.4,a:-.3}, calm:{v:.35,a:-.8},
-  tenderness:{v:.55,a:-.4}, hope:{v:.5,a:.25}, wonder:{v:.3,a:.7}, joy:{v:.8,a:.6}
+  anger:{v:-.85,a:.88}, tension:{v:-.35,a:.85}, fear:{v:-.62,a:.45}, sadness:{v:-.78,a:-.55}, longing:{v:-.5,a:-.2},
+  nostalgia:{v:0,a:-.45}, calm:{v:.3,a:-.88}, tenderness:{v:.62,a:-.5}, transcendence:{v:.5,a:-.12}, hope:{v:.15,a:.1},
+  wonder:{v:.15,a:.6}, power:{v:.55,a:.92}, joy:{v:.88,a:.55}, playfulness:{v:.72,a:.28}
 };
 const DARK_TO_BRIGHT = ['locrian','phrygian','minor','dorian','major','lydian'];
 function nearest(v,a){
@@ -96,13 +117,14 @@ function leadVoice(e,timbre){
    above: a plain I-V-vi-IV for joy, a falling minor line for sadness, a dissonant flat-II for fear. */
 const PROG = {
   joy:[0,4,5,3], sadness:[0,5,2,6], calm:[0,3,1,0], fear:[0,1,0,4], anger:[0,1,0,6],
-  tenderness:[0,2,3,0], longing:[0,3,6,0], wonder:[0,1,0,4], hope:[0,3,4,0]
+  tenderness:[0,2,3,0], longing:[0,3,6,0], wonder:[0,1,0,4], hope:[0,3,4,0],
+  nostalgia:[0,5,3,0], power:[0,3,4,0], tension:[0,1,0,5], transcendence:[0,1,3,0], playfulness:[0,4,0,4]
 };
 
 /* Words the page knows without asking anyone. Accents and Persian variants are normalised below. */
 const WORDS = {
-  joy:{en:['joy','happy','happiness','glad','delight','cheerful','excited','elated','bliss','fun','joyful','thrilled','overjoyed','euphoric','proud'],
-       es:['alegría','feliz','felicidad','contento','contenta','gozo','dicha','entusiasmo','alegre','eufórico','eufórica','orgulloso','orgullosa'],
+  joy:{en:['joy','happy','happiness','glad','delight','cheerful','excited','elated','bliss','fun','joyful','thrilled','overjoyed','euphoric'],
+       es:['alegría','feliz','felicidad','contento','contenta','gozo','dicha','entusiasmo','alegre','eufórico','eufórica'],
        fa:['شادی','خوشحال','خوشحالی','شاد','ذوق','سرور','خوشی','لذت','سرخوش','هیجان‌زده','شادمان']},
   sadness:{en:['sad','sadness','sorrow','grief','melancholy','blue','mourning','lonely','loneliness','heartbreak','down','heartbroken','depressed','gloomy','hurt','disappointed','unhappy'],
        es:['triste','tristeza','pena','dolor','luto','melancolía','soledad','duelo','deprimido','deprimida','desanimado','desanimada','decepcionado','decepcionada','abatido'],
@@ -110,24 +132,39 @@ const WORDS = {
   calm:{en:['calm','peace','peaceful','serene','serenity','relaxed','still','quiet','tranquil','rest','content','chill','safe','grounded','at ease','relief'],
        es:['calma','paz','tranquilo','tranquilidad','serenidad','sosiego','quietud','descanso','relajado','relajada','sereno','serena','a gusto','alivio'],
        fa:['آرامش','آرام','صلح','سکوت','آسودگی','آسوده','سکون','راحت','آسوده‌خاطر','آسایش']},
-  fear:{en:['fear','afraid','scared','anxious','anxiety','dread','worry','panic','nervous','terror','unease','frightened','terrified','uneasy','tense','insecure','stressed','stress'],
-       es:['miedo','temor','ansiedad','pánico','nervios','angustia','inquietud','asustado','asustada','inseguro','insegura','tenso','tensa','preocupado','preocupada','estrés'],
-       fa:['ترس','هراس','اضطراب','نگرانی','وحشت','دلهره','نگران','ترسیده','دلشوره','استرس','مضطرب']},
+  fear:{en:['fear','afraid','scared','anxious','anxiety','dread','worry','panic','nervous','terror','unease','frightened','terrified','uneasy','insecure'],
+       es:['miedo','temor','ansiedad','pánico','nervios','angustia','inquietud','asustado','asustada','inseguro','insegura','preocupado','preocupada'],
+       fa:['ترس','هراس','اضطراب','نگرانی','وحشت','دلهره','نگران','ترسیده','دلشوره','مضطرب']},
   anger:{en:['anger','angry','rage','fury','mad','annoyed','irritated','frustration','frustrated','outrage','furious','resentful','bitter','irritable','resentment'],
        es:['ira','rabia','enfado','enojo','furia','frustración','indignación','furioso','furiosa','harto','harta','rencor','enfadado','enfadada'],
        fa:['خشم','عصبانی','عصبانیت','غضب','کلافه','عصبی','کینه','خشمگین']},
   tenderness:{en:['tender','tenderness','love','affection','warmth','care','gentle','kindness','compassion','fondness','loving','grateful','gratitude','cozy','caring','adore'],
        es:['ternura','amor','cariño','calidez','dulzura','compasión','afecto','agradecido','agradecida','gratitud','cariñoso','cariñosa'],
        fa:['مهربانی','عشق','محبت','مهر','لطف','دلسوزی','عاطفه','قدردانی','سپاسگزاری','دوست‌داشتن']},
-  longing:{en:['longing','nostalgia','nostalgic','homesick','homesickness','yearning','missing','miss','wistful','saudade','pining','yearn','missing home','miss home'],
-       es:['añoranza','morriña','anhelo','extrañar','nostálgico','echar de menos','nostalgia','echo de menos','te extraño'],
-       fa:['دلتنگی','دلتنگ','نوستالژی','حسرت','غربت','اشتیاق','دلتنگم','هوای خانه']},
+  longing:{en:['longing','homesick','homesickness','yearning','missing','miss','wistful','saudade','pining','yearn','missing home','miss home'],
+       es:['añoranza','morriña','anhelo','extrañar','echar de menos','echo de menos','te extraño'],
+       fa:['دلتنگی','دلتنگ','حسرت','غربت','اشتیاق','دلتنگم','هوای خانه']},
   wonder:{en:['wonder','awe','amazement','curiosity','marvel','astonished','surprise','inspired','fascination','awestruck','amazed','dreamy','mesmerized','mesmerised'],
        es:['asombro','maravilla','admiración','curiosidad','sorpresa','fascinación','asombrado','asombrada','maravillado','maravillada','fascinado','fascinada'],
        fa:['شگفتی','حیرت','تعجب','کنجکاوی','شگفت‌زده','مبهوت','حیرت‌زده','شگفت']},
   hope:{en:['hope','hopeful','optimism','optimistic','faith','determined','looking forward','motivated','eager'],
        es:['esperanza','optimismo','fe','esperanzado','ilusión','ilusionado','ilusionada','motivado','motivada'],
-       fa:['امید','امیدواری','امیدوار','خوش‌بینی','انگیزه','امیدوارم','چشم‌انتظار']}
+       fa:['امید','امیدواری','امیدوار','خوش‌بینی','انگیزه','امیدوارم','چشم‌انتظار']},
+  nostalgia:{en:['nostalgia','nostalgic','sentimental','reminiscing','memories','remembering','throwback','bittersweet'],
+       es:['nostalgia','nostálgico','nostálgica','recuerdos','recordar','sentimental','agridulce'],
+       fa:['نوستالژی','نوستالژیک','خاطره','خاطرات','یادش بخیر']},
+  power:{en:['proud','pride','powerful','power','strong','strength','confident','confidence','triumphant','triumph','empowered','fierce','heroic','victorious','unstoppable','courage','brave','bold'],
+       es:['orgulloso','orgullosa','orgullo','poderoso','poderosa','fuerte','fuerza','confianza','triunfo','triunfante','valiente','valentía','audaz'],
+       fa:['افتخار','قدرت','قدرتمند','قوی','توانمند','پیروزی','پیروز','شجاع','شجاعت','سربلند']},
+  tension:{en:['tense','tension','stress','stressed','restless','agitated','edgy','jittery','on edge','overwhelmed','pressure','uptight','wired','frantic','suspense'],
+       es:['tenso','tensa','tensión','estrés','estresado','estresada','inquieto','inquieta','agitado','agitada','presión','agobiado','agobiada','suspense'],
+       fa:['تنش','استرس','بی‌قرار','بی‌قراری','آشفته','پریشان','فشار']},
+  transcendence:{en:['transcendence','transcendent','spiritual','sacred','reverence','devotion','ecstasy','ecstatic','euphoria','uplifted','elevated','worship','divine','prayer','holy'],
+       es:['trascendencia','espiritual','sagrado','reverencia','devoción','éxtasis','extasiado','elevado','divino','plenitud','oración'],
+       fa:['تعالی','معنوی','مقدس','قدسی','عرفان','عارفانه','وجد','نیایش','دعا','الهی','روحانی']},
+  playfulness:{en:['playful','playfulness','silly','funny','amused','amusement','humor','humour','mischievous','cheeky','giggly','giddy','goofy','teasing','lighthearted'],
+       es:['juguetón','juguetona','travieso','traviesa','gracioso','divertido','divertida','diversión','risa','bromista','pícaro'],
+       fa:['شوخ','شوخی','بازیگوش','شیطنت','شیطون','خنده','بامزه']}
 };
 
 function norm(s){

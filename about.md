@@ -1,32 +1,43 @@
 ---
 layout: page
 title: About
-description: About dos — Design of سهی. Models, apps and research by Sohi, at the meeting point of people, migration and AI.
+description: "dos — Design of سهی is a small platform for creative, AI-powered apps in English, Español and فارسی."
 permalink: /about/
 ref: about
 ---
 
-I'm Sohi. I build small tools, models and apps where people, migration and AI meet, from the
-idea to the code to the details that make something feel finished.
+dos (short for Design of سهی) is a small platform for creative apps powered by AI. We design
+and build them end to end, in English, Spanish and Persian, and we try to make each one honest
+about what it does with your words.
 
-My background is in psychology. I work in computational social science and humanitarian
-migration work, building agent-based models (in NetLogo, among others) and designing and
-delivering training, including mental health and psychosocial support for vulnerable
-populations. dos is where the creative side of that work lives.
+Some of what we make is for learning, some for play, and some for understanding how people
+settle into new places. [Camino](/projects/camino/) teaches Spanish offline, the
+[Tarot Sanctuary](/projects/tarot-app/) reads cards in three languages, and our
+[Acculturation](/projects/acculturation/) model simulates how newcomers and a small town find
+each other. Type a feeling on the [home page](/) and you can hear the idea at its smallest.
 
 <details class="fold" markdown="1" open>
-<summary>What I'm curious about</summary>
+<summary>How we work</summary>
 
-- **How people settle in a new place**: the acculturation model on this site simulates it.
-- **How we attach to AI**, and what digital education can learn from it.
-- **How music makes us feel**, in what we sense and in what we perceive. "Type a feeling" on the home page comes from this.
+- **Small and finished.** One idea per app, built end to end: the idea, the code and the details.
+- **Honest about AI.** An app says when it is an AI, and keeps what you type on your own device wherever it can.
+- **Three languages from the start**, including right-to-left Persian, not translated as an afterthought.
 
 </details>
 
 <details class="fold" markdown="1">
-<summary>Work with me</summary>
+<summary>Where it comes from</summary>
 
-Commissions and collaborations are welcome. Write to [{{ site.email }}](mailto:{{ site.email }}).
-My code is on [GitHub](https://github.com/soheilhrad).
+Our work grows out of psychology, migration work and computational social science: how people
+adapt, learn and feel, and how tools can make that easier.
+
+</details>
+
+<details class="fold" markdown="1">
+<summary>Work with us</summary>
+
+We take commissions and collaborations: apps, models and small tools for organisations that
+work across languages. Write to [{{ site.email }}](mailto:{{ site.email }}). Our code is on
+[GitHub](https://github.com/soheilhrad).
 
 </details>

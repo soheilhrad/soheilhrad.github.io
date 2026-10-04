@@ -13,7 +13,10 @@ permalink: /es/
 
 {% include type-a-feeling.html %}
 
+<h2 class="works-heading">{{ t.projects }}</h2>
 {% include project-list.html %}
+
+{% include note-cards.html limit=2 %}
 
 {%- if site.email and site.email != "" %}
 <p class="contact"><a href="mailto:{{ site.email }}">{{ t.write_to_us }}</a></p>

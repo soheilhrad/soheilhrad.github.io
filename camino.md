@@ -9,6 +9,10 @@ ref: camino
 clip: /assets/video/camino-demo.mp4
 poster: /assets/img/projects/camino-poster.jpg
 image: /assets/img/projects/camino-poster.jpg
+clip_narrow: /assets/video/camino-demo-phone.mp4
+poster_narrow: /assets/img/projects/camino-poster-phone.jpg
+ask: true
+related: [cut-off]
 clip_alt: "Camino on a phone, three moments side by side: a lesson card on Spanish spelling, the tutor explaining the tilde, and an exercise answered correctly."
 ---
 {%- assign t = site.data.i18n[page.lang] -%}
@@ -19,7 +23,7 @@ clip_alt: "Camino on a phone, three moments side by side: a lesson card on Spani
 - **25 lessons** for absolute beginners, explained in Persian, English or Spanish.
 - **1,180 exercises**, marked by the app itself, and a tutor to talk to.
 - **Every word spoken aloud**, and a story: each lesson you master unlocks a scene of a year in Salamanca.
-- **Offline and private**: no account, and no internet after setup.
+- **Fully offline**: no account, and no internet needed after setup.
 
 </details>
 

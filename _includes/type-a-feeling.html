@@ -66,6 +66,21 @@ want to explore) and "how it's made" stay folded until asked for.
     <p class="feeling-legend" aria-hidden="true"><span>← {{ f.axis_dark }}</span><span><span>↑ {{ f.axis_intense }}</span> · <span>↓ {{ f.axis_calm }}</span></span><span>{{ f.axis_bright }} →</span></p>
   </details>
   <p class="feeling-note">{{ f.note }}</p>
+  <details class="feeling-fold feeling-research">
+    <summary>{{ f.research }}</summary>
+    <p>{{ f.research_intro }}</p>
+    <p>{{ f.research_caveat }}</p>
+    <p class="feeling-refs-title">{{ f.references }}</p>
+    <ul class="feeling-refs" lang="en" dir="ltr">
+      <li>Balkwill, L.-L., &amp; Thompson, W. F. (1999). A cross-cultural investigation of the perception of emotion in music. <i>Music Perception, 17</i>(1), 43–64.</li>
+      <li>Eerola, T., &amp; Vuoskoski, J. K. (2011). A comparison of the discrete and dimensional models of emotion in music. <i>Psychology of Music, 39</i>(1), 18–49.</li>
+      <li>Gabrielsson, A., &amp; Lindström, E. (2010). The role of structure in the musical expression of emotions. In P. N. Juslin &amp; J. A. Sloboda (Eds.), <i>Handbook of Music and Emotion</i> (pp. 367–400). Oxford University Press.</li>
+      <li>Hevner, K. (1936). Experimental studies of the elements of expression in music. <i>American Journal of Psychology, 48</i>(2), 246–268.</li>
+      <li>Juslin, P. N., &amp; Laukka, P. (2003). Communication of emotions in vocal expression and music performance: Different channels, same code? <i>Psychological Bulletin, 129</i>(5), 770–814.</li>
+      <li>Russell, J. A. (1980). A circumplex model of affect. <i>Journal of Personality and Social Psychology, 39</i>(6), 1161–1178.</li>
+      <li>Zentner, M., Grandjean, D., &amp; Scherer, K. R. (2008). Emotions evoked by the sound of music: Characterization, classification, and measurement. <i>Emotion, 8</i>(4), 494–521.</li>
+    </ul>
+  </details>
 </section>
 <script type="application/json" id="taf-data">{"endpoint": {{ site.classify_endpoint | default: "" | jsonify }}, "strings": {"en": {{ site.data.i18n.en.feeling | jsonify }}, "es": {{ site.data.i18n.es.feeling | jsonify }}, "fa": {{ site.data.i18n.fa.feeling | jsonify }} } }</script>
 <script src="{{ '/assets/js/type-a-feeling.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>

@@ -3,13 +3,13 @@
 - slug: camino
   en:
     title: Camino
-    blurb: An offline Spanish tutor for beginners, with 25 lessons explained in Persian, English or Spanish. Nothing leaves the learner's computer.
+    blurb: An offline Spanish tutor for beginners, with 25 lessons explained in Persian, English or Spanish. It runs fully offline, so nothing leaves the learner's computer.
   es:
     title: Camino
-    blurb: Un tutor de español sin conexión para principiantes, con 25 lecciones explicadas en persa, inglés o español. Nada sale del ordenador del alumno.
+    blurb: Un tutor de español sin conexión para principiantes, con 25 lecciones explicadas en persa, inglés o español. Funciona sin conexión: nada sale del ordenador del alumno.
   fa:
     title: Camino
-    blurb: معلم آفلاین اسپانیایی برای مبتدی‌ها، با ۲۵ درس که به فارسی، انگلیسی یا اسپانیایی توضیح داده می‌شوند. هیچ چیزی از رایانه زبان‌آموز بیرون نمی‌رود.
+    blurb: معلم آفلاین اسپانیایی برای مبتدی‌ها، با ۲۵ درس که به فارسی، انگلیسی یا اسپانیایی توضیح داده می‌شوند. کاملاً آفلاین کار می‌کند و هیچ چیزی از کامپیوتر زبان‌آموز بیرون نمی‌رود.
 - slug: acculturation
   en:
     title: Acculturation
@@ -23,7 +23,7 @@
 - slug: tarot-app
   en:
     title: The Digital Tarot Sanctuary
-    blurb: AI tarot readings in English, Spanish and Farsi, with the 1909 Rider-Waite deck.
+    blurb: AI tarot readings in English, Spanish and Persian, with the 1909 Rider-Waite deck.
   es:
     title: The Digital Tarot Sanctuary
     blurb: Lecturas de tarot con IA en inglés, español y persa, con la baraja Rider-Waite de 1909.
