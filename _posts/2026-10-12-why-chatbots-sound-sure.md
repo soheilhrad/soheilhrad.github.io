@@ -14,7 +14,9 @@ A language model predicts the next word. It is very good at choosing a word that
 
 Tone is not evidence. A chatbot can say "I am 100% sure" and then, a line later, admit it is not certain about the facts it gives. That is the pattern in the video.
 
-Two checks before you trust an answer:
+Four checks before you trust an answer:
 
 1. Ask where the claim came from, then open that source.
 2. Test it on one fact you already know.
+3. Check names, dates and numbers in an official or original source.
+4. Ask again in a new chat. If the answers differ, check before you use one.
