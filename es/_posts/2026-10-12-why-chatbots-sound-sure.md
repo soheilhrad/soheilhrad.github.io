@@ -16,7 +16,9 @@ Un modelo de lenguaje predice la siguiente palabra. Lo hace muy bien, así que u
 
 El tono no es una prueba. Un chatbot puede decir «estoy al 100 % seguro» y, unas líneas después, reconocer que no está seguro de los datos que da. Ese es el patrón del vídeo.
 
-Antes de fiarte de una respuesta, haz dos comprobaciones:
+Antes de fiarte de una respuesta, haz cuatro comprobaciones:
 
 1. Pregunta de dónde sale la afirmación y abre esa fuente.
 2. Compruébalo con un dato que ya conozcas.
+3. Comprueba nombres, fechas y cifras en una fuente oficial u original.
+4. Vuelve a preguntar en un chat nuevo. Si las respuestas no coinciden, compruébalas antes de usar una.
