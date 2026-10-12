@@ -329,6 +329,27 @@ pre code { background: none; padding: 0; }
 }
 .feeling-timbre button + button { border-inline-start: 1px solid var(--border); }
 .feeling-timbre button[aria-pressed="true"] { background: var(--text); color: var(--surface); }
+.feeling-timbre { max-width: 100%; }
+// On a phone the voice choice wraps as separate buttons, so none is cut off in any language.
+@media (max-width: 520px) {
+  .feeling-timbre { flex-wrap: wrap; gap: 0.35rem; border: 0; border-radius: 0; overflow: visible; }
+  .feeling-timbre button { border: 1px solid var(--border); border-radius: 999px; }
+  .feeling-timbre button + button { border-inline-start: 1px solid var(--border); }
+}
+.feeling-lens-note { margin: var(--space-1) 0 0; max-width: 60ch; }
+// "Heard or felt?": two questions answered 1 to 5, kept on the page.
+.feeling-rate { margin-top: var(--space-1); border-top: 1px solid var(--border); }
+.feeling-rate > summary { color: var(--muted); font-weight: 500; }
+.feeling-q { margin: var(--space-1) 0 0.35rem; font-size: 0.95rem; }
+.feeling-scale { display: flex; gap: 0.4rem; direction: ltr; }
+.feeling-scale button {
+  font: inherit; min-width: 44px; min-height: 44px; border: 1px solid var(--border); border-radius: 999px;
+  background: transparent; color: var(--text); cursor: pointer; font-variant-numeric: tabular-nums;
+}
+.feeling-scale button:hover { border-color: var(--text); }
+.feeling-scale button[aria-checked="true"] { background: var(--text); color: var(--surface); border-color: var(--text); }
+// On the Persian scales the feelings the study found almost never felt are drawn fainter.
+.lens-p .taf-dot[data-rare]:not([aria-current="true"]) { opacity: 0.55; }
 // The map: feelings laid out from dark to bright (left to right) and calm to intense (bottom to top).
 // Touch a name, or anywhere between, to hear that place.
 .feeling-map { margin-top: var(--space-2); }
@@ -402,6 +423,9 @@ video.project-video { background: #000; }
 .fold summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
 .fold > :not(summary) { margin-inline-start: 1.5rem; }
 .fold h3 { margin-top: var(--space-3); }
+.fold table { border-collapse: collapse; margin: 0 0 var(--space-2); font-size: 0.95rem; font-variant-numeric: tabular-nums; }
+.fold th, .fold td { padding: 0.4rem 0.9rem 0.4rem 0; border-bottom: 1px solid var(--border); text-align: start; }
+.fold th { font-weight: 600; }
 .fold > :last-child { margin-bottom: var(--space-3); }
 
 // Screenshots on a project page: a strip you swipe or scroll sideways.

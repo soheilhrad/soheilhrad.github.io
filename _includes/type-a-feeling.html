@@ -38,21 +38,43 @@ want to explore) and "how it's made" stay folded until asked for.
       <svg id="taf-roll" class="feeling-roll" viewBox="0 0 300 72" aria-hidden="true" focusable="false" preserveAspectRatio="none"></svg>
       <div class="feeling-actions">
         <button class="feeling-link" id="taf-take" type="button"></button>
+        <button class="feeling-link" id="taf-long" type="button"></button>
         <button class="feeling-link" id="taf-share" type="button"></button>
         <span id="taf-shareOut" class="feeling-shareout"></span>
       </div>
+      <details class="feeling-fold feeling-rate" id="taf-rate">
+        <summary id="taf-rateSum"></summary>
+        <p id="taf-rateHelp" class="feeling-meta"></p>
+        <p id="taf-qHeard" class="feeling-q"></p>
+        <div class="feeling-scale" role="radiogroup" aria-labelledby="taf-qHeard" data-q="heard"></div>
+        <p id="taf-qFelt" class="feeling-q"></p>
+        <div class="feeling-scale" role="radiogroup" aria-labelledby="taf-qFelt" data-q="felt"></div>
+        <p id="taf-rateNote" class="feeling-cue" aria-live="polite"></p>
+        <p id="taf-rateLocal" class="feeling-meta"></p>
+      </details>
       <details class="feeling-fold feeling-why">
         <summary id="taf-why"></summary>
         <p id="taf-meta" class="feeling-meta"></p>
         <p id="taf-cue" class="feeling-cue"></p>
+        <p id="taf-rare" class="feeling-cue" hidden></p>
         <div class="feeling-sound" role="group" aria-labelledby="taf-soundLabel">
           <span id="taf-soundLabel" class="feeling-sound-label"></span>
-          <span class="feeling-timbre">
+          <span class="feeling-timbre" id="taf-timbres">
             <button type="button" data-t="auto" id="taf-t-auto" aria-pressed="true"></button>
             <button type="button" data-t="keys" id="taf-t-keys" aria-pressed="false"></button>
             <button type="button" data-t="strings" id="taf-t-strings" aria-pressed="false"></button>
+            <button type="button" data-t="plucked" id="taf-t-plucked" aria-pressed="false"></button>
+            <button type="button" data-t="breath" id="taf-t-breath" aria-pressed="false"></button>
           </span>
         </div>
+        <div class="feeling-sound" role="group" aria-labelledby="taf-scaleLabel">
+          <span id="taf-scaleLabel" class="feeling-sound-label"></span>
+          <span class="feeling-timbre" id="taf-lens">
+            <button type="button" data-l="w" id="taf-l-w" aria-pressed="false"></button>
+            <button type="button" data-l="p" id="taf-l-p" aria-pressed="false"></button>
+          </span>
+        </div>
+        <p id="taf-lensNote" class="feeling-meta feeling-lens-note"></p>
       </details>
     </div>
   </div>
@@ -69,6 +91,7 @@ want to explore) and "how it's made" stay folded until asked for.
   <details class="feeling-fold feeling-research">
     <summary>{{ f.research }}</summary>
     <p>{{ f.research_intro }}</p>
+    <p>{{ f.research_study }} <a href="{{ t.prefix | append: '/projects/music-emotion/' | relative_url }}">{{ f.research_more }}</a></p>
     <p>{{ f.research_caveat }}</p>
     <p class="feeling-refs-title">{{ f.references }}</p>
     <ul class="feeling-refs" lang="en" dir="ltr">

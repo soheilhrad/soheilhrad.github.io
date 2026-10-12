@@ -12,7 +12,10 @@ const CLASSIFY_ENDPOINT = DATA.endpoint || '';
 const SCALES = {
   major:[0,2,4,5,7,9,11], minor:[0,2,3,5,7,8,10], dorian:[0,2,3,5,7,9,10],
   lydian:[0,2,4,6,7,9,11], phrygian:[0,1,3,5,7,8,10], locrian:[0,1,3,5,6,8,10],
-  pentaMaj:[0,2,4,7,9]
+  pentaMaj:[0,2,4,7,9],
+  /* Persian dastgāh scales, in semitones above the tonic. A step of 1.5 is the half-flat step (koron):
+     a quarter tone below the major second, between two piano keys. Web Audio plays it exactly. */
+  shur:[0,1.5,3,5,7,8,10], homayun:[0,1.5,4,5,7,8,10]
 };
 
 /* One row per feeling: how it is heard (cue text) and how it is built (numbers). */
@@ -21,7 +24,7 @@ const EMO = {
     scale:'major',root:57,bpm:132,wave:'triangle',bright:6500,gain:.22,legato:.5,attack:.008,decay:.06,sustain:.5,release:.12,
     rhythm:[.5,.5,.5,.5,1,.5,.5],contour:'up',range:[0,10],startDeg:0,ending:'tonic',vel:[.7,1],rest:.05},
   sadness:{
-    scale:'minor',root:50,bpm:54,wave:'sine',bright:1500,gain:.26,legato:.95,attack:.06,decay:.3,sustain:.6,release:.5,
+    free:true,scale:'minor',root:50,bpm:54,wave:'sine',bright:1500,gain:.26,legato:.95,attack:.06,decay:.3,sustain:.6,release:.5,
     rhythm:[1,1,2,1,1,2],contour:'down',range:[-4,7],startDeg:6,ending:'tonic',vel:[.6,.85],rest:0},
   calm:{
     scale:'pentaMaj',root:55,bpm:48,wave:'sine',bright:1300,gain:.2,legato:1,attack:.4,decay:.6,sustain:.7,release:1.2,
@@ -38,7 +41,7 @@ const EMO = {
     scale:'pentaMaj',root:60,bpm:66,wave:'sine',bright:2000,gain:.22,legato:.95,attack:.08,decay:.3,sustain:.7,release:.6,
     rhythm:[1,.5,.5,1,1,1],contour:'rock',range:[-1,6],startDeg:2,ending:'tonic',vel:[.5,.8],rest:0,echo:.2},
   longing:{
-    scale:'dorian',root:52,bpm:60,wave:'triangle',bright:2300,gain:.24,legato:.95,attack:.05,decay:.25,sustain:.65,release:.6,
+    free:true,scale:'dorian',root:52,bpm:60,wave:'triangle',bright:2300,gain:.24,legato:.95,attack:.05,decay:.25,sustain:.65,release:.6,
     rhythm:[1,1,.5,.5,2,1],contour:'arch',range:[-2,7],startDeg:0,ending:'dominant',vel:[.5,.9],rest:0,
     vib:{rate:5,cents:14},echo:.22},
   wonder:{
@@ -51,7 +54,7 @@ const EMO = {
      Hevner's adjective clusters (playful). Same method: the cue numbers are our reading of the
      published findings on mode, tempo, register, loudness and articulation. */
   nostalgia:{
-    scale:'major',root:53,bpm:62,wave:'triangle',bright:2600,gain:.23,legato:.95,attack:.05,decay:.25,sustain:.65,release:.6,
+    free:true,scale:'major',root:53,bpm:62,wave:'triangle',bright:2600,gain:.23,legato:.95,attack:.05,decay:.25,sustain:.65,release:.6,
     rhythm:[1,1,.5,.5,1,2],contour:'arch',range:[-2,7],startDeg:2,ending:'tonic',vel:[.5,.85],rest:0,
     vib:{rate:5,cents:10},echo:.3},
   power:{
@@ -62,12 +65,36 @@ const EMO = {
     rhythm:[.25,.25,.5,.25,.25,.75,.25],contour:'wander',range:[-2,6],startDeg:0,ending:'none',vel:[.4,1],crescendo:true,
     rest:.08,cluster:4,clusterProb:.2,vib:{rate:7,cents:18}},
   transcendence:{
-    scale:'pentaMaj',root:57,bpm:44,wave:'sine',bright:3500,gain:.2,legato:1,attack:.5,decay:.6,sustain:.75,release:1.6,
+    free:true,scale:'pentaMaj',root:57,bpm:44,wave:'sine',bright:3500,gain:.2,legato:1,attack:.5,decay:.6,sustain:.75,release:1.6,
     rhythm:[3,3,4],contour:'up',range:[0,12],startDeg:0,ending:'high',vel:[.4,.7],rest:0,echo:.55,drone:true,target:7},
   playfulness:{
     scale:'major',root:64,bpm:140,wave:'triangle',bright:7000,gain:.2,legato:.3,attack:.004,decay:.05,sustain:.3,release:.08,
-    rhythm:[.5,.25,.25,.5,.5,.25,.25,.5],contour:'wander',range:[0,9],startDeg:2,ending:'tonic',vel:[.55,.95],rest:.08}
+    rhythm:[.5,.25,.25,.5,.5,.25,.25,.5],contour:'wander',range:[0,9],startDeg:2,ending:'tonic',vel:[.55,.95],rest:.08},
+  /* Two more, from a listening study of Persian classical music. Its mixed pieces sounded happy and
+     sad at once, so 'bittersweet' turns the third from one colour to the other (another take reverses
+     the order, and with it where the phrase lands). Its sad pieces were unmeasured and swelling, and
+     the sadder a piece sounded the more it moved listeners, so 'moved' is slow, free and swelling. */
+  bittersweet:{
+    free:true,scale:'major',scale2:'minor',root:53,bpm:80,wave:'triangle',bright:2800,gain:.23,legato:.95,attack:.05,decay:.25,sustain:.65,release:.6,
+    rhythm:[.5,.5,1,.5,.5,1,2],contour:'arch',range:[-2,7],startDeg:2,ending:'tonic',vel:[.35,.95],rest:0,
+    vib:{rate:5,cents:10},echo:.25},
+  moved:{
+    free:true,scale:'minor',root:52,bpm:58,wave:'triangle',bright:2400,gain:.23,legato:1,attack:.12,decay:.4,sustain:.7,release:.9,
+    rhythm:[1,1,2,1.5,.5,2],contour:'arch',range:[-2,8],startDeg:2,ending:'high',vel:[.3,1],rest:0,
+    vib:{rate:5,cents:12},echo:.35}
 };
+
+/* Typing the name of a Persian classical mode plays its scale. These are scales, not feelings:
+   no spot on the map, always free rhythm over a drone. */
+const MODES = {
+  shur:{scale:'shur',root:50,bpm:60,wave:'triangle',bright:2300,gain:.24,legato:1,attack:.03,decay:.4,sustain:.55,release:.8,
+    rhythm:[1,1,.5,.5,2,1],contour:'arch',range:[-2,7],startDeg:0,ending:'tonic',vel:[.3,1],rest:0,free:true,echo:.25,vib:{rate:5,cents:10}},
+  homayun:{scale:'homayun',root:50,bpm:56,wave:'triangle',bright:2300,gain:.24,legato:1,attack:.03,decay:.4,sustain:.55,release:.8,
+    rhythm:[1,1,.5,.5,2,1],contour:'arch',range:[-2,7],startDeg:0,ending:'tonic',vel:[.3,1],rest:0,free:true,echo:.25,vib:{rate:5,cents:10}},
+  mahur:{scale:'major',root:48,bpm:64,wave:'triangle',bright:2600,gain:.24,legato:1,attack:.03,decay:.4,sustain:.55,release:.8,
+    rhythm:[1,1,.5,.5,2,1],contour:'arch',range:[-2,7],startDeg:0,ending:'tonic',vel:[.3,1],rest:0,free:true,echo:.25,vib:{rate:5,cents:10}}
+};
+const MODE_VOICE = {shur:'plucked', homayun:'breath', mahur:'plucked'};
 
 /* Where each feeling sits on the map: valence (dark to bright, left to right) and arousal (calm to
    intense, bottom to top), after Russell's circumplex. Touching anywhere on the map plays music
@@ -76,7 +103,8 @@ const EMO = {
 const POS = {
   anger:{v:-.85,a:.88}, tension:{v:-.35,a:.85}, fear:{v:-.62,a:.45}, sadness:{v:-.78,a:-.55}, longing:{v:-.5,a:-.2},
   nostalgia:{v:0,a:-.45}, calm:{v:.3,a:-.88}, tenderness:{v:.62,a:-.5}, transcendence:{v:.5,a:-.12}, hope:{v:.15,a:.1},
-  wonder:{v:.15,a:.6}, power:{v:.55,a:.92}, joy:{v:.88,a:.55}, playfulness:{v:.72,a:.28}
+  wonder:{v:.15,a:.6}, power:{v:.55,a:.92}, joy:{v:.88,a:.55}, playfulness:{v:.72,a:.28},
+  bittersweet:{v:-.22,a:-.32}, moved:{v:-.18,a:.3}
 };
 const DARK_TO_BRIGHT = ['locrian','phrygian','minor','dorian','major','lydian'];
 function nearest(v,a){
@@ -87,15 +115,30 @@ function nearest(v,a){
 /* The feeling nearest the touch supplies the character (timbre, rhythm, contour); the distance
    from it bends tempo, register, brightness, attack and mode. At a feeling's own spot the result
    is that feeling exactly. */
+/* The Western or Persian scales, chosen under "How it's made". The Persian side swaps in dastgāh
+   scales where the study's pieces point to one (Homayun for sad, Shur for longing, nostalgia and
+   being moved, Mahur-to-Shur for bittersweet), drops the chords for a drone, and gives the
+   lead a plucked, bowed or breathy voice. The others keep their Western scale. */
+let lens = 'w';
+const PERS = {
+  sadness:{scale:'homayun',bright:2200}, longing:{scale:'shur'}, nostalgia:{scale:'shur'}, moved:{scale:'shur'},
+  bittersweet:{scale:'major',scale2:'shur'}
+};
+const PVOICE = {sadness:'breath', longing:'strings', nostalgia:'plucked', moved:'strings', bittersweet:'plucked',
+                joy:'plucked', playfulness:'plucked', hope:'plucked', shur:'plucked', homayun:'breath', mahur:'plucked'};
+/* In the study, listeners almost never felt these (anger, fear and anxiety barely registered). */
+const RARE = new Set(['fear','anger','tension']);
+const baseEmo = key => lens==='p' ? Object.assign({},EMO[key],PERS[key]||{},{persian:true}) : EMO[key];
+
 function synth(v,a,key){
-  const base = EMO[key], dv = v-POS[key].v, da = a-POS[key].a, e = Object.assign({},base);
+  const base = baseEmo(key), dv = v-POS[key].v, da = a-POS[key].a, e = Object.assign({},base);
   e.bpm = Math.max(40,Math.min(168,Math.round(base.bpm*Math.pow(2,da*.7))));
   e.root = base.root + Math.round(dv*3 + da*2);
   e.bright = Math.max(900,Math.round(base.bright*(1+da*.45+dv*.3)));
   e.attack = Math.max(.004,base.attack*(1-da*.6));
-  if(Math.abs(dv)>.22){
+  if(Math.abs(dv)>.22 && !base.scale2){
     const i = base.scale==='pentaMaj' ? 4 : DARK_TO_BRIGHT.indexOf(base.scale);
-    e.scale = DARK_TO_BRIGHT[Math.max(0,Math.min(5,i+Math.round(dv*2)))];
+    if(i>=0) e.scale = DARK_TO_BRIGHT[Math.max(0,Math.min(5,i+Math.round(dv*2)))];
   }
   return e;
 }
@@ -103,10 +146,15 @@ function synth(v,a,key){
 /* Two more voices for the melody besides the one each feeling brings ('auto'). */
 const TIMBRE = {
   keys:{kind:'fm',attack:.004,decay:.5,sustain:.25,release:.6,legato:.9,vib:null,detune:0,pure:true,gainMul:1.3,brightMin:2600},
-  strings:{wave:'sawtooth',detune:9,attack:.09,decay:.3,sustain:.75,release:.7,legato:1,vib:{rate:5.5,cents:10},pure:true,gainMul:.6,brightMin:1400,brightMax:2600}
+  strings:{wave:'sawtooth',detune:9,attack:.09,decay:.3,sustain:.75,release:.7,legato:1,vib:{rate:5.5,cents:10},pure:true,gainMul:.6,brightMin:1400,brightMax:2600},
+  /* A plucked string (setar, tar, santur): a bright strike that dies away, higher partials first. */
+  plucked:{kind:'pluck',attack:.004,decay:.1,sustain:.5,release:.2,legato:1,vib:null,detune:0,pure:true,gainMul:1.1,brightMin:2400,brightMax:5200},
+  /* A breathy reed (ney): a pure tone with a little band of breath noise and a late vibrato. */
+  breath:{kind:'breath',attack:.09,decay:.2,sustain:.9,release:.35,legato:1,vib:{rate:5.2,cents:16},detune:0,pure:true,gainMul:1,brightMin:2600,brightMax:4600}
 };
-function leadVoice(e,timbre){
-  const tb = TIMBRE[timbre]; if(!tb) return e;
+function leadVoice(e,timbre,key){
+  const pick = timbre==='auto' && e.persian ? (MODE_VOICE[key] || PVOICE[key]) : timbre;
+  const tb = TIMBRE[pick]; if(!tb) return e;
   const o = Object.assign({},e,tb);
   o.gain = e.gain*tb.gainMul;
   o.bright = Math.min(tb.brightMax||1e9, Math.max(tb.brightMin, e.bright));
@@ -118,7 +166,8 @@ function leadVoice(e,timbre){
 const PROG = {
   joy:[0,4,5,3], sadness:[0,5,2,6], calm:[0,3,1,0], fear:[0,1,0,4], anger:[0,1,0,6],
   tenderness:[0,2,3,0], longing:[0,3,6,0], wonder:[0,1,0,4], hope:[0,3,4,0],
-  nostalgia:[0,5,3,0], power:[0,3,4,0], tension:[0,1,0,5], transcendence:[0,1,3,0], playfulness:[0,4,0,4]
+  nostalgia:[0,5,3,0], power:[0,3,4,0], tension:[0,1,0,5], transcendence:[0,1,3,0], playfulness:[0,4,0,4],
+  bittersweet:[0,3,2,0], moved:[0,5,3,0]
 };
 
 /* Words the page knows without asking anyone. Accents and Persian variants are normalised below. */
@@ -150,8 +199,8 @@ const WORDS = {
   hope:{en:['hope','hopeful','optimism','optimistic','faith','determined','looking forward','motivated','eager'],
        es:['esperanza','optimismo','fe','esperanzado','ilusión','ilusionado','ilusionada','motivado','motivada'],
        fa:['امید','امیدواری','امیدوار','خوش‌بینی','انگیزه','امیدوارم','چشم‌انتظار']},
-  nostalgia:{en:['nostalgia','nostalgic','sentimental','reminiscing','memories','remembering','throwback','bittersweet'],
-       es:['nostalgia','nostálgico','nostálgica','recuerdos','recordar','sentimental','agridulce'],
+  nostalgia:{en:['nostalgia','nostalgic','sentimental','reminiscing','memories','remembering','throwback'],
+       es:['nostalgia','nostálgico','nostálgica','recuerdos','recordar','sentimental'],
        fa:['نوستالژی','نوستالژیک','خاطره','خاطرات','یادش بخیر']},
   power:{en:['proud','pride','powerful','power','strong','strength','confident','confidence','triumphant','triumph','empowered','fierce','heroic','victorious','unstoppable','courage','brave','bold'],
        es:['orgulloso','orgullosa','orgullo','poderoso','poderosa','fuerte','fuerza','confianza','triunfo','triunfante','valiente','valentía','audaz'],
@@ -164,7 +213,17 @@ const WORDS = {
        fa:['تعالی','معنوی','مقدس','قدسی','عرفان','عارفانه','وجد','نیایش','دعا','الهی','روحانی']},
   playfulness:{en:['playful','playfulness','silly','funny','amused','amusement','humor','humour','mischievous','cheeky','giggly','giddy','goofy','teasing','lighthearted'],
        es:['juguetón','juguetona','travieso','traviesa','gracioso','divertido','divertida','diversión','risa','bromista','pícaro'],
-       fa:['شوخ','شوخی','بازیگوش','شیطنت','شیطون','خنده','بامزه']}
+       fa:['شوخ','شوخی','بازیگوش','شیطنت','شیطون','خنده','بامزه']},
+  bittersweet:{en:['bittersweet','happy and sad','sad and happy','mixed feelings','mixed emotions','ambivalent','torn','smiling through tears','half happy half sad'],
+       es:['agridulce','sentimientos encontrados','emociones encontradas','ambivalente','dividido','dividida','alegre y triste','triste y alegre'],
+       fa:['تلخ و شیرین','شیرین و تلخ','احساسات متناقض','حس متناقض','دوگانه','دودل','هم شاد هم غمگین']},
+  moved:{en:['moved','touched','emotional','tearful','teary','choked up','stirred','heartfelt'],
+       es:['conmovido','conmovida','emocionado','emocionada','emotivo','emotiva','tocado','tocada','con lágrimas'],
+       fa:['متاثر','متأثر','تحت تاثیر','تحت‌تاثیر','منقلب','دگرگون','دلم لرزید','اشک در چشم','اشکم درآمد']}
+};
+/* The names of Persian classical modes, in Latin and Persian letters. */
+const MODEWORDS = {
+  shur:['shur','shour','shoor','شور'], homayun:['homayun','homayoun','homayon','همایون'], mahur:['mahur','mahoor','mahour','ماهور']
 };
 
 function norm(s){
@@ -181,6 +240,7 @@ const LEX = new Map();
 for(const [emo,langs] of Object.entries(WORDS))
   for(const [lang,list] of Object.entries(langs))
     for(const w of list){ const k = norm(w); if(!LEX.has(k)) LEX.set(k,{emo,lang}); }
+for(const [m,list] of Object.entries(MODEWORDS)) for(const w of list){ const k = norm(w); if(!LEX.has(k)) LEX.set(k,{emo:m,lang:'en',mode:true}); }
 
 function detectLang(raw){
   if(/[\u0600-\u06FF]/.test(raw)) return 'fa';
@@ -222,6 +282,7 @@ function lookup(text){
   }
   if(!found.length) return intensity ? {emo:null,intensity} : null;
   const raw = detectLang(text);
+  if(found[0].mode) return {emo:found[0].emo, mode:true, lang: raw==='fa' ? 'fa' : PAGE_LANG};
   return place({emo:found[0].emo, lang: raw==='fa' ? 'fa' : (raw==='es' ? 'es' : found[0].lang)}, found[1] && found[1].emo, intensity, negated && found.length===1);
 }
 
@@ -258,46 +319,76 @@ function pickStep(contour,progress,r){
   }
 }
 
-/* Same word + same feeling always gives the same phrase. */
-function buildPhrase(word,key,v,e){
-  const rnd = mulberry32(fnv(norm(word)+'|'+key+(v ? '|'+v : '')));
-  const beat = 60/e.bpm, target = e.target || 6.5, len = SCALES[e.scale].length;
-  const notes = []; let t = 0, deg = e.startDeg, i = 0;
+/* Same word + same feeling always gives the same phrase. A 'free' feeling has unmeasured timing
+   (some notes held, some run on) and a swell in loudness, like the free-rhythm pieces of the
+   study; the others keep a steady beat and a narrow range of loudness, like its reng pieces.
+   A feeling with two scales ('bittersweet') changes scale half-way; an odd take reverses them. */
+function buildPhrase(word,key,v,e,salt){
+  const rnd = mulberry32(fnv(norm(word)+'|'+key+(v ? '|'+v : '')+(salt ? '|L'+salt : '')));
+  const flip = (((v||0)+(salt||0)) % 2) === 1;
+  const eA = e.scale2 ? Object.assign({},e,{scale: flip ? e.scale2 : e.scale}) : e;
+  const eB = e.scale2 ? Object.assign({},e,{scale: flip ? e.scale : e.scale2}) : e;
+  const free = !!e.free, beat = 60/e.bpm, target = e.target || (free ? 9 : 6.5), len = SCALES[e.scale].length;
+  const notes = []; let t = 0, deg = e.startDeg, i = 0, switched = false;
   while(t < target - beat){
-    const dur = e.rhythm[i % e.rhythm.length]*beat; i++;
+    let dur = e.rhythm[i % e.rhythm.length]*beat; i++;
+    if(free){ const r = rnd(); dur *= r < .18 ? 2.2 : .6 + r*1.1; }
     if(rnd() < e.rest){ t += dur; continue; }
     const progress = Math.min(1,t/target);
     deg += pickStep(e.contour,progress,rnd());
     deg = Math.max(e.range[0],Math.min(e.range[1],deg));
-    const vel = e.vel[0] + (e.vel[1]-e.vel[0])*(e.crescendo ? progress : rnd());
-    const n = {t,dur,midi:degToMidi(deg,e),vel};
+    // At the turn the line returns to the third, so the change of colour is heard at once.
+    if(e.scale2 && !switched && progress >= .5){ switched = true; deg = 2; }
+    const vel = free ? .2 + .8*(.85*Math.sin(Math.PI*progress) + .15*rnd())
+                     : e.vel[0] + (e.vel[1]-e.vel[0])*(e.crescendo ? progress : rnd());
+    const n = {t,dur,midi:degToMidi(deg, progress < .5 ? eA : eB),vel};
     if(e.cluster && rnd() < e.clusterProb) n.extra = n.midi + e.cluster;
     notes.push(n); t += dur;
   }
   let fin = null;
-  if(e.ending==='tonic') fin = degToMidi(Math.round(deg/len)*len,e);
+  if(e.ending==='tonic'){
+    const td = Math.round(deg/len)*len;
+    fin = degToMidi(td,eB);
+    // On a Shur or Homayun scale the line comes home by way of the quarter-flat second, as a cadence does.
+    if(e.persian && SCALES[eB.scale][1]===1.5){ notes.push({t,dur:beat*1.5,midi:degToMidi(td+1,eB),vel:e.vel[1]*.8}); t += beat*1.5; }
+  }
   else if(e.ending==='dominant'){
     let d = deg;
     for(let k=0;k<len;k++){
       if((((deg+k)%len)+len)%len===4){ d=deg+k; break; }
       if((((deg-k)%len)+len)%len===4){ d=deg-k; break; }
     }
-    fin = degToMidi(d,e);
+    fin = degToMidi(d,eB);
   }
   else if(e.ending==='semitone') fin = e.root + 12*Math.round(deg/len) + 1;
-  else if(e.ending==='high') fin = degToMidi(deg>=len ? len*2 : len,e);
+  else if(e.ending==='high') fin = degToMidi(deg>=len ? len*2 : len,eB);
   if(fin!==null){ const d = beat*2; notes.push({t,dur:d,midi:fin,vel:e.vel[1],final:true}); t += d; }
   // The chords take no random numbers, so they never change the melody; the last one is home.
-  const prog = PROG[key], seg = t/prog.length, chords = prog.map((d,k)=>{
-    const r = (k===prog.length-1) ? 0 : d;
-    return {t:k*seg, dur:seg, bass:degToMidi(r,e)-24, tones:[0,2,4].map(s=>degToMidi(r+s,e)-12)};
-  });
+  // On the Persian side there are no chords: a drone takes their place (see play).
+  const prog = (e.persian || !PROG[key]) ? null : PROG[key], seg = prog ? t/prog.length : 0;
+  const chords = prog ? prog.map((d,k)=>{
+    const r = (k===prog.length-1) ? 0 : d, ee = (k/prog.length < .5) ? eA : eB;
+    return {t:k*seg, dur:seg, bass:degToMidi(r,ee)-24, tones:[0,2,4].map(s=>degToMidi(r+s,ee)-12)};
+  }) : [];
   return {notes,chords,total:t};
+}
+
+/* "Keep listening": five phrases in a row, the first the same as the short one. */
+function makePhrase(c){
+  if(!c.long) return buildPhrase(c.text,c.key,c.v,c.e);
+  const notes = [], chords = []; let off = 0;
+  for(let s=0;s<5;s++){
+    const ph = buildPhrase(c.text,c.key,c.v,c.e,s);
+    ph.notes.forEach(n=>notes.push(Object.assign({},n,{t:n.t+off})));
+    ph.chords.forEach(ch=>chords.push(Object.assign({},ch,{t:ch.t+off})));
+    off += ph.total;
+  }
+  return {notes,chords,total:off};
 }
 
 /* ---------- audio ---------- */
 const $ = id => document.getElementById('taf-' + id);
-let AC=null, master=null, bus=null, playId=0, current=null, timbre='auto';
+let AC=null, master=null, bus=null, playId=0, current=null, timbre='auto', lastArgs=null, pendingLong=false;
 const midiHz = m => 440*Math.pow(2,(m-69)/12);
 
 function ensureAudio(){
@@ -355,8 +446,58 @@ function fmVoice(e,fx,t0,midi,dur,vel,gainScale){
   car.start(t0); mod.start(t0); car.stop(end); mod.stop(end);
 }
 
+let NOISE=null;
+function noiseBuf(){
+  if(NOISE) return NOISE;
+  const len = AC.sampleRate, buf = AC.createBuffer(1,len,AC.sampleRate), rnd = mulberry32(11), d = buf.getChannelData(0);
+  for(let i=0;i<len;i++) d[i] = rnd()*2-1;
+  return NOISE = buf;
+}
+/* Plucked: a strike that dies away, the higher partials first. Exact pitch, so quarter tones are true. */
+function pluckVoice(e,fx,t0,midi,dur,vel,gainScale){
+  const f = midiHz(midi), peak = e.gain*vel*(gainScale||1)*.45;
+  const ring = Math.max(.9,Math.min(2.6,dur*1.6)), H = Math.max(1,Math.min(8,Math.floor(7000/f)));
+  for(let k=1;k<=H;k++){
+    const o = AC.createOscillator(), g = AC.createGain();
+    const a = peak/Math.pow(k,1.15), tau = ring/(1+.55*(k-1));
+    o.type = 'sine'; o.frequency.value = f*k;
+    g.gain.setValueAtTime(.0001,t0);
+    g.gain.exponentialRampToValueAtTime(a,t0+.004);
+    g.gain.exponentialRampToValueAtTime(.0001,t0+.004+tau);
+    o.connect(g); g.connect(fx); o.start(t0); o.stop(t0+.004+tau+.05);
+  }
+}
+/* Breath: a near-pure tone with a thin band of air noise and a vibrato that arrives late. */
+function breathVoice(e,fx,t0,midi,dur,vel,gainScale){
+  const f = midiHz(midi), a = e.attack, hold = Math.max(dur*e.legato,a+.15), peak = e.gain*vel*(gainScale||1);
+  const end = t0+hold+e.release+.05, g = AC.createGain();
+  g.gain.setValueAtTime(.0001,t0);
+  g.gain.exponentialRampToValueAtTime(peak,t0+a);
+  g.gain.setValueAtTime(peak,t0+hold);
+  g.gain.exponentialRampToValueAtTime(.0001,t0+hold+e.release);
+  g.connect(fx);
+  [1,2,3].forEach((k,i)=>{
+    const o = AC.createOscillator(), og = AC.createGain();
+    o.type = 'sine'; o.frequency.value = f*k; og.gain.value = [1,.2,.07][i];
+    if(e.vib){
+      const lfo = AC.createOscillator(), lg = AC.createGain();
+      lfo.frequency.value = e.vib.rate;
+      lg.gain.setValueAtTime(0,t0); lg.gain.linearRampToValueAtTime(e.vib.cents,t0+Math.min(.5,hold));
+      lfo.connect(lg); lg.connect(o.detune); lfo.start(t0); lfo.stop(end);
+    }
+    o.connect(og); og.connect(g); o.start(t0); o.stop(end);
+  });
+  const nb = AC.createBufferSource(), bp = AC.createBiquadFilter(), ng = AC.createGain();
+  nb.buffer = noiseBuf(); nb.loop = true;
+  bp.type = 'bandpass'; bp.frequency.value = Math.min(f*3,6000); bp.Q.value = .9;
+  ng.gain.value = .3;
+  nb.connect(bp); bp.connect(ng); ng.connect(g); nb.start(t0); nb.stop(end);
+}
+
 function voice(e,fx,base,midi,dur,vel,gainScale){
   if(e.kind==='fm') return fmVoice(e,fx,base,midi,dur,vel,gainScale);
+  if(e.kind==='pluck') return pluckVoice(e,fx,base,midi,dur,vel,gainScale);
+  if(e.kind==='breath') return breathVoice(e,fx,base,midi,dur,vel,gainScale);
   const t0 = base, a = e.attack, hold = Math.max(dur*e.legato, a+e.decay+.02);
   const peak = e.gain*vel*(gainScale||1);
   const g = AC.createGain();
@@ -406,7 +547,7 @@ function stop(){
 
 function play(){
   if(!current || !ensureAudio()) return;
-  const {phrase,key,e} = current, lead = leadVoice(e,timbre), now = AC.currentTime;
+  const {phrase,key,e} = current, lead = leadVoice(e,timbre,key), now = AC.currentTime;
   fadeOut();
   bus = AC.createGain(); bus.connect(master);
   setPlaying(true);
@@ -422,14 +563,19 @@ function play(){
     c.tones.forEach(m=>voice(padE,fx,base+c.t,m,c.dur,.7,1));
     voice(bassE,fx,base+c.t,c.bass,c.dur,.8,1);
   });
-  if(e.drone){
-    const o = AC.createOscillator(), g = AC.createGain();
-    o.type='sine'; o.frequency.value = midiHz(e.root-12);
-    g.gain.setValueAtTime(.0001,base);
-    g.gain.exponentialRampToValueAtTime(.06,base+1.5);
-    g.gain.setValueAtTime(.06,base+phrase.total-1);
-    g.gain.exponentialRampToValueAtTime(.0001,base+phrase.total+1.5);
-    o.connect(g); g.connect(fx); o.start(base); o.stop(base+phrase.total+1.6);
+  if(e.drone || e.persian){
+    // A steady note under the melody; on the Persian side a fifth is added, as the strings hold it.
+    const drone = (midi,peak)=>{
+      const o = AC.createOscillator(), g = AC.createGain();
+      o.type = 'sine'; o.frequency.value = midiHz(midi);
+      g.gain.setValueAtTime(.0001,base);
+      g.gain.exponentialRampToValueAtTime(peak,base+1.5);
+      g.gain.setValueAtTime(peak,base+phrase.total-1);
+      g.gain.exponentialRampToValueAtTime(.0001,base+phrase.total+1.5);
+      o.connect(g); g.connect(fx); o.start(base); o.stop(base+phrase.total+1.6);
+    };
+    drone(e.root-12, e.persian ? .07 : .06);
+    if(e.persian) drone(e.root-5, .035);
   }
   const rects = [...document.querySelectorAll('#taf-roll rect')];
   (function frame(){
@@ -458,6 +604,7 @@ async function remoteClassify(text){
 /* ---------- interface ---------- */
 const T = DATA.strings;
 const PAGE_LANG = T[document.documentElement.lang] ? document.documentElement.lang : 'en';
+lens = PAGE_LANG==='fa' ? 'p' : 'w';   // a link or the buttons can change it
 const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
 const localDigits = (s,lang) => lang==='fa' ? String(s).replace(/\d/g,d=>FA_DIGITS[d]) : String(s);
 
@@ -466,7 +613,7 @@ function drawRoll(phrase){
   const midis = phrase.notes.map(n=>n.midi), lo = Math.min(...midis), hi = Math.max(...midis), span = Math.max(1,hi-lo);
   phrase.notes.forEach(n=>{
     const r = document.createElementNS('http://www.w3.org/2000/svg','rect');
-    const x = n.t/phrase.total*300, w = Math.max(4,n.dur*.9/phrase.total*300);
+    const x = n.t/phrase.total*300, w = Math.max(phrase.notes.length>40 ? 2.5 : 4,n.dur*.9/phrase.total*300);
     const y = 64 - (n.midi-lo)/span*54;
     r.setAttribute('x',x.toFixed(1)); r.setAttribute('y',y.toFixed(1));
     r.setAttribute('width',w.toFixed(1)); r.setAttribute('height','6'); r.setAttribute('rx','3');
@@ -480,9 +627,13 @@ function moveMarker(p){
   MARK.style.insetInlineStart = 'auto'; MARK.style.right = 'auto';
   MARK.style.left = ((p.v+1)/2*100)+'%'; MARK.style.top = ((1-p.a)/2*100)+'%'; MARK.hidden = false;
 }
+function syncLens(){
+  document.querySelectorAll('#taf-lens button').forEach(b=>b.setAttribute('aria-pressed', String(b.dataset.l===lens)));
+  PAD.classList.toggle('lens-p', lens==='p');
+}
 Object.keys(POS).forEach(k=>{
   const b = document.createElement('button');
-  b.type = 'button'; b.className = 'taf-dot'; b.dataset.k = k;
+  b.type = 'button'; b.className = 'taf-dot'; b.dataset.k = k; if(RARE.has(k)) b.dataset.rare = '';
   b.style.left = ((POS[k].v+1)/2*100)+'%'; b.style.top = ((1-POS[k].a)/2*100)+'%';
   const name = T[PAGE_LANG].emotions[k].name;
   b.innerHTML = '<span class="taf-dot-name"></span>'; b.firstChild.textContent = name;
@@ -509,31 +660,78 @@ PAD.addEventListener('keydown',ev=>{
   else if(ev.key==='Enter' || ev.key===' '){ ev.preventDefault(); playPoint(kp); }
 });
 
+function updateMeta(){
+  const c = current, lang = c.lang, e = c.e;
+  const sc = e.scale2 ? ((c.v%2) ? [e.scale2,e.scale] : [e.scale,e.scale2]) : [e.scale];
+  $('meta').textContent = sc.map(x=>T[lang].modes[x]).join(' ' + T[lang].then + ' ') + ' · '
+    + (e.free ? T[lang].free_rhythm : localDigits(e.bpm,lang) + ' bpm');
+}
+
+/* "Heard or felt?": the two questions of the listening study, 1 to 5, answered on this page only. */
+const RATE = {heard:0, felt:0};
+function rateNote(){
+  const lang = current ? current.lang : PAGE_LANG;
+  $('rateNote').textContent = (RATE.heard && RATE.felt)
+    ? T[lang][RATE.felt < RATE.heard ? 'rate_less' : RATE.felt > RATE.heard ? 'rate_more' : 'rate_same'] : '';
+}
+document.querySelectorAll('.feeling-scale').forEach(box=>{
+  for(let n=1;n<=5;n++){
+    const b = document.createElement('button');
+    b.type = 'button'; b.setAttribute('role','radio'); b.setAttribute('aria-checked','false'); b.dataset.n = n; b.textContent = n;
+    b.addEventListener('click',()=>{
+      RATE[box.dataset.q] = n;
+      box.querySelectorAll('button').forEach(x=>x.setAttribute('aria-checked', String(+x.dataset.n===n)));
+      rateNote();
+    });
+    box.appendChild(b);
+  }
+});
+
 function showResult(text,hit,autoplay,v,pos){
-  const lang = hit.lang, at = pos || hit.pos, p = at || POS[hit.emo];
-  const key = hit.keep ? hit.emo : (at ? nearest(p.v,p.a) : hit.emo), e = synth(p.v,p.a,key);
+  lastArgs = [text,hit,v,pos];
+  const lang = hit.lang, mode = !!hit.mode, at = pos || hit.pos;
+  const p = mode ? {v:0,a:0} : (at || POS[hit.emo]);
+  const key = (mode || hit.keep) ? hit.emo : (at ? nearest(p.v,p.a) : hit.emo);
+  const e = mode ? Object.assign({persian:true},MODES[key]) : synth(p.v,p.a,key);
   const names = T[lang].emotions;
   const label = hit.negated ? T[lang].not + ' ' + names[hit.emo].name : hit.second ? names[hit.emo].name + ' + ' + names[hit.second].name : names[key].name;
-  const mod = !hit.second && hit.intensity ? T[lang][hit.intensity>0 ? 'intense' : 'gentle'] : '';
+  const mod = !mode && !hit.second && hit.intensity ? T[lang][hit.intensity>0 ? 'intense' : 'gentle'] : '';
   const box = $('result');
   box.hidden = false; box.lang = lang; box.dir = lang==='fa' ? 'rtl' : 'ltr';
-  hit = {emo:key,lang};
-  current = {text,key,lang,v:v||0,pos:p,e,phrase:buildPhrase(text,key,v||0,e)};
-  moveMarker(p);
+  current = {text,key,lang,v:v||0,pos:p,e,long:pendingLong};
+  pendingLong = false;
+  current.phrase = makePhrase(current);
+  if(mode) MARK.hidden = true; else moveMarker(p);
   // The nearest feeling on the map is marked, so the map and the answer always agree.
-  document.querySelectorAll('.taf-dot').forEach(d=>d.setAttribute('aria-current', String(d.dataset.k===key)));
+  document.querySelectorAll('.taf-dot').forEach(d=>d.setAttribute('aria-current', String(!mode && d.dataset.k===key)));
   drawRoll(current.phrase);
   $('emo').textContent = label;
   if(mod){ const m = document.createElement('span'); m.className = 'feeling-emo-mod'; m.textContent = ' · ' + mod; $('emo').appendChild(m); }
-  $('cue').textContent = T[lang].emotions[hit.emo].cue;
-  $('meta').textContent = T[lang].modes[e.scale] + ' · ' + localDigits(e.bpm,lang) + ' bpm';
+  $('cue').textContent = names[key].cue;
+  const rare = !mode && lens==='p' && RARE.has(key);
+  $('rare').hidden = !rare; $('rare').textContent = rare ? T[lang].rare : '';
+  updateMeta();
   if(!autoplay){ playId++; setPlaying(false); }
   $('share').textContent = T[lang].share;
   $('take').textContent = T[lang].take;
+  $('long').textContent = T[lang][current.long ? 'shorter' : 'longer'];
   $('soundLabel').textContent = T[lang].sound;
   $('why').textContent = T[lang].why;
-  ['auto','keys','strings'].forEach(k=>{ $('t-'+k).textContent = T[lang]['timbre_'+k]; });
-  document.querySelectorAll('.feeling-timbre button').forEach(b=>b.setAttribute('aria-pressed', String(b.dataset.t===timbre)));
+  ['auto','keys','strings','plucked','breath'].forEach(k=>{ $('t-'+k).textContent = T[lang]['timbre_'+k]; });
+  document.querySelectorAll('#taf-timbres button').forEach(b=>b.setAttribute('aria-pressed', String(b.dataset.t===timbre)));
+  $('scaleLabel').textContent = T[lang].scales;
+  $('l-w').textContent = T[lang].scale_w; $('l-p').textContent = T[lang].scale_p;
+  $('lensNote').textContent = T[lang].lens_note;
+  syncLens();
+  $('rate').hidden = mode;
+  if(!mode){
+    $('rateSum').textContent = T[lang].rate_sum; $('rateHelp').textContent = T[lang].rate_scale;
+    $('qHeard').textContent = T[lang].rate_heard.replace('%s',names[key].name);
+    $('qFelt').textContent = T[lang].rate_felt.replace('%s',names[key].name);
+    $('rateLocal').textContent = T[lang].rate_local; $('rateNote').textContent = '';
+    RATE.heard = RATE.felt = 0;
+    document.querySelectorAll('.feeling-scale button').forEach(b=>{ b.setAttribute('aria-checked','false'); b.textContent = localDigits(b.dataset.n,lang); });
+  }
   $('shareOut').textContent = '';
   $('status').textContent = '';
   if(autoplay) play();
@@ -577,18 +775,29 @@ $('play').addEventListener('click',()=>{
 $('take').addEventListener('click',()=>{
   if(!current) return;
   ensureAudio();
-  current.v++; current.phrase = buildPhrase(current.text,current.key,current.v,current.e);
+  current.v++; current.phrase = makePhrase(current);
+  updateMeta(); drawRoll(current.phrase); play();
+});
+$('long').addEventListener('click',()=>{
+  if(!current) return;
+  ensureAudio();
+  current.long = !current.long; current.phrase = makePhrase(current);
+  $('long').textContent = T[current.lang][current.long ? 'shorter' : 'longer'];
   drawRoll(current.phrase); play();
 });
-document.querySelectorAll('.feeling-timbre button').forEach(b=>b.addEventListener('click',()=>{
+document.querySelectorAll('#taf-lens button').forEach(b=>b.addEventListener('click',()=>{
+  lens = b.dataset.l; syncLens();
+  if(current && lastArgs){ pendingLong = current.long; ensureAudio(); showResult(lastArgs[0],lastArgs[1],true,lastArgs[2],lastArgs[3]); }
+}));
+document.querySelectorAll('#taf-timbres button').forEach(b=>b.addEventListener('click',()=>{
   timbre = b.dataset.t;
-  document.querySelectorAll('.feeling-timbre button').forEach(x=>x.setAttribute('aria-pressed', String(x===b)));
+  document.querySelectorAll('#taf-timbres button').forEach(x=>x.setAttribute('aria-pressed', String(x===b)));
   if(current){ ensureAudio(); play(); }
 }));
 $('share').addEventListener('click',async()=>{
   if(!current) return;
   const url = location.href.split('#')[0] + '#' + (/^p:/.test(current.text) ? 'p=' + Math.round(current.pos.v*100) + ',' + Math.round(current.pos.a*100) : 'f=' + encodeURIComponent(current.text))
-    + (current.v ? '&v='+current.v : '') + (timbre!=='auto' ? '&s='+timbre : '');
+    + (current.v ? '&v='+current.v : '') + (timbre!=='auto' ? '&s='+timbre : '') + '&l=' + lens + (current.long ? '&g=1' : '');
   try{ await navigator.clipboard.writeText(url); $('shareOut').textContent = T[current.lang].copied; }
   catch(err){ $('shareOut').textContent = url; }
 });
@@ -596,15 +805,18 @@ $('share').addEventListener('click',async()=>{
 /* A shared link opens the result but waits for a tap before making sound. It only uses the
    words the page already knows: an unknown word would need the network, so it waits for the
    visitor to press the button. */
+syncLens();
 try{
-  const m = location.hash.match(/f=([^&]+)/), mp = location.hash.match(/p=(-?\d+),(-?\d+)/);
+  const h = location.hash, m = h.match(/f=([^&]+)/), mp = h.match(/p=(-?\d+),(-?\d+)/), hl = h.match(/[#&]l=(w|p)/);
+  // A link without l= was made before the scales choice existed: it keeps the Western scales.
+  if(m || mp){ lens = hl ? hl[1] : 'w'; pendingLong = /[#&]g=1/.test(h); syncLens(); }
   if(mp){
-    const p = {v:Math.max(-1,Math.min(1,+mp[1]/100)), a:Math.max(-1,Math.min(1,+mp[2]/100))}, ms = location.hash.match(/s=(keys|strings)/);
+    const p = {v:Math.max(-1,Math.min(1,+mp[1]/100)), a:Math.max(-1,Math.min(1,+mp[2]/100))}, ms = h.match(/s=(keys|strings|plucked|breath)/);
     if(ms) timbre = ms[1];
     PAD.closest('details').open = true;
     showResult('p:'+Math.round(p.v*20)+','+Math.round(p.a*20),{emo:nearest(p.v,p.a),lang:PAGE_LANG},false,0,p);
   } else if(m){
-    const w = decodeURIComponent(m[1]), mv = location.hash.match(/v=(\d+)/), ms = location.hash.match(/s=(keys|strings)/);
+    const w = decodeURIComponent(m[1]), mv = h.match(/v=(\d+)/), ms = h.match(/s=(keys|strings|plucked|breath)/);
     if(ms) timbre = ms[1];
     $('feeling').value = w; handle(w,false,true,mv ? Math.min(99,+mv[1]) : 0);
   }

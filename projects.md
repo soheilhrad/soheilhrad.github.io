@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Projects
-description: "Three projects: an AI tarot app, an offline Spanish tutor and a simulation of acculturation in a small town."
+description: "Four projects: an AI tarot app, an offline Spanish tutor, a simulation of acculturation in a small town and a tool that turns feelings into music."
 permalink: /projects/
 ref: projects
 ---
