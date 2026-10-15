@@ -53,8 +53,14 @@ made live from the cues for the chosen point on the map and played on recorded i
     <summary>{{ f.map }}</summary>
     <p class="feeling-map-hint">{{ f.map_hint }}</p>
     <div id="taf-pad" class="feeling-pad" role="group" tabindex="0" aria-label="{{ f.pad | escape }}">
+      {%- comment -%} Layers, bottom to top: the glow of rated words, the territories, the points (added by the script), the ghost, the marker. {%- endcomment %}
+      <canvas id="taf-cloud" class="feeling-cloud" width="{{ site.data.feelings.cloud.cols | default: 40 }}" height="{{ site.data.feelings.cloud.rows | default: 24 }}" aria-hidden="true"></canvas>
+      <svg id="taf-cells" class="feeling-cells" viewBox="-1 -1 2 2" preserveAspectRatio="none" aria-hidden="true" focusable="false"><g transform="scale(1,-1)"></g></svg>
+      <span class="feeling-beyond" aria-hidden="true" dir="auto">{{ f.beyond }}</span>
+      <span id="taf-ghost" class="feeling-ghost" hidden aria-hidden="true"></span>
       <span id="taf-mark" class="feeling-mark" hidden aria-hidden="true"></span>
     </div>
+    <p id="taf-peek" class="feeling-peek" aria-live="off"></p>
     {%- comment -%} The map is always laid out left to right, so its legend is too (also on Persian pages). {%- endcomment %}
     <p class="feeling-legend" aria-hidden="true"><span>← {{ f.axis_dark }}</span><span><span>↑ {{ f.axis_intense }}</span> · <span>↓ {{ f.axis_calm }}</span></span><span>{{ f.axis_bright }} →</span></p>
   </details>
@@ -79,5 +85,5 @@ made live from the cues for the chosen point on the map and played on recorded i
     </ul>
   </details>
 </section>
-<script type="application/json" id="taf-data">{"endpoint": {{ site.classify_endpoint | default: "" | jsonify }}, "feelings": {{ site.data.feelings.feelings | jsonify }}, "instruments": {{ site.data.instruments.instruments | jsonify }}, "samples": {{ '/assets/audio/instruments/' | relative_url | jsonify }}, "samplesVersion": 1, "strings": {"en": {{ site.data.i18n.en.feeling | jsonify }}, "es": {{ site.data.i18n.es.feeling | jsonify }}, "fa": {{ site.data.i18n.fa.feeling | jsonify }} } }</script>
+<script type="application/json" id="taf-data">{"endpoint": {{ site.classify_endpoint | default: "" | jsonify }}, "feelings": {{ site.data.feelings.feelings | jsonify }}, "cloud": {{ site.data.feelings.cloud | jsonify }}, "instruments": {{ site.data.instruments.instruments | jsonify }}, "samples": {{ '/assets/audio/instruments/' | relative_url | jsonify }}, "samplesVersion": 1, "strings": {"en": {{ site.data.i18n.en.feeling | jsonify }}, "es": {{ site.data.i18n.es.feeling | jsonify }}, "fa": {{ site.data.i18n.fa.feeling | jsonify }} } }</script>
 <script src="{{ '/assets/js/type-a-feeling.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>

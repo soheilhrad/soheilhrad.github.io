@@ -20,7 +20,7 @@ github.com works too. Installing things locally is only for previewing before yo
 | `_data/projects.yml` | The project cards, in all three languages |
 | `_data/i18n.yml` | Menu, buttons and other interface text, in all three languages |
 | `_includes/type-a-feeling.html`, `assets/js/type-a-feeling.js` | The one input on the home page ("Type a feeling"); its text is under `feeling:` in `_data/i18n.yml` |
-| `_data/feelings.yml` | Where each of the 16 feelings sits on the map, with the word ratings it comes from. Generated: don't edit by hand |
+| `_data/feelings.yml` | Where each of the 16 feelings sits on the map, with the word ratings it comes from, and the grid of counts behind the map (how many rated words fall in each square; counts only, no words). Generated: don't edit by hand |
 | `tools/make_feelings.py` | Builds `_data/feelings.yml` from the published word norms (Warriner et al. 2013). The norms file goes in `tools/_raw/` and is not committed; see the top of the script |
 | `assets/audio/instruments/` | The instrument notes "Type a feeling" plays (single notes, about 3 MB for 8 instruments). Made by `tools/make_samples.py`; credits are on the project page and in the page's references |
 | `_data/instruments.yml` | Which notes exist for each instrument. Generated: don't edit by hand |

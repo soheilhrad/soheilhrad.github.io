@@ -49,7 +49,9 @@ en:
     stop: "Stop"
     estimated: "estimated position"
     map: "Or explore the map"
-    map_hint: "Every spot plays a different piece: darker to the left, brighter to the right, calmer at the bottom, more intense at the top."
+    map_hint: "Tap or drag. Every spot plays a different piece: darker to the left, brighter to the right, calmer at the bottom, more intense at the top. The glow is where people rated English words; the outlines show whose sound a spot borrows."
+    beyond: "No word has been rated up here. Music can still go."
+    beyond_short: "beyond words"
     axis_dark: "darker"
     axis_bright: "brighter"
     axis_calm: "calmer"
@@ -133,6 +135,7 @@ en:
     basis: {published: "", related: "a related word", estimated: "estimated: mean of these words"}
     russell_note: "Russell (1980) printed the angle on his circle for 15 of his 28 words. Where one of them is the word for a feeling here, the table gives his angle and the angle the norms give the same word (0° is pleasant, 90° is aroused). “happy”, “sad” and “calm” point the same way; “tense” does not: Russell puts it near the top of his circle, while raters called it unpleasant but only moderately arousing."
     hollow: "Hollow dots on the map are estimated."
+    cloud: "The glow behind the map counts how many of the 13,915 rated words fall in each small square. It holds no words and no single ratings."
   months: [January, February, March, April, May, June, July, August, September, October, November, December]
   months_short: [Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
 es:
@@ -184,7 +187,9 @@ es:
     stop: "Detener"
     estimated: "posición estimada"
     map: "O explora el mapa"
-    map_hint: "Cada punto suena distinto: más oscuro a la izquierda, más luminoso a la derecha, más sereno abajo y más intenso arriba."
+    map_hint: "Toca o arrastra. Cada punto suena distinto: más oscuro a la izquierda, más luminoso a la derecha, más sereno abajo y más intenso arriba. El resplandor marca dónde se puntuaron palabras en inglés; los contornos muestran de qué sentimiento toma el sonido cada punto."
+    beyond: "Aquí arriba no se ha puntuado ninguna palabra. La música sí puede llegar."
+    beyond_short: "más allá de las palabras"
     axis_dark: "más oscuro"
     axis_bright: "más luminoso"
     axis_calm: "más sereno"
@@ -268,6 +273,7 @@ es:
     basis: {published: "", related: "una palabra relacionada", estimated: "estimado: media de estas palabras"}
     russell_note: "Russell (1980) imprimió el ángulo en su círculo para 15 de sus 28 palabras. Cuando una de ellas es la palabra de un sentimiento de aquí, la tabla da su ángulo y el que las normas dan a la misma palabra (0° es agradable, 90° es activado). «happy», «sad» y «calm» apuntan en la misma dirección; «tense» no: Russell la sitúa cerca de lo alto de su círculo, mientras que quienes puntuaron la vieron desagradable pero solo moderadamente activadora."
     hollow: "Los puntos huecos del mapa son estimados."
+    cloud: "El resplandor del fondo cuenta cuántas de las 13 915 palabras puntuadas caen en cada cuadradito. No contiene palabras ni puntuaciones sueltas."
   months: [enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre]
   months_short: [ene, feb, mar, abr, may, jun, jul, ago, sept, oct, nov, dic]
 fa:
@@ -319,7 +325,9 @@ fa:
     stop: "توقف"
     estimated: "جای تخمینی"
     map: "یا روی نقشه بگردید"
-    map_hint: "هر نقطه قطعهٔ متفاوتی می‌نوازد: چپ تیره‌تر، راست روشن‌تر، پایین آرام‌تر و بالا پرشورتر."
+    map_hint: "بکشید یا لمس کنید. هر نقطه قطعهٔ متفاوتی می‌نوازد: چپ تیره‌تر، راست روشن‌تر، پایین آرام‌تر و بالا پرشورتر. درخشش جایی است که مردم واژه‌های انگلیسی را نمره داده‌اند؛ خط‌های دور هر ناحیه نشان می‌دهند آن نقطه صدایش را از کدام احساس وام می‌گیرد."
+    beyond: "اینجا بالا هیچ واژه‌ای نمره نگرفته است. موسیقی می‌تواند برود."
+    beyond_short: "فراتر از واژه‌ها"
     axis_dark: "تیره‌تر"
     axis_bright: "روشن‌تر"
     axis_calm: "آرام‌تر"
@@ -403,5 +411,6 @@ fa:
     basis: {published: "", related: "یک واژهٔ هم‌خانواده", estimated: "تخمینی: میانگین این واژه‌ها"}
     russell_note: "راسل (۱۹۸۰) زاویهٔ ۱۵ واژه از ۲۸ واژهٔ خود را روی دایره‌اش چاپ کرده است. وقتی یکی از آن‌ها واژهٔ یکی از احساس‌های اینجا باشد، جدول زاویهٔ او و زاویه‌ای را که هنجارها به همان واژه می‌دهند نشان می‌دهد (۰° خوشایند، ۹۰° برانگیخته). «happy»، «sad» و «calm» به یک سو اشاره می‌کنند؛ «tense» نه: راسل آن را نزدیک بالای دایره‌اش می‌گذارد، اما نمره‌دهندگان آن را ناخوشایند و فقط نسبتاً برانگیزاننده دانستند."
     hollow: "نقطه‌های توخالی روی نقشه تخمینی‌اند."
+    cloud: "درخششِ پشت نقشه می‌شمارد از ۱۳٬۹۱۵ واژهٔ نمره‌داده‌شده چندتا در هر خانهٔ کوچک می‌افتند. هیچ واژه یا نمرهٔ تکی در آن نیست."
   months: [ژانویه, فوریه, مارس, آوریل, مه, ژوئن, ژوئیه, اوت, سپتامبر, اکتبر, نوامبر, دسامبر]
   months_short: [ژانویه, فوریه, مارس, آوریل, مه, ژوئن, ژوئیه, اوت, سپتامبر, اکتبر, نوامبر, دسامبر]

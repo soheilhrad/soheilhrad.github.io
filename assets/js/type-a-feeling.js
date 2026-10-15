@@ -436,14 +436,27 @@ const LEAD = {
 const PAD_INST = 'violin', BASS_INST = 'contrabass';
 const SAMPLE_GAIN = 2.5;           // the recordings are levelled quietly; this brings them up to the oscillators' level
 const SAMPLES = new Map();         // instrument name -> promise of {kind, bufs:[{midi, buf}]}, or null
+/* One note, tried twice: a single failed request on a poor connection should not cost the whole instrument. */
+async function loadNote(name,n){
+  for(let tries=0; tries<2; tries++){
+    try{
+      const r = await fetch(DATA.samples + name + '/' + n + '.mp3?v=' + DATA.samplesVersion);
+      if(!r.ok) throw new Error(name + ' ' + n);
+      return {midi:n, buf: await AC.decodeAudioData(await r.arrayBuffer())};
+    }catch(err){}
+  }
+  return null;
+}
+/* An instrument works with some of its notes missing (the nearest one is shifted further); with fewer than
+   three it is not used, and the next press tries again. */
 function loadInstrument(name){
   if(SAMPLES.has(name)) return SAMPLES.get(name);
   const spec = DATA.instruments && DATA.instruments[name];
-  const p = !spec ? Promise.resolve(null) : Promise.all(spec.notes.map(async n=>{
-    const r = await fetch(DATA.samples + name + '/' + n + '.mp3?v=' + DATA.samplesVersion);
-    if(!r.ok) throw new Error(name + ' ' + n);
-    return {midi:n, buf: await AC.decodeAudioData(await r.arrayBuffer())};
-  })).then(bufs=>({kind:spec.kind, bufs}), ()=>{ SAMPLES.delete(name); return null; });   // try again next time
+  const p = !spec ? Promise.resolve(null) : Promise.all(spec.notes.map(n=>loadNote(name,n))).then(list=>{
+    const bufs = list.filter(Boolean);
+    if(bufs.length < 3){ SAMPLES.delete(name); return null; }
+    return {kind:spec.kind, bufs};
+  });
   SAMPLES.set(name,p);
   return p;
 }
@@ -479,6 +492,7 @@ function setPlaying(on){
   const b = $('play'), lang = current ? current.lang : PAGE_LANG;
   b.dataset.playing = String(on);
   $('playLabel').textContent = T[lang][on ? 'stop' : 'play'];
+  if(!on) MARK.dataset.pulse = '';
 }
 function fadeOut(){
   if(!bus || !AC) return;
@@ -490,6 +504,7 @@ function fadeOut(){
 function stop(){
   playId++; fadeOut(); setPlaying(false);
   document.querySelectorAll('#taf-roll rect').forEach(r=>r.style.opacity=.55);
+  MARK.querySelectorAll('.feeling-ripple').forEach(r=>r.remove());
 }
 
 async function play(){
@@ -528,11 +543,15 @@ async function play(){
     };
     drone(e.root-12, .06);
   }
+  // The marker beats at the tempo, or breathes slowly when the rhythm is free.
+  if(!REDUCED.matches){ MARK.style.setProperty('--beat',(60/e.bpm).toFixed(3)+'s'); MARK.dataset.pulse = e.free ? 'breathe' : 'beat'; }
   const rects = [...document.querySelectorAll('#taf-roll rect')];
+  let nextRipple = 0;
   (function frame(){
     if(id!==playId) return;
     const t = AC.currentTime - base;
     rects.forEach((r,i)=>{ const n = phrase.notes[i]; r.style.opacity = (t>=n.t && t<n.t+n.dur*.98) ? 1 : .45; });
+    while(nextRipple < phrase.notes.length && t >= phrase.notes[nextRipple].t){ ripple(phrase.notes[nextRipple],phrase); nextRipple++; }
     if(t < phrase.total+1.5) requestAnimationFrame(frame);
     else { rects.forEach(r=>r.style.opacity=.55); setPlaying(false); }
   })();
@@ -572,10 +591,75 @@ function drawRoll(phrase){
 }
 
 /* ---------- the map ---------- */
-const PAD = $('pad'), MARK = $('mark');
-function moveMarker(p){
-  MARK.style.insetInlineStart = 'auto'; MARK.style.right = 'auto';
-  MARK.style.left = ((p.v+1)/2*100)+'%'; MARK.style.top = ((1-p.a)/2*100)+'%'; MARK.hidden = false;
+const PAD = $('pad'), MARK = $('mark'), GHOST = $('ghost'), PEEK = $('peek');
+const SVGNS = 'http://www.w3.org/2000/svg';
+const REDUCED = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : {matches:false};
+const putAt = (el,p) => { el.style.left = ((p.v+1)/2*100)+'%'; el.style.top = ((1-p.a)/2*100)+'%'; };
+function moveMarker(p){ putAt(MARK,p); MARK.hidden = false; }
+
+/* The glow behind the map: how many of the 13,915 words in the norms fall in each small square of it
+   (_data/feelings.yml, made by tools/make_feelings.py). Only counts are kept: no words, no single ratings.
+   Word ratings bunch in a lens-shaped band, so the glow shows where words live and leaves the rest of
+   the map, where music can still go, dark. */
+const CLOUD = DATA.cloud;
+function cloudAt(p){
+  if(!CLOUD) return 1;
+  const c = Math.min(CLOUD.cols-1,Math.max(0,Math.floor((p.v+1)/2*CLOUD.cols)));
+  const r = Math.min(CLOUD.rows-1,Math.max(0,Math.floor((1-p.a)/2*CLOUD.rows)));
+  return CLOUD.counts[r][c];
+}
+function drawCloud(){
+  const cv = $('cloud');
+  if(!CLOUD || !cv) return;
+  const ctx = cv.getContext('2d'), max = Math.max(...CLOUD.counts.map(row=>Math.max(...row)));
+  ctx.clearRect(0,0,CLOUD.cols,CLOUD.rows);
+  ctx.fillStyle = getComputedStyle(PAD).color;                       // the text colour, in light or dark
+  CLOUD.counts.forEach((row,y)=>row.forEach((n,x)=>{ if(n){ ctx.globalAlpha = Math.sqrt(n/max); ctx.fillRect(x,y,1,1); } }));
+}
+drawCloud();
+if(window.matchMedia) matchMedia('(prefers-color-scheme: dark)').addEventListener('change',drawCloud);
+
+/* The territories: the part of the map nearest each feeling. The nearest feeling lends the character
+   (instrument, rhythm, contour) to a point; the distance from it moves the cues (see synth). Cells are
+   cut from the square (-1..1) by the line halfway between each pair of feelings. */
+function clip(poly,nx,ny,c){                                          // keep nx*x + ny*y <= c
+  const out = [];
+  for(let i=0;i<poly.length;i++){
+    const A = poly[i], B = poly[(i+1)%poly.length], da = nx*A[0]+ny*A[1]-c, db = nx*B[0]+ny*B[1]-c;
+    if(da<=0) out.push(A);
+    if((da<0 && db>0) || (da>0 && db<0)){ const t = da/(da-db); out.push([A[0]+t*(B[0]-A[0]), A[1]+t*(B[1]-A[1])]); }
+  }
+  return out;
+}
+function territories(){
+  const ids = Object.keys(POS), cells = {};
+  ids.forEach(k=>{
+    let poly = [[-1,-1],[1,-1],[1,1],[-1,1]];
+    ids.forEach(j=>{
+      const nx = POS[j].v-POS[k].v, ny = POS[j].a-POS[k].a;
+      if(j===k || (!nx && !ny)) return;
+      poly = clip(poly,nx,ny,nx*(POS[k].v+POS[j].v)/2 + ny*(POS[k].a+POS[j].a)/2);
+    });
+    cells[k] = poly;
+  });
+  return cells;
+}
+const CELLS = territories(), CELLG = $('cells').firstElementChild, PULL = document.createElementNS(SVGNS,'line');
+Object.keys(CELLS).forEach(k=>{
+  const path = document.createElementNS(SVGNS,'path');
+  path.setAttribute('d','M'+CELLS[k].map(q=>q[0].toFixed(4)+' '+q[1].toFixed(4)).join('L')+'Z');
+  path.dataset.k = k; if(ESTIMATED.has(k)) path.dataset.estimated = '';
+  CELLG.appendChild(path);
+});
+PULL.setAttribute('class','pull'); PULL.style.display = 'none'; CELLG.appendChild(PULL);
+function lightCell(k,cls){
+  CELLG.querySelectorAll('path.'+cls).forEach(p=>p.classList.remove(cls));
+  if(k) CELLG.querySelector('path[data-k="'+k+'"]').classList.add(cls);
+}
+function pullTo(p,k){          // a thin line from a point to the feeling whose sound it borrows
+  if(!p || !k){ PULL.style.display = 'none'; return; }
+  PULL.setAttribute('x1',p.v); PULL.setAttribute('y1',p.a); PULL.setAttribute('x2',POS[k].v); PULL.setAttribute('y2',POS[k].a);
+  PULL.style.display = '';
 }
 Object.keys(POS).forEach(k=>{
   const b = document.createElement('button');
@@ -628,22 +712,82 @@ function playPoint(p){
   $('feeling').value = ''; ensureAudio();
   showResult('p:'+Math.round(p.v*20)+','+Math.round(p.a*20),{emo:nearest(p.v,p.a),lang:PAGE_LANG},true,p);
 }
-PAD.addEventListener('click',ev=>playPoint(padPoint(ev.clientX,ev.clientY)));
-// Arrow keys move the point in steps, Enter or Space plays it.
+/* What a point would sound like, in words: scale(s) and tempo (or "free rhythm"). */
+function recipeOf(e,lang){
+  const sc = e.scale2 ? [e.scale,e.scale2] : [e.scale];
+  return sc.map(x=>T[lang].modes[x]).join(' ' + T[lang].then + ' ') + ' · '
+    + (e.free ? T[lang].free_rhythm : localDigits(e.bpm,lang) + ' bpm');
+}
+function updateMeta(){ $('meta').textContent = recipeOf(current.e,current.lang); }
+
+/* Looking before playing. A point under the pointer (or being dragged, or reached by the arrow keys)
+   shows a ghost ring, a thin line to the feeling whose sound it would borrow, that feeling's territory,
+   and one line saying what it would be. Nothing sounds until the pointer is released. With no point,
+   it goes back to the point that is playing. */
+function peek(p){
+  if(!p){
+    GHOST.hidden = true; lightCell(null,'peek');
+    pullTo(current && current.pos, current && current.key);
+    PEEK.textContent = current ? T[PAGE_LANG].emotions[current.key].name + ' · ' + recipeOf(current.e,PAGE_LANG) : '';
+    return;
+  }
+  const k = nearest(p.v,p.a), e = synth(p.v,p.a,k);
+  putAt(GHOST,p); GHOST.hidden = false;
+  lightCell(k,'peek'); pullTo(p,k);
+  PEEK.textContent = T[PAGE_LANG].emotions[k].name + ' · ' + recipeOf(e,PAGE_LANG) + (cloudAt(p) ? '' : ' · ' + T[PAGE_LANG].beyond_short);
+}
+
+/* Each note sends a ring out from the marker: higher notes above it, louder notes wider. */
+function ripple(n,ph){
+  if(REDUCED.matches || !MARK.animate || MARK.childElementCount >= 24) return;
+  if(!ph.pitch){ const m = ph.notes.map(x=>x.midi); ph.pitch = [Math.min(...m),Math.max(...m)]; }
+  const dy = -((n.midi-ph.pitch[0])/Math.max(1,ph.pitch[1]-ph.pitch[0]) - .5)*46, s = 2.4 + n.vel*2.6;
+  const r = document.createElement('span');
+  r.className = 'feeling-ripple'; MARK.appendChild(r);
+  r.animate([{transform:'translateY('+dy+'px) scale(.5)',opacity:.75},{transform:'translateY('+dy+'px) scale('+s+')',opacity:0}],
+            {duration:900,easing:'ease-out'}).onfinish = ()=>r.remove();
+}
+
+/* Pointer: a mouse drags from anywhere; on a touch screen a tap places the point and the marker is the
+   handle to drag, so the page can still be scrolled with a finger anywhere else. The music plays when
+   the pointer is released, a tap included. */
+let drag = null;
+PAD.addEventListener('pointerdown',ev=>{
+  if(ev.button || (ev.target.closest && ev.target.closest('.taf-dot'))) return;
+  if(ev.pointerType==='touch' && ev.target!==MARK){ drag = {id:ev.pointerId, tap:true, x:ev.clientX, y:ev.clientY}; return; }
+  drag = {id:ev.pointerId, tap:false};
+  MARK.style.transition = 'none';                     // the marker follows the pointer, it does not glide behind it
+  try{ PAD.setPointerCapture(ev.pointerId); }catch(err){}
+  const p = padPoint(ev.clientX,ev.clientY); moveMarker(p); peek(p);
+});
+PAD.addEventListener('pointermove',ev=>{
+  if(!drag){ if(ev.pointerType==='mouse') peek(padPoint(ev.clientX,ev.clientY)); return; }
+  if(drag.id!==ev.pointerId) return;
+  if(drag.tap){ if(Math.hypot(ev.clientX-drag.x,ev.clientY-drag.y) > 10) drag = null; return; }   // it is a scroll, not a tap
+  const p = padPoint(ev.clientX,ev.clientY); moveMarker(p); peek(p);
+});
+PAD.addEventListener('pointerup',ev=>{
+  if(!drag || drag.id!==ev.pointerId) return;
+  drag = null; MARK.style.transition = '';
+  try{ PAD.releasePointerCapture(ev.pointerId); }catch(err){}
+  playPoint(padPoint(ev.clientX,ev.clientY));
+  if(ev.pointerType!=='mouse') peek(null);
+});
+PAD.addEventListener('pointercancel',()=>{ drag = null; MARK.style.transition = ''; peek(null); });
+PAD.addEventListener('pointerleave',()=>{ if(!drag) peek(null); });
+
+// Arrow keys move the point in steps, Enter or Space plays it. Only keyboard moves are announced.
 let kp = {v:0,a:0};
 PAD.addEventListener('keydown',ev=>{
   if(ev.target!==PAD) return;
   const s = .15, m = {ArrowLeft:[-s,0],ArrowRight:[s,0],ArrowUp:[0,s],ArrowDown:[0,-s]}[ev.key];
-  if(m){ ev.preventDefault(); kp = {v:Math.max(-1,Math.min(1,kp.v+m[0])),a:Math.max(-1,Math.min(1,kp.a+m[1]))}; moveMarker(kp); }
+  if(m){
+    ev.preventDefault(); kp = {v:Math.max(-1,Math.min(1,kp.v+m[0])),a:Math.max(-1,Math.min(1,kp.a+m[1]))};
+    moveMarker(kp); PEEK.setAttribute('aria-live','polite'); peek(kp);
+  }
   else if(ev.key==='Enter' || ev.key===' '){ ev.preventDefault(); playPoint(kp); }
 });
-
-function updateMeta(){
-  const c = current, lang = c.lang, e = c.e;
-  const sc = e.scale2 ? [e.scale,e.scale2] : [e.scale];
-  $('meta').textContent = sc.map(x=>T[lang].modes[x]).join(' ' + T[lang].then + ' ') + ' · '
-    + (e.free ? T[lang].free_rhythm : localDigits(e.bpm,lang) + ' bpm');
-}
+PAD.addEventListener('blur',()=>{ PEEK.setAttribute('aria-live','off'); peek(null); });
 
 function showResult(text,hit,autoplay,pos){
   const lang = hit.lang, at = pos || hit.pos;
@@ -660,6 +804,7 @@ function showResult(text,hit,autoplay,pos){
   moveMarker(p);
   // The nearest feeling on the map is marked, so the map and the answer always agree.
   document.querySelectorAll('.taf-dot').forEach(d=>d.setAttribute('aria-current', String(d.dataset.k===key)));
+  lightCell(key,'on'); peek(null);
   drawRoll(current.phrase);
   $('emo').textContent = label;
   if(mod){ const m = document.createElement('span'); m.className = 'feeling-emo-mod'; m.textContent = ' · ' + mod; $('emo').appendChild(m); }
