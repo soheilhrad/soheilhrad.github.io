@@ -122,6 +122,8 @@ translation appears in every list, marked with its language.
 **Slides:** list them in the post's front matter under `slides:` (a `file` and an `alt` text
 saying what each slide says), keep the images in `assets/img/posts/<name>/`, set `image:` to
 the first one, and put `{% include slides.html %}` where the carousel should go.
+Slides are taken to be 1600 × 900; for other sizes (for example 1080 × 1350 portrait slides)
+set `slides_width:` and `slides_height:` in the front matter.
 
 ## Add a project
 
