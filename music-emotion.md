@@ -1,8 +1,8 @@
 ---
 layout: project
 title: Hear a feeling
-description: "Type a word for a feeling in English, Spanish or Persian and hear a short phrase of music. The labels are checked against how listeners rated Persian classical music."
-lede: "Type a word for a feeling and hear a phrase built from the cues research links to it. It is checked against a listening study of Persian classical music."
+description: "Type a word for a feeling in English, Spanish or Persian, or touch a map of feelings, and hear a short phrase of music. The map is placed from word ratings; the labels are checked against how listeners rated Persian classical music."
+lede: "Type a word for a feeling, or touch the map, and hear a phrase built from the cues research links to it. The map is placed from how people rated the words; the labels are checked against a listening study of Persian classical music."
 decision: "Hearing an emotion and feeling it are not the same thing, so the page keeps them apart: what the music says, and what you feel."
 permalink: /projects/music-emotion/
 ref: music-emotion
@@ -14,7 +14,8 @@ cta_url: /#taf-title
 <details class="fold" markdown="1" open>
 <summary>{{ t.detail_does }}</summary>
 
-- **One input.** Type a feeling in English, Spanish or Persian, or touch the map. A short phrase plays.
+- **One input and one map.** Type a feeling in English, Spanish or Persian, or tap or drag on the map: every spot plays its own phrase. Hovering shows what a spot would be before it plays.
+- **Change it by typing.** "very sad" moves the point outward, "a bit sad" inward, "not happy" across to the other side, and "sad and hopeful" lands between the two.
 - **Built from cues, played on real instruments.** Mode, tempo, register, brightness, timing and loudness make the music, and recorded piano, strings, flute and others play it. The same word always gives the same phrase.
 
 </details>
@@ -40,7 +41,8 @@ In a listening study, 20 people with no professional music training heard nine p
 <details class="fold" markdown="1">
 <summary>{{ t.detail_built }}</summary>
 
-- **Two layers.** The page sounds from published cues (Russell's map, the Geneva Emotional Music Scale, Hevner's clusters, the reviews by Juslin and Laukka). The study checks the labels on real recordings.
+- **Two layers.** Where each feeling sits comes from word ratings (Warriner, Kuperman and Brysbaert 2013) on Russell's circumplex (1980). How a point sounds follows Eerola, Friberg and Bresin (2013), and each feeling's character follows the Geneva Emotional Music Scale, Hevner's clusters and the reviews by Juslin and Laukka. The study checks the labels on real recordings.
+- **What is our choice.** The size of each step (tempo, semitones, decibels), which instrument plays which feeling, "not" crossing to the other side of the centre and flattening, a blend landing halfway between two feelings, and how far "very" and "a bit" move a point. That intensity is the distance from the centre does follow Russell's reading.
 - **What the study changed.** Sadness, longing, nostalgia, being moved and bittersweet play in free rhythm with a swell in loudness; joy and play keep a steady beat and steady loudness. In our own rough measurement of the recordings, loudness moved by about 8 to 14 dB in the happy pieces and by 19 to 48 dB in the sad ones. Bittersweet turns the third from major to minor, as the study's mixed pieces did.
 - **Real instruments.** The notes are single-note recordings from VSCO 2 Community Edition (Versilian Studios, released as CC0), in the web edition by N. P. Brosowsky (tonejs-instruments, CC BY 3.0). Which instrument plays which feeling is our choice, not a finding. The one research link is brightness: in Eerola, Friberg and Bresin (2013) brighter sounds went with higher arousal, so the page brightens or darkens the sound with it.
 - **It is not a test of the sound.** The study's pieces were real performances; this page assembles recorded notes by rules. The page does not play Persian classical modes.
