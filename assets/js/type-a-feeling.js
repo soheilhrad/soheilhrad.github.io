@@ -97,18 +97,50 @@ function nearest(v,a){
   for(const k in POS){ const d = (POS[k].v-v)**2 + (POS[k].a-a)**2; if(d<bd){ bd = d; best = k; } }
   return best;
 }
-/* The feeling nearest the touch supplies the character (timbre, rhythm, contour); the distance
-   from it bends tempo, register, brightness, attack and mode. At a feeling's own spot the result
-   is that feeling exactly. */
+/* How far each musical cue moves when the point moves on the map. The direction and the relative
+   weight of valence against arousal come from Eerola, Friberg & Bresin (2013, Frontiers in
+   Psychology 4:487, Table 1): listeners rated 200 pieces, built by varying six cues, as happy,
+   sad, peaceful or scary, and the cues acted almost linearly and independently of each other.
+   Read as the four corners of the map (happy: bright and intense, peaceful: bright and calm,
+   scary: dark and intense, sad: dark and calm), the effect of valence on a cue is
+   (happy + peaceful - sad - scary) / 4 and the effect of arousal is
+   (happy + scary - sad - peaceful) / 4. Only these directions and ratios are published;
+   how many semitones, BPM or dB a step is worth (the numbers in synth) is our choice.
+   Articulation: a positive beta means more detached notes; timbre: brighter. */
+const EEROLA = {
+  mode:{happy:1.77,peaceful:.43,scary:-.74,sad:-1.60},          // + is major
+  tempo:{happy:.25,peaceful:-.27,scary:.07,sad:-.32},
+  register:{happy:.18,peaceful:.15,scary:-.23,sad:-.05},
+  dynamics:{happy:-.01,peaceful:-.28,scary:.20,sad:-.05},
+  articulation:{happy:.14,peaceful:-.10,scary:-.03,sad:-.18},
+  timbre:{happy:.01,peaceful:-.45,scary:.15,sad:-.14}
+};
+const EFFECT = {};
+for(const c in EEROLA){
+  const b = EEROLA[c];
+  EFFECT[c] = {v:(b.happy+b.peaceful-b.sad-b.scary)/4, a:(b.happy+b.scary-b.sad-b.peaceful)/4};
+}
+/* A step on the map (dv across, da up) as a share of the cue's range: 1 would be a full step along
+   the cue's dominant axis. */
+const shift = (cue,dv,da) => (EFFECT[cue].v*dv + EFFECT[cue].a*da) / (Math.abs(EFFECT[cue].v)+Math.abs(EFFECT[cue].a));
+
+/* The feeling nearest the touch supplies the character (rhythm, contour, echo, voice); the distance
+   from it moves the six cues above. At a feeling's own spot nothing moves, so the result is that
+   feeling exactly. */
 function synth(v,a,key){
   const base = EMO[key], dv = v-POS[key].v, da = a-POS[key].a, e = Object.assign({},base);
-  e.bpm = Math.max(40,Math.min(168,Math.round(base.bpm*Math.pow(2,da*.7))));
-  e.root = base.root + Math.round(dv*3 + da*2);
-  e.bright = Math.max(900,Math.round(base.bright*(1+da*.45+dv*.3)));
-  e.attack = Math.max(.004,base.attack*(1-da*.6));
-  if(Math.abs(dv)>.22 && !base.scale2){
+  const clamp = (x,lo,hi) => Math.max(lo,Math.min(hi,x));
+  e.bpm = clamp(Math.round(base.bpm*Math.pow(2,.9*shift('tempo',dv,da))),40,168);
+  e.root = base.root + Math.round(5*shift('register',dv,da));
+  e.gain = base.gain*Math.pow(10,4*shift('dynamics',dv,da)/20);                   // about 4 dB per step
+  e.bright = Math.max(900,Math.round(base.bright*Math.pow(2,1.2*shift('timbre',dv,da))));
+  const art = shift('articulation',dv,da);
+  e.legato = clamp(base.legato*(1-.3*art),.15,1);
+  e.attack = Math.max(.004,base.attack*Math.pow(2,-1.2*art));
+  const m = shift('mode',dv,da);
+  if(Math.abs(m)>.2 && !base.scale2){
     const i = base.scale==='pentaMaj' ? 4 : DARK_TO_BRIGHT.indexOf(base.scale);
-    if(i>=0) e.scale = DARK_TO_BRIGHT[Math.max(0,Math.min(5,i+Math.round(dv*2)))];
+    if(i>=0) e.scale = DARK_TO_BRIGHT[clamp(i+Math.round(3*m),0,5)];
   }
   return e;
 }
