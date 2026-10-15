@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Cuéntale a una IA lo que hiciste y es más probable que se ponga de tu parte"
+title: "Cuéntale a una IA lo que hiciste: es más probable que se ponga de tu parte que una persona"
 description: "Un estudio publicado en Science en 2026 probó 11 modelos de IA. Respaldaron las acciones de los usuarios un 49 % más a menudo que las personas, y la gente confió más en ellos por eso."
 ref: ai-takes-your-side
 lang: es

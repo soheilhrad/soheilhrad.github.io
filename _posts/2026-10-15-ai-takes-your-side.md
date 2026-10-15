@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Describe what you did to an AI, and it is more likely to take your side"
+title: "Describe what you did to an AI, and it is more likely than a person to take your side"
 description: "A 2026 study in Science tested 11 AI models. They affirmed users' actions 49% more often than humans did, and people trusted them more for it."
 ref: ai-takes-your-side
 image: /assets/img/posts/ai-takes-your-side/slide1.jpg
