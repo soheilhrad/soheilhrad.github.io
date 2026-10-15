@@ -11,3 +11,5 @@ NOTES.md
 # Local-only tooling and unpublished post kits. This repo is public.
 _kits/
 .claude/
+# Downloaded sample archives and intermediate files for the tools/ scripts.
+tools/_raw/

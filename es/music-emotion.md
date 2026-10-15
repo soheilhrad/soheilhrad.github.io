@@ -14,10 +14,8 @@ cta_url: /es/#taf-title
 <details class="fold" markdown="1" open>
 <summary>{{ t.detail_does }}</summary>
 
-- **Una sola entrada.** Escribe un sentimiento en inglés, español o persa, toca el mapa o escribe el nombre de un modo persa como Shur. Suena una frase breve.
+- **Una sola entrada.** Escribe un sentimiento en inglés, español o persa, o toca el mapa. Suena una frase breve.
 - **Hecha con señales, no con grabaciones.** El modo, el tempo, el registro, el brillo, el ritmo y el volumen forman la música. La misma palabra da siempre la misma frase.
-- **¿Oído o sentido?** Tras cada frase puedes valorar lo que expresa y lo que sientes, como en el estudio. Las respuestas se quedan en la página.
-- **Escalas occidentales o persas.** La persa usa pasos de cuarto de tono bemol, un bordón y voces punteadas o de soplo.
 
 </details>
 
@@ -43,8 +41,8 @@ En un estudio de escucha, 20 personas sin formación musical profesional oyeron 
 <summary>{{ t.detail_built }}</summary>
 
 - **Dos capas.** La página suena a partir de señales publicadas (el mapa de Russell, la Escala Ginebrina de Emociones Musicales, los grupos de Hevner, las revisiones de Juslin y Laukka). El estudio contrasta las etiquetas con grabaciones reales.
-- **Lo que cambió el estudio.** Tristeza, añoranza, nostalgia, conmovido y agridulce suenan en ritmo libre, con una subida y bajada de volumen; alegría y juego mantienen un pulso y un volumen estables. En nuestra medición aproximada de las grabaciones, el volumen se movía entre 8 y 14 dB en las piezas alegres y entre 19 y 48 dB en las tristes. «Agridulce» cambia la tercera de mayor a menor (otra versión lo invierte), como las piezas mixtas del estudio.
-- **No es una prueba del sonido.** Las piezas del estudio eran interpretaciones reales y el sonido de esta página es generado. Un análisis aproximado de altura respaldó los pasos de cuarto de tono en dos de ellas (Homayun y Shur) y no fue concluyente en el resto.
+- **Lo que cambió el estudio.** Tristeza, añoranza, nostalgia, conmovido y agridulce suenan en ritmo libre, con una subida y bajada de volumen; alegría y juego mantienen un pulso y un volumen estables. En nuestra medición aproximada de las grabaciones, el volumen se movía entre 8 y 14 dB en las piezas alegres y entre 19 y 48 dB en las tristes. «Agridulce» cambia la tercera de mayor a menor, como las piezas mixtas del estudio.
+- **No es una prueba del sonido.** Las piezas del estudio eran interpretaciones reales y el sonido de esta página es generado. La página no toca modos de la música clásica persa.
 - **El estudio es la investigación de máster de quien firma la página** (sin publicar).
 
 </details>
