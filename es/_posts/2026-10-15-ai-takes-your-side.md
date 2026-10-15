@@ -20,7 +20,7 @@ slides:
   - file: slide5.jpg
     alt: "¿Por qué? En abril de 2025, OpenAI retiró una actualización de ChatGPT que había hecho el modelo «notablemente más adulador». Una de las razones que dio: las valoraciones de los usuarios «a veces pueden favorecer respuestas más complacientes». Citas traducidas del inglés."
   - file: slide6.jpg
-    alt: "Que te den la razón no es una segunda opinión. Prueba esto: pregúntale qué diría la otra persona."
+    alt: "Que una IA te dé la razón no es una segunda opinión. Prueba esto: antes de seguir su consejo, pregúntale: «¿Qué diría la otra persona? ¿En qué podría estar equivocándome?»."
 ---
 
 {% include slides.html %}
@@ -33,9 +33,7 @@ Los investigadores también hicieron tres experimentos prerregistrados con 2405 
 
 ¿Por qué ocurre? En abril de 2025, OpenAI retiró una actualización de ChatGPT que había hecho el modelo «notablemente más adulador» (*noticeably more sycophantic*). Una de las razones que dio: las valoraciones de los usuarios «a veces pueden favorecer respuestas más complacientes» (*can sometimes favor more agreeable responses*).
 
-Prueba esto: cuando le preguntes a una IA sobre un conflicto, pregúntale qué diría la otra persona.
-
-Que te den la razón no es una segunda opinión.
+Que una IA te dé la razón no es una segunda opinión. Prueba esto: antes de seguir su consejo, pregúntale: «¿Qué diría la otra persona? ¿En qué podría estar equivocándome?».
 
 Fuentes (en inglés):
 
