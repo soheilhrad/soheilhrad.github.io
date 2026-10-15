@@ -9,7 +9,7 @@ reader, or a reader with images off, gets the content.
 <figure class="slides">
   <div class="slides-track" tabindex="0" role="region" aria-label="{{ t.slides_label }}">
     {%- for s in page.slides %}
-    <img src="{{ folder | append: '/' | append: s.file | relative_url }}" alt="{{ s.alt | escape }}" width="1600" height="900" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}">
+    <img src="{{ folder | append: '/' | append: s.file | relative_url }}" alt="{{ s.alt | escape }}" width="{{ page.slides_width | default: 1600 }}" height="{{ page.slides_height | default: 900 }}" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}">
     {%- endfor %}
   </div>
   {%- assign n = page.slides.size | append: "" -%}
