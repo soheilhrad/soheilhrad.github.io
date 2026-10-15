@@ -47,8 +47,11 @@ en:
     chips: ["homesick", "alegría", "دلتنگی"]
     play: "Play"
     stop: "Stop"
+    estimated: "estimated position"
     map: "Or explore the map"
-    map_hint: "Every spot plays a different piece: darker to the left, brighter to the right, calmer at the bottom, more intense at the top."
+    map_hint: "Tap or drag. Every spot plays a different piece: darker to the left, brighter to the right, calmer at the bottom, more intense at the top. The glow is where people rated English words; the outlines show whose sound a spot borrows."
+    beyond: "No word has been rated up here. Music can still go."
+    beyond_short: "beyond words"
     axis_dark: "darker"
     axis_bright: "brighter"
     axis_calm: "calmer"
@@ -61,33 +64,11 @@ en:
     unknown: "I don't know that feeling yet. Try another word: longing, calm, fear."
     note: "Known words are matched on your device. Other words go to an AI model at Cloudflare to be classified; this site stores nothing."
     research: "The research behind it"
-    research_intro: "Where a feeling sits on the map follows Russell's circumplex model (valence and arousal, 1980). The feelings themselves draw on the Geneva Emotional Music Scale (Zentner and colleagues, 2008) and Hevner's adjective clusters (1936). The musical cues (mode, tempo, register, brightness, articulation) follow the reviews by Juslin and Laukka (2003) and Gabrielsson and Lindström (2010)."
-    research_caveat: "This is a design built from published findings, not a tested instrument. The settings for each feeling are our reading of those findings, and most of the studies used Western listeners and Western tonal music. We compiled the Spanish and Persian word lists ourselves, and they are not validated. The Persian scales are our reading of dastgāh theory, checked only roughly against the study's recordings. We have not tested the generated sound with listeners."
+    research_intro: "The map is Russell's circumplex model (valence and arousal, 1980), and each feeling sits where English speakers rated its word in the norms of Warriner, Kuperman and Brysbaert (2013). The feelings themselves draw on the Geneva Emotional Music Scale (Zentner and colleagues, 2008) and Hevner's adjective clusters (1936). The musical cues (mode, tempo, register, brightness, articulation) follow the reviews by Juslin and Laukka (2003) and Gabrielsson and Lindström (2010); how each cue changes across the map follows Eerola, Friberg and Bresin (2013)."
+    research_caveat: "This is a design built from published findings, not a tested instrument. The settings for each feeling are our reading of those findings, and most of the studies used Western listeners and Western tonal music. We compiled the Spanish and Persian word lists ourselves, and they are not validated. We have not tested the generated sound with listeners."
     references: "References"
-    sound: "Sound"
-    timbre_auto: "Auto"
-    timbre_keys: "Keys"
-    timbre_strings: "Strings"
-    take: "Another take"
-    timbre_plucked: "Plucked"
-    timbre_breath: "Breath"
-    scales: "Scales"
-    scale_w: "Western"
-    scale_p: "Persian"
-    lens_note: "Persian uses the quarter-flat steps (koron) of the dastgāhs Shur and Homayun, a drone instead of chords, and plucked, bowed or breathy voices."
     free_rhythm: "free rhythm"
     then: "then"
-    longer: "Keep listening"
-    shorter: "Short version"
-    rare: "Listeners in our study of Persian classical music almost never felt this."
-    rate_sum: "Heard or felt?"
-    rate_scale: "1 = not at all, 5 = very much"
-    rate_heard: "How much does it sound like “%s”?"
-    rate_felt: "How much do you feel “%s”?"
-    rate_same: "You felt as much as you heard."
-    rate_less: "You felt it less than you heard it. That was the usual pattern in our study."
-    rate_more: "You felt it more than you heard it. That was uncommon in our study."
-    rate_local: "Your answers stay on this page and are sent nowhere."
     research_study: "A listening study of Persian classical music checks the happy and sad labels on real recordings. It does not test this page's generated sound."
     research_more: "Read about the study"
     emotions:
@@ -135,19 +116,10 @@ en:
         cue: "Light, quick, detached notes that skip and leap, in a major key. Lightness with a bounce."
       bittersweet:
         name: "Bittersweet"
-        cue: "A major colour that turns minor, or the reverse, in a line with no fixed beat. Another take reverses the order, and with it where the phrase lands."
+        cue: "A major colour that turns minor, or the reverse, in a line with no fixed beat. Happy and sad at once."
       moved:
         name: "Moved"
         cue: "Slow, with no fixed beat, and swelling: held notes that grow louder and fade, in a minor colour with a long echo. In our study, the sadder a piece sounded, the more it moved listeners."
-      shur:
-        name: "Shur"
-        cue: "A mode (dastgāh) of Persian classical music. Its second step lies a quarter tone below the major second (koron), a step a piano cannot play."
-      homayun:
-        name: "Homayun"
-        cue: "A mode (dastgāh) of Persian classical music. Like Shur it has the quarter-flat second, but its third is major."
-      mahur:
-        name: "Mahur"
-        cue: "A mode (dastgāh) of Persian classical music, close to the major scale."
     modes:
       major: "major"
       minor: "minor"
@@ -156,8 +128,14 @@ en:
       phrygian: "phrygian"
       locrian: "locrian"
       pentaMaj: "major pentatonic"
-      shur: "shur (quarter-flat second)"
-      homayun: "homayun (quarter-flat second)"
+  placement:
+    title: "Where each feeling sits"
+    intro: "Each feeling sits where people rated its word. In the norms of Warriner, Kuperman and Brysbaert (2013), about 20 English speakers rated each word from 1 to 9 for valence (unpleasant to pleasant) and for arousal (calm to excited). The map shows (rating − 5) ÷ 4, so nothing is stretched. Word ratings bunch towards the middle: even anger is rated only moderately arousing, so no feeling reaches the top of the map."
+    cols: ["Feeling", "Word rated", "Valence", "Arousal", "Russell (1980): angle, then norms"]
+    basis: {published: "", related: "a related word", estimated: "estimated: mean of these words"}
+    russell_note: "Russell (1980) printed the angle on his circle for 15 of his 28 words. Where one of them is the word for a feeling here, the table gives his angle and the angle the norms give the same word (0° is pleasant, 90° is aroused). “happy”, “sad” and “calm” point the same way; “tense” does not: Russell puts it near the top of his circle, while raters called it unpleasant but only moderately arousing."
+    hollow: "Hollow dots on the map are estimated."
+    cloud: "The glow behind the map counts how many of the 13,915 rated words fall in each small square. It holds no words and no single ratings."
   months: [January, February, March, April, May, June, July, August, September, October, November, December]
   months_short: [Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
 es:
@@ -207,8 +185,11 @@ es:
     chips: ["añoranza", "homesick", "دلتنگی"]
     play: "Reproducir"
     stop: "Detener"
+    estimated: "posición estimada"
     map: "O explora el mapa"
-    map_hint: "Cada punto suena distinto: más oscuro a la izquierda, más luminoso a la derecha, más sereno abajo y más intenso arriba."
+    map_hint: "Toca o arrastra. Cada punto suena distinto: más oscuro a la izquierda, más luminoso a la derecha, más sereno abajo y más intenso arriba. El resplandor marca dónde se puntuaron palabras en inglés; los contornos muestran de qué sentimiento toma el sonido cada punto."
+    beyond: "Aquí arriba no se ha puntuado ninguna palabra. La música sí puede llegar."
+    beyond_short: "más allá de las palabras"
     axis_dark: "más oscuro"
     axis_bright: "más luminoso"
     axis_calm: "más sereno"
@@ -221,33 +202,11 @@ es:
     unknown: "Todavía no conozco ese sentimiento. Prueba con otra palabra: añoranza, calma, miedo."
     note: "Las palabras conocidas se reconocen en tu dispositivo. Las demás se envían a un modelo de IA de Cloudflare para clasificarlas; este sitio no guarda nada."
     research: "La investigación detrás"
-    research_intro: "La posición de cada sentimiento en el mapa sigue el modelo circumplejo de Russell (valencia y activación, 1980). Los sentimientos se apoyan en la Escala Ginebrina de Emociones Musicales (Zentner y colaboradores, 2008) y en los grupos de adjetivos de Hevner (1936). Las señales musicales (modo, tempo, registro, brillo, articulación) siguen las revisiones de Juslin y Laukka (2003) y de Gabrielsson y Lindström (2010)."
-    research_caveat: "Es un diseño construido a partir de hallazgos publicados, no un instrumento validado. Los ajustes de cada sentimiento son nuestra lectura de esos hallazgos, y la mayoría de los estudios usaron oyentes occidentales y música tonal occidental. Las listas de palabras en español y persa las hemos compilado nosotros y no están validadas. Las escalas persas son nuestra lectura de la teoría de los dastgāh, comprobada solo a grandes rasgos con las grabaciones del estudio. No hemos probado el sonido generado con oyentes."
+    research_intro: "El mapa es el modelo circumplejo de Russell (valencia y activación, 1980), y cada sentimiento está donde hablantes de inglés puntuaron su palabra en las normas de Warriner, Kuperman y Brysbaert (2013). Los sentimientos se apoyan en la Escala Ginebrina de Emociones Musicales (Zentner y colaboradores, 2008) y en los grupos de adjetivos de Hevner (1936). Las señales musicales (modo, tempo, registro, brillo, articulación) siguen las revisiones de Juslin y Laukka (2003) y de Gabrielsson y Lindström (2010); cómo cambia cada señal a lo largo del mapa sigue a Eerola, Friberg y Bresin (2013)."
+    research_caveat: "Es un diseño construido a partir de hallazgos publicados, no un instrumento validado. Los ajustes de cada sentimiento son nuestra lectura de esos hallazgos, y la mayoría de los estudios usaron oyentes occidentales y música tonal occidental. Las listas de palabras en español y persa las hemos compilado nosotros y no están validadas. No hemos probado el sonido generado con oyentes."
     references: "Referencias"
-    sound: "Sonido"
-    timbre_auto: "Auto"
-    timbre_keys: "Teclas"
-    timbre_strings: "Cuerdas"
-    take: "Otra versión"
-    timbre_plucked: "Punteado"
-    timbre_breath: "Soplo"
-    scales: "Escalas"
-    scale_w: "Occidental"
-    scale_p: "Persa"
-    lens_note: "La escala persa usa los pasos de cuarto de tono bemol (koron) de los dastgāh Shur y Homayun, un bordón en lugar de acordes y voces punteadas, frotadas o de soplo."
     free_rhythm: "ritmo libre"
     then: "luego"
-    longer: "Seguir escuchando"
-    shorter: "Versión corta"
-    rare: "Los oyentes de nuestro estudio de música clásica persa casi nunca sintieron esto."
-    rate_sum: "¿Oído o sentido?"
-    rate_scale: "1 = nada, 5 = muchísimo"
-    rate_heard: "¿Cuánto suena a «%s»?"
-    rate_felt: "¿Cuánto sientes «%s»?"
-    rate_same: "Has sentido tanto como has oído."
-    rate_less: "Has sentido menos de lo que has oído. Fue lo habitual en nuestro estudio."
-    rate_more: "Has sentido más de lo que has oído. Fue poco habitual en nuestro estudio."
-    rate_local: "Tus respuestas se quedan en esta página y no se envían a ningún sitio."
     research_study: "Un estudio de escucha de música clásica persa comprueba las etiquetas de alegre y triste con grabaciones reales. No pone a prueba el sonido generado de esta página."
     research_more: "Leer sobre el estudio"
     emotions:
@@ -295,19 +254,10 @@ es:
         cue: "Notas ligeras, rápidas y picadas que saltan y brincan, en modo mayor. Ligereza con rebote."
       bittersweet:
         name: "Agridulce"
-        cue: "Un color mayor que se vuelve menor, o al revés, en una línea sin compás fijo. «Otra versión» invierte el orden y, con él, dónde termina la frase."
+        cue: "Un color mayor que se vuelve menor, o al revés, en una línea sin compás fijo. Alegre y triste a la vez."
       moved:
         name: "Conmovido"
         cue: "Lento, sin compás fijo y en crescendo: notas largas que suben de volumen y se apagan, en color menor y con un eco largo. En nuestro estudio, cuanto más triste sonaba una pieza, más conmovía a los oyentes."
-      shur:
-        name: "Shur"
-        cue: "Un modo (dastgāh) de la música clásica persa. Su segundo grado queda un cuarto de tono por debajo del segundo grado mayor (koron), un paso que el piano no puede tocar."
-      homayun:
-        name: "Homayun"
-        cue: "Un modo (dastgāh) de la música clásica persa. Como el Shur, tiene el segundo grado con koron, pero su tercer grado es mayor."
-      mahur:
-        name: "Mahur"
-        cue: "Un modo (dastgāh) de la música clásica persa, próximo a la escala mayor."
     modes:
       major: "mayor"
       minor: "menor"
@@ -316,8 +266,14 @@ es:
       phrygian: "frigio"
       locrian: "locrio"
       pentaMaj: "pentatónica mayor"
-      shur: "shur (segundo grado con koron)"
-      homayun: "homayun (segundo grado con koron)"
+  placement:
+    title: "Dónde está cada sentimiento"
+    intro: "Cada sentimiento está donde la gente puntuó su palabra. En las normas de Warriner, Kuperman y Brysbaert (2013), unos 20 hablantes de inglés puntuaron cada palabra de 1 a 9 en valencia (de desagradable a agradable) y en activación (de sereno a excitado). El mapa muestra (puntuación − 5) ÷ 4, así que no se estira nada. Las puntuaciones de las palabras se agrupan hacia el centro: incluso la ira se puntúa como moderadamente activadora, por lo que ningún sentimiento llega a la parte alta del mapa."
+    cols: ["Sentimiento", "Palabra puntuada", "Valencia", "Activación", "Russell (1980): ángulo y, después, normas"]
+    basis: {published: "", related: "una palabra relacionada", estimated: "estimado: media de estas palabras"}
+    russell_note: "Russell (1980) imprimió el ángulo en su círculo para 15 de sus 28 palabras. Cuando una de ellas es la palabra de un sentimiento de aquí, la tabla da su ángulo y el que las normas dan a la misma palabra (0° es agradable, 90° es activado). «happy», «sad» y «calm» apuntan en la misma dirección; «tense» no: Russell la sitúa cerca de lo alto de su círculo, mientras que quienes puntuaron la vieron desagradable pero solo moderadamente activadora."
+    hollow: "Los puntos huecos del mapa son estimados."
+    cloud: "El resplandor del fondo cuenta cuántas de las 13 915 palabras puntuadas caen en cada cuadradito. No contiene palabras ni puntuaciones sueltas."
   months: [enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre]
   months_short: [ene, feb, mar, abr, may, jun, jul, ago, sept, oct, nov, dic]
 fa:
@@ -367,8 +323,11 @@ fa:
     chips: ["دلتنگی", "alegría", "homesick"]
     play: "پخش"
     stop: "توقف"
+    estimated: "جای تخمینی"
     map: "یا روی نقشه بگردید"
-    map_hint: "هر نقطه قطعهٔ متفاوتی می‌نوازد: چپ تیره‌تر، راست روشن‌تر، پایین آرام‌تر و بالا پرشورتر."
+    map_hint: "بکشید یا لمس کنید. هر نقطه قطعهٔ متفاوتی می‌نوازد: چپ تیره‌تر، راست روشن‌تر، پایین آرام‌تر و بالا پرشورتر. درخشش جایی است که مردم واژه‌های انگلیسی را نمره داده‌اند؛ خط‌های دور هر ناحیه نشان می‌دهند آن نقطه صدایش را از کدام احساس وام می‌گیرد."
+    beyond: "اینجا بالا هیچ واژه‌ای نمره نگرفته است. موسیقی می‌تواند برود."
+    beyond_short: "فراتر از واژه‌ها"
     axis_dark: "تیره‌تر"
     axis_bright: "روشن‌تر"
     axis_calm: "آرام‌تر"
@@ -381,33 +340,11 @@ fa:
     unknown: "این احساس را هنوز نمی‌شناسم. کلمهٔ دیگری امتحان کنید: دلتنگی، آرامش، ترس."
     note: "واژه‌های آشنا روی دستگاه شما شناسایی می‌شوند. واژه‌های دیگر برای دسته‌بندی به یک مدل هوش مصنوعی در Cloudflare می‌روند؛ این سایت چیزی ذخیره نمی‌کند."
     research: "پژوهشی که پشت آن است"
-    research_intro: "جای هر احساس روی نقشه از مدل دایره‌ای راسل (ظرفیت و برانگیختگی، ۱۹۸۰) پیروی می‌کند. خود احساس‌ها از مقیاس هیجان‌های موسیقایی ژنو (زنتنر و همکاران، ۲۰۰۸) و خوشه‌های صفت هونر (۱۹۳۶) گرفته شده‌اند. نشانه‌های موسیقایی (گام، ضرب، بم و زیری، روشنی و شیوهٔ اجرای نت‌ها) از مرورهای یوسلین و لائوکا (۲۰۰۳) و گابریلسون و لیندستروم (۲۰۱۰) می‌آیند."
-    research_caveat: "این یک طراحی بر پایهٔ یافته‌های منتشرشده است، نه یک ابزار آزموده‌شده. تنظیم هر احساس برداشت خودمان از آن یافته‌هاست و بیشتر پژوهش‌ها با شنوندگان غربی و موسیقی تونال غربی انجام شده‌اند. فهرست واژه‌های اسپانیایی و فارسی را خودمان گردآورده‌ایم و اعتبارسنجی نشده‌اند. گام‌های ایرانی برداشت خودمان از نظریهٔ دستگاه‌هاست و فقط به‌طور تقریبی با ضبط‌های پژوهش سنجیده شده‌اند. صدای تولیدشده را هنوز با شنوندگان آزمایش نکرده‌ایم."
+    research_intro: "نقشه همان مدل دایره‌ای راسل (ظرفیت و برانگیختگی، ۱۹۸۰) است و هر احساس همان‌جایی است که انگلیسی‌زبانان واژه‌اش را در هنجارهای وارینر، کوپرمن و بریسبرت (۲۰۱۳) نمره داده‌اند. خود احساس‌ها از مقیاس هیجان‌های موسیقایی ژنو (زنتنر و همکاران، ۲۰۰۸) و خوشه‌های صفت هونر (۱۹۳۶) گرفته شده‌اند. نشانه‌های موسیقایی (گام، ضرب، بم و زیری، روشنی و شیوهٔ اجرای نت‌ها) از مرورهای یوسلین و لائوکا (۲۰۰۳) و گابریلسون و لیندستروم (۲۰۱۰) می‌آیند؛ تغییر هر نشانه روی نقشه از اِرولا، فریبرگ و برسین (۲۰۱۳) پیروی می‌کند."
+    research_caveat: "این یک طراحی بر پایهٔ یافته‌های منتشرشده است، نه یک ابزار آزموده‌شده. تنظیم هر احساس برداشت خودمان از آن یافته‌هاست و بیشتر پژوهش‌ها با شنوندگان غربی و موسیقی تونال غربی انجام شده‌اند. فهرست واژه‌های اسپانیایی و فارسی را خودمان گردآورده‌ایم و اعتبارسنجی نشده‌اند. صدای تولیدشده را هنوز با شنوندگان آزمایش نکرده‌ایم."
     references: "منابع"
-    sound: "صدا"
-    timbre_auto: "خودکار"
-    timbre_keys: "کلید"
-    timbre_strings: "زهی"
-    take: "یک نسخهٔ دیگر"
-    timbre_plucked: "زخمه‌ای"
-    timbre_breath: "بادی"
-    scales: "گام‌ها"
-    scale_w: "غربی"
-    scale_p: "ایرانی"
-    lens_note: "گام ایرانی از پرده‌های کرنِ دستگاه‌های شور و همایون استفاده می‌کند، با یک زمینهٔ پیوسته به‌جای آکورد، و صدای زخمه‌ای، آرشه‌ای یا بادی."
     free_rhythm: "ریتم آزاد"
     then: "سپس"
-    longer: "ادامه بده"
-    shorter: "نسخهٔ کوتاه"
-    rare: "شنوندگان در پژوهش ما دربارهٔ موسیقی کلاسیک ایرانی این احساس را تقریباً هرگز تجربه نکردند."
-    rate_sum: "شنیدن یا احساس کردن؟"
-    rate_scale: "۱ = اصلاً، ۵ = خیلی زیاد"
-    rate_heard: "چقدر شبیه «%s» به گوش می‌رسد؟"
-    rate_felt: "چقدر «%s» را احساس می‌کنید؟"
-    rate_same: "همان‌قدر که شنیدید احساس کردید."
-    rate_less: "کمتر از آنچه شنیدید احساس کردید. در پژوهش ما این حالت رایج بود."
-    rate_more: "بیشتر از آنچه شنیدید احساس کردید. در پژوهش ما این حالت کمتر دیده شد."
-    rate_local: "پاسخ‌های شما روی همین صفحه می‌مانند و به جایی فرستاده نمی‌شوند."
     research_study: "یک پژوهش شنیداری دربارهٔ موسیقی کلاسیک ایرانی برچسب‌های شاد و غمگین را روی ضبط‌های واقعی می‌سنجد. صدای تولیدشدهٔ این صفحه را آزمایش نمی‌کند."
     research_more: "دربارهٔ پژوهش بخوانید"
     emotions:
@@ -455,19 +392,10 @@ fa:
         cue: "نت‌های سبک، تند و جدا از هم که می‌جهند و می‌پرند، در گام ماژور. سبکی با جَست‌وخیز."
       bittersweet:
         name: "تلخ و شیرین"
-        cue: "رنگ ماژور که مینور می‌شود، یا برعکس، در خطی بی‌ضرب. «نسخهٔ دیگر» ترتیب را برعکس می‌کند و با آن جای پایان عبارت را."
+        cue: "رنگ ماژور که مینور می‌شود، یا برعکس، در خطی بی‌ضرب. هم شاد و هم غمگین."
       moved:
         name: "متأثر"
         cue: "کند، بی‌ضرب و در حال اوج‌گرفتن: نت‌های کشیده که بلندتر می‌شوند و بعد محو می‌شوند، با رنگ مینور و پژواکی بلند. در پژوهش ما هرچه قطعه غمگین‌تر به گوش می‌رسید، شنونده بیشتر متأثر می‌شد."
-      shur:
-        name: "شور"
-        cue: "یک دستگاه موسیقی کلاسیک ایرانی. درجهٔ دوم آن یک ربع‌پرده پایین‌تر از ثانیهٔ بزرگ است (کرن)، گامی که پیانو نمی‌تواند بنوازد."
-      homayun:
-        name: "همایون"
-        cue: "یک دستگاه موسیقی کلاسیک ایرانی. مثل شور درجهٔ دومش کرن است، اما درجهٔ سومش بزرگ است."
-      mahur:
-        name: "ماهور"
-        cue: "یک دستگاه موسیقی کلاسیک ایرانی، نزدیک به گام ماژور."
     modes:
       major: "ماژور"
       minor: "مینور"
@@ -476,7 +404,13 @@ fa:
       phrygian: "فریژین"
       locrian: "لوکرین"
       pentaMaj: "پنتاتونیک ماژور"
-      shur: "شور (درجهٔ دوم کرن)"
-      homayun: "همایون (درجهٔ دوم کرن)"
+  placement:
+    title: "جای هر احساس"
+    intro: "هر احساس همان‌جایی است که مردم واژه‌اش را نمره داده‌اند. در هنجارهای وارینر، کوپرمن و بریسبرت (۲۰۱۳)، حدود ۲۰ انگلیسی‌زبان هر واژه را از ۱ تا ۹ برای ظرفیت (از ناخوشایند تا خوشایند) و برانگیختگی (از آرام تا هیجان‌زده) نمره دادند. نقشه (نمره − ۵) ÷ ۴ را نشان می‌دهد، پس چیزی کشیده نشده است. نمرهٔ واژه‌ها به میانه می‌چسبد: حتی خشم هم فقط نسبتاً برانگیزاننده نمره گرفته است، برای همین هیچ احساسی به بالای نقشه نمی‌رسد."
+    cols: ["احساس", "واژهٔ نمره‌داده‌شده", "ظرفیت", "برانگیختگی", "راسل (۱۹۸۰): زاویه، سپس هنجارها"]
+    basis: {published: "", related: "یک واژهٔ هم‌خانواده", estimated: "تخمینی: میانگین این واژه‌ها"}
+    russell_note: "راسل (۱۹۸۰) زاویهٔ ۱۵ واژه از ۲۸ واژهٔ خود را روی دایره‌اش چاپ کرده است. وقتی یکی از آن‌ها واژهٔ یکی از احساس‌های اینجا باشد، جدول زاویهٔ او و زاویه‌ای را که هنجارها به همان واژه می‌دهند نشان می‌دهد (۰° خوشایند، ۹۰° برانگیخته). «happy»، «sad» و «calm» به یک سو اشاره می‌کنند؛ «tense» نه: راسل آن را نزدیک بالای دایره‌اش می‌گذارد، اما نمره‌دهندگان آن را ناخوشایند و فقط نسبتاً برانگیزاننده دانستند."
+    hollow: "نقطه‌های توخالی روی نقشه تخمینی‌اند."
+    cloud: "درخششِ پشت نقشه می‌شمارد از ۱۳٬۹۱۵ واژهٔ نمره‌داده‌شده چندتا در هر خانهٔ کوچک می‌افتند. هیچ واژه یا نمرهٔ تکی در آن نیست."
   months: [ژانویه, فوریه, مارس, آوریل, مه, ژوئن, ژوئیه, اوت, سپتامبر, اکتبر, نوامبر, دسامبر]
   months_short: [ژانویه, فوریه, مارس, آوریل, مه, ژوئن, ژوئیه, اوت, سپتامبر, اکتبر, نوامبر, دسامبر]

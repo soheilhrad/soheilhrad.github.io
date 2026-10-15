@@ -2,8 +2,10 @@
 "Type a feeling": one input, one short phrase of sound. Interface text is in _data/i18n.yml
 under `feeling:`; the engine is assets/js/type-a-feeling.js. Nothing is requested from another
 site when the page loads, and no sound starts until the visitor presses the button or Enter.
-Layers: the field and its examples first; the answer card under it; the map (for people who
-want to explore) and "how it's made" stay folded until asked for.
+Layers: the field and its examples first; the answer card under it; the map, open, because it is
+the main way to play; "how it's made" and the research stay folded until asked for. The music is
+made live from the cues for the chosen point on the map and played on recorded instrument notes
+(assets/audio/instruments/), which are fetched only after the visitor presses play.
 {%- endcomment -%}
 {%- assign t = site.data.i18n[page.lang] -%}
 {%- assign f = t.feeling -%}
@@ -37,53 +39,28 @@ want to explore) and "how it's made" stay folded until asked for.
       </div>
       <svg id="taf-roll" class="feeling-roll" viewBox="0 0 300 72" aria-hidden="true" focusable="false" preserveAspectRatio="none"></svg>
       <div class="feeling-actions">
-        <button class="feeling-link" id="taf-take" type="button"></button>
-        <button class="feeling-link" id="taf-long" type="button"></button>
         <button class="feeling-link" id="taf-share" type="button"></button>
         <span id="taf-shareOut" class="feeling-shareout"></span>
       </div>
-      <details class="feeling-fold feeling-rate" id="taf-rate">
-        <summary id="taf-rateSum"></summary>
-        <p id="taf-rateHelp" class="feeling-meta"></p>
-        <p id="taf-qHeard" class="feeling-q"></p>
-        <div class="feeling-scale" role="radiogroup" aria-labelledby="taf-qHeard" data-q="heard"></div>
-        <p id="taf-qFelt" class="feeling-q"></p>
-        <div class="feeling-scale" role="radiogroup" aria-labelledby="taf-qFelt" data-q="felt"></div>
-        <p id="taf-rateNote" class="feeling-cue" aria-live="polite"></p>
-        <p id="taf-rateLocal" class="feeling-meta"></p>
-      </details>
       <details class="feeling-fold feeling-why">
         <summary id="taf-why"></summary>
         <p id="taf-meta" class="feeling-meta"></p>
         <p id="taf-cue" class="feeling-cue"></p>
-        <p id="taf-rare" class="feeling-cue" hidden></p>
-        <div class="feeling-sound" role="group" aria-labelledby="taf-soundLabel">
-          <span id="taf-soundLabel" class="feeling-sound-label"></span>
-          <span class="feeling-timbre" id="taf-timbres">
-            <button type="button" data-t="auto" id="taf-t-auto" aria-pressed="true"></button>
-            <button type="button" data-t="keys" id="taf-t-keys" aria-pressed="false"></button>
-            <button type="button" data-t="strings" id="taf-t-strings" aria-pressed="false"></button>
-            <button type="button" data-t="plucked" id="taf-t-plucked" aria-pressed="false"></button>
-            <button type="button" data-t="breath" id="taf-t-breath" aria-pressed="false"></button>
-          </span>
-        </div>
-        <div class="feeling-sound" role="group" aria-labelledby="taf-scaleLabel">
-          <span id="taf-scaleLabel" class="feeling-sound-label"></span>
-          <span class="feeling-timbre" id="taf-lens">
-            <button type="button" data-l="w" id="taf-l-w" aria-pressed="false"></button>
-            <button type="button" data-l="p" id="taf-l-p" aria-pressed="false"></button>
-          </span>
-        </div>
-        <p id="taf-lensNote" class="feeling-meta feeling-lens-note"></p>
       </details>
     </div>
   </div>
-  <details class="feeling-fold feeling-map">
+  <details class="feeling-fold feeling-map" open>
     <summary>{{ f.map }}</summary>
     <p class="feeling-map-hint">{{ f.map_hint }}</p>
     <div id="taf-pad" class="feeling-pad" role="group" tabindex="0" aria-label="{{ f.pad | escape }}">
+      {%- comment -%} Layers, bottom to top: the glow of rated words, the territories, the points (added by the script), the ghost, the marker. {%- endcomment %}
+      <canvas id="taf-cloud" class="feeling-cloud" width="{{ site.data.feelings.cloud.cols | default: 40 }}" height="{{ site.data.feelings.cloud.rows | default: 24 }}" aria-hidden="true"></canvas>
+      <svg id="taf-cells" class="feeling-cells" viewBox="-1 -1 2 2" preserveAspectRatio="none" aria-hidden="true" focusable="false"><g transform="scale(1,-1)"></g></svg>
+      <span class="feeling-beyond" aria-hidden="true" dir="auto">{{ f.beyond }}</span>
+      <span id="taf-ghost" class="feeling-ghost" hidden aria-hidden="true"></span>
       <span id="taf-mark" class="feeling-mark" hidden aria-hidden="true"></span>
     </div>
+    <p id="taf-peek" class="feeling-peek" aria-live="off"></p>
     {%- comment -%} The map is always laid out left to right, so its legend is too (also on Persian pages). {%- endcomment %}
     <p class="feeling-legend" aria-hidden="true"><span>← {{ f.axis_dark }}</span><span><span>↑ {{ f.axis_intense }}</span> · <span>↓ {{ f.axis_calm }}</span></span><span>{{ f.axis_bright }} →</span></p>
   </details>
@@ -96,14 +73,17 @@ want to explore) and "how it's made" stay folded until asked for.
     <p class="feeling-refs-title">{{ f.references }}</p>
     <ul class="feeling-refs" lang="en" dir="ltr">
       <li>Balkwill, L.-L., &amp; Thompson, W. F. (1999). A cross-cultural investigation of the perception of emotion in music. <i>Music Perception, 17</i>(1), 43–64.</li>
+      <li>Eerola, T., Friberg, A., &amp; Bresin, R. (2013). Emotional expression in music: Contribution, linearity, and additivity of primary musical cues. <i>Frontiers in Psychology, 4</i>, 487.</li>
       <li>Eerola, T., &amp; Vuoskoski, J. K. (2011). A comparison of the discrete and dimensional models of emotion in music. <i>Psychology of Music, 39</i>(1), 18–49.</li>
       <li>Gabrielsson, A., &amp; Lindström, E. (2010). The role of structure in the musical expression of emotions. In P. N. Juslin &amp; J. A. Sloboda (Eds.), <i>Handbook of Music and Emotion</i> (pp. 367–400). Oxford University Press.</li>
       <li>Hevner, K. (1936). Experimental studies of the elements of expression in music. <i>American Journal of Psychology, 48</i>(2), 246–268.</li>
       <li>Juslin, P. N., &amp; Laukka, P. (2003). Communication of emotions in vocal expression and music performance: Different channels, same code? <i>Psychological Bulletin, 129</i>(5), 770–814.</li>
       <li>Russell, J. A. (1980). A circumplex model of affect. <i>Journal of Personality and Social Psychology, 39</i>(6), 1161–1178.</li>
+      <li>Warriner, A. B., Kuperman, V., &amp; Brysbaert, M. (2013). Norms of valence, arousal, and dominance for 13,915 English lemmas. <i>Behavior Research Methods, 45</i>(4), 1191–1207.</li>
+      <li>Instrument sounds: single-note recordings from VSCO 2 Community Edition (Versilian Studios, CC0), in the web edition by Brosowsky, N. P., tonejs-instruments (CC BY 3.0), github.com/nbrosowsky/tonejs-instruments.</li>
       <li>Zentner, M., Grandjean, D., &amp; Scherer, K. R. (2008). Emotions evoked by the sound of music: Characterization, classification, and measurement. <i>Emotion, 8</i>(4), 494–521.</li>
     </ul>
   </details>
 </section>
-<script type="application/json" id="taf-data">{"endpoint": {{ site.classify_endpoint | default: "" | jsonify }}, "strings": {"en": {{ site.data.i18n.en.feeling | jsonify }}, "es": {{ site.data.i18n.es.feeling | jsonify }}, "fa": {{ site.data.i18n.fa.feeling | jsonify }} } }</script>
+<script type="application/json" id="taf-data">{"endpoint": {{ site.classify_endpoint | default: "" | jsonify }}, "feelings": {{ site.data.feelings.feelings | jsonify }}, "cloud": {{ site.data.feelings.cloud | jsonify }}, "instruments": {{ site.data.instruments.instruments | jsonify }}, "samples": {{ '/assets/audio/instruments/' | relative_url | jsonify }}, "samplesVersion": 1, "strings": {"en": {{ site.data.i18n.en.feeling | jsonify }}, "es": {{ site.data.i18n.es.feeling | jsonify }}, "fa": {{ site.data.i18n.fa.feeling | jsonify }} } }</script>
 <script src="{{ '/assets/js/type-a-feeling.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>

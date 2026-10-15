@@ -41,6 +41,13 @@ the markup is `_includes/type-a-feeling.html`. Words it doesn't know go to the W
 service, so keep the note and the Worker in step. The Worker takes at most 40 characters and
 answers only `{emotion, lang}` from a fixed list; it never logs the text.
 
+Two data files are generated: `_data/feelings.yml` (where each feeling sits on the map, and the
+counts behind it) by `tools/make_feelings.py`, and `_data/instruments.yml` with the notes in
+`assets/audio/instruments/` by `tools/make_samples.py`. Change the script and run it; don't edit
+the output. The positions come from published word norms, so keep the sources and credits on the
+home page and the project page in step with them. Instrument notes load only after the visitor
+presses play.
+
 ## Identity
 
 The site is **dos**, in full **Design of سهی**. Titles are `{page title} — dos`. Wrap the

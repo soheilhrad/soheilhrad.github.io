@@ -12,10 +12,7 @@ const CLASSIFY_ENDPOINT = DATA.endpoint || '';
 const SCALES = {
   major:[0,2,4,5,7,9,11], minor:[0,2,3,5,7,8,10], dorian:[0,2,3,5,7,9,10],
   lydian:[0,2,4,6,7,9,11], phrygian:[0,1,3,5,7,8,10], locrian:[0,1,3,5,6,8,10],
-  pentaMaj:[0,2,4,7,9],
-  /* Persian dastgāh scales, in semitones above the tonic. A step of 1.5 is the half-flat step (koron):
-     a quarter tone below the major second, between two piano keys. Web Audio plays it exactly. */
-  shur:[0,1.5,3,5,7,8,10], homayun:[0,1.5,4,5,7,8,10]
+  pentaMaj:[0,2,4,7,9]
 };
 
 /* One row per feeling: how it is heard (cue text) and how it is built (numbers). */
@@ -84,81 +81,67 @@ const EMO = {
     vib:{rate:5,cents:12},echo:.35}
 };
 
-/* Typing the name of a Persian classical mode plays its scale. These are scales, not feelings:
-   no spot on the map, always free rhythm over a drone. */
-const MODES = {
-  shur:{scale:'shur',root:50,bpm:60,wave:'triangle',bright:2300,gain:.24,legato:1,attack:.03,decay:.4,sustain:.55,release:.8,
-    rhythm:[1,1,.5,.5,2,1],contour:'arch',range:[-2,7],startDeg:0,ending:'tonic',vel:[.3,1],rest:0,free:true,echo:.25,vib:{rate:5,cents:10}},
-  homayun:{scale:'homayun',root:50,bpm:56,wave:'triangle',bright:2300,gain:.24,legato:1,attack:.03,decay:.4,sustain:.55,release:.8,
-    rhythm:[1,1,.5,.5,2,1],contour:'arch',range:[-2,7],startDeg:0,ending:'tonic',vel:[.3,1],rest:0,free:true,echo:.25,vib:{rate:5,cents:10}},
-  mahur:{scale:'major',root:48,bpm:64,wave:'triangle',bright:2600,gain:.24,legato:1,attack:.03,decay:.4,sustain:.55,release:.8,
-    rhythm:[1,1,.5,.5,2,1],contour:'arch',range:[-2,7],startDeg:0,ending:'tonic',vel:[.3,1],rest:0,free:true,echo:.25,vib:{rate:5,cents:10}}
-};
-const MODE_VOICE = {shur:'plucked', homayun:'breath', mahur:'plucked'};
-
 /* Where each feeling sits on the map: valence (dark to bright, left to right) and arousal (calm to
-   intense, bottom to top), after Russell's circumplex. Touching anywhere on the map plays music
-   for that point: tempo, mode, register and brightness follow the position, so there are as many
-   tracks as there are places to touch. */
-const POS = {
-  anger:{v:-.85,a:.88}, tension:{v:-.35,a:.85}, fear:{v:-.62,a:.45}, sadness:{v:-.78,a:-.55}, longing:{v:-.5,a:-.2},
-  nostalgia:{v:0,a:-.45}, calm:{v:.3,a:-.88}, tenderness:{v:.62,a:-.5}, transcendence:{v:.5,a:-.12}, hope:{v:.15,a:.1},
-  wonder:{v:.15,a:.6}, power:{v:.55,a:.92}, joy:{v:.88,a:.55}, playfulness:{v:.72,a:.28},
-  bittersweet:{v:-.22,a:-.32}, moved:{v:-.18,a:.3}
-};
+   intense, bottom to top), on Russell's circumplex (1980). The positions are not set by hand: they
+   are where people rated the word for the feeling in the norms of Warriner, Kuperman & Brysbaert
+   (2013), as (rating - 5) / 4. They come from _data/feelings.yml, made by tools/make_feelings.py,
+   which also says how the few feelings without a rating of their own were placed (ESTIMATED).
+   Touching anywhere on the map plays music for that point: tempo, mode, register and brightness
+   follow the position, so there are as many tracks as there are places to touch. */
+const POS = {}, ESTIMATED = new Set();
+DATA.feelings.forEach(f=>{ POS[f.id] = {v:f.v, a:f.a}; if(f.status==='estimated') ESTIMATED.add(f.id); });
 const DARK_TO_BRIGHT = ['locrian','phrygian','minor','dorian','major','lydian'];
 function nearest(v,a){
   let best = 'calm', bd = 9;
   for(const k in POS){ const d = (POS[k].v-v)**2 + (POS[k].a-a)**2; if(d<bd){ bd = d; best = k; } }
   return best;
 }
-/* The feeling nearest the touch supplies the character (timbre, rhythm, contour); the distance
-   from it bends tempo, register, brightness, attack and mode. At a feeling's own spot the result
-   is that feeling exactly. */
-/* The Western or Persian scales, chosen under "How it's made". The Persian side swaps in dastgāh
-   scales where the study's pieces point to one (Homayun for sad, Shur for longing, nostalgia and
-   being moved, Mahur-to-Shur for bittersweet), drops the chords for a drone, and gives the
-   lead a plucked, bowed or breathy voice. The others keep their Western scale. */
-let lens = 'w';
-const PERS = {
-  sadness:{scale:'homayun',bright:2200}, longing:{scale:'shur'}, nostalgia:{scale:'shur'}, moved:{scale:'shur'},
-  bittersweet:{scale:'major',scale2:'shur'}
+/* How far each musical cue moves when the point moves on the map. The direction and the relative
+   weight of valence against arousal come from Eerola, Friberg & Bresin (2013, Frontiers in
+   Psychology 4:487, Table 1): listeners rated 200 pieces, built by varying six cues, as happy,
+   sad, peaceful or scary, and the cues acted almost linearly and independently of each other.
+   Read as the four corners of the map (happy: bright and intense, peaceful: bright and calm,
+   scary: dark and intense, sad: dark and calm), the effect of valence on a cue is
+   (happy + peaceful - sad - scary) / 4 and the effect of arousal is
+   (happy + scary - sad - peaceful) / 4. Only these directions and ratios are published;
+   how many semitones, BPM or dB a step is worth (the numbers in synth) is our choice.
+   Articulation: a positive beta means more detached notes; timbre: brighter. */
+const EEROLA = {
+  mode:{happy:1.77,peaceful:.43,scary:-.74,sad:-1.60},          // + is major
+  tempo:{happy:.25,peaceful:-.27,scary:.07,sad:-.32},
+  register:{happy:.18,peaceful:.15,scary:-.23,sad:-.05},
+  dynamics:{happy:-.01,peaceful:-.28,scary:.20,sad:-.05},
+  articulation:{happy:.14,peaceful:-.10,scary:-.03,sad:-.18},
+  timbre:{happy:.01,peaceful:-.45,scary:.15,sad:-.14}
 };
-const PVOICE = {sadness:'breath', longing:'strings', nostalgia:'plucked', moved:'strings', bittersweet:'plucked',
-                joy:'plucked', playfulness:'plucked', hope:'plucked', shur:'plucked', homayun:'breath', mahur:'plucked'};
-/* In the study, listeners almost never felt these (anger, fear and anxiety barely registered). */
-const RARE = new Set(['fear','anger','tension']);
-const baseEmo = key => lens==='p' ? Object.assign({},EMO[key],PERS[key]||{},{persian:true}) : EMO[key];
+const EFFECT = {};
+for(const c in EEROLA){
+  const b = EEROLA[c];
+  EFFECT[c] = {v:(b.happy+b.peaceful-b.sad-b.scary)/4, a:(b.happy+b.scary-b.sad-b.peaceful)/4};
+}
+/* A step on the map (dv across, da up) as a share of the cue's range: 1 would be a full step along
+   the cue's dominant axis. */
+const shift = (cue,dv,da) => (EFFECT[cue].v*dv + EFFECT[cue].a*da) / (Math.abs(EFFECT[cue].v)+Math.abs(EFFECT[cue].a));
 
+/* The feeling nearest the touch supplies the character (rhythm, contour, echo, voice); the distance
+   from it moves the six cues above. At a feeling's own spot nothing moves, so the result is that
+   feeling exactly. */
 function synth(v,a,key){
-  const base = baseEmo(key), dv = v-POS[key].v, da = a-POS[key].a, e = Object.assign({},base);
-  e.bpm = Math.max(40,Math.min(168,Math.round(base.bpm*Math.pow(2,da*.7))));
-  e.root = base.root + Math.round(dv*3 + da*2);
-  e.bright = Math.max(900,Math.round(base.bright*(1+da*.45+dv*.3)));
-  e.attack = Math.max(.004,base.attack*(1-da*.6));
-  if(Math.abs(dv)>.22 && !base.scale2){
+  const base = EMO[key], dv = v-POS[key].v, da = a-POS[key].a, e = Object.assign({},base);
+  const clamp = (x,lo,hi) => Math.max(lo,Math.min(hi,x));
+  e.bpm = clamp(Math.round(base.bpm*Math.pow(2,.9*shift('tempo',dv,da))),40,168);
+  e.root = base.root + Math.round(5*shift('register',dv,da));
+  e.gain = base.gain*Math.pow(10,4*shift('dynamics',dv,da)/20);                   // about 4 dB per step
+  e.bright = Math.max(900,Math.round(base.bright*Math.pow(2,1.2*shift('timbre',dv,da))));
+  const art = shift('articulation',dv,da);
+  e.legato = clamp(base.legato*(1-.3*art),.15,1);
+  e.attack = Math.max(.004,base.attack*Math.pow(2,-1.2*art));
+  const m = shift('mode',dv,da);
+  if(Math.abs(m)>.2 && !base.scale2){
     const i = base.scale==='pentaMaj' ? 4 : DARK_TO_BRIGHT.indexOf(base.scale);
-    if(i>=0) e.scale = DARK_TO_BRIGHT[Math.max(0,Math.min(5,i+Math.round(dv*2)))];
+    if(i>=0) e.scale = DARK_TO_BRIGHT[clamp(i+Math.round(3*m),0,5)];
   }
   return e;
-}
-
-/* Two more voices for the melody besides the one each feeling brings ('auto'). */
-const TIMBRE = {
-  keys:{kind:'fm',attack:.004,decay:.5,sustain:.25,release:.6,legato:.9,vib:null,detune:0,pure:true,gainMul:1.3,brightMin:2600},
-  strings:{wave:'sawtooth',detune:9,attack:.09,decay:.3,sustain:.75,release:.7,legato:1,vib:{rate:5.5,cents:10},pure:true,gainMul:.6,brightMin:1400,brightMax:2600},
-  /* A plucked string (setar, tar, santur): a bright strike that dies away, higher partials first. */
-  plucked:{kind:'pluck',attack:.004,decay:.1,sustain:.5,release:.2,legato:1,vib:null,detune:0,pure:true,gainMul:1.1,brightMin:2400,brightMax:5200},
-  /* A breathy reed (ney): a pure tone with a little band of breath noise and a late vibrato. */
-  breath:{kind:'breath',attack:.09,decay:.2,sustain:.9,release:.35,legato:1,vib:{rate:5.2,cents:16},detune:0,pure:true,gainMul:1,brightMin:2600,brightMax:4600}
-};
-function leadVoice(e,timbre,key){
-  const pick = timbre==='auto' && e.persian ? (MODE_VOICE[key] || PVOICE[key]) : timbre;
-  const tb = TIMBRE[pick]; if(!tb) return e;
-  const o = Object.assign({},e,tb);
-  o.gain = e.gain*tb.gainMul;
-  o.bright = Math.min(tb.brightMax||1e9, Math.max(tb.brightMin, e.bright));
-  return o;
 }
 
 /* Chords under the melody: scale-degree roots, stacked in thirds. Modal choices follow the cues
@@ -221,11 +204,6 @@ const WORDS = {
        es:['conmovido','conmovida','emocionado','emocionada','emotivo','emotiva','tocado','tocada','con lágrimas'],
        fa:['متاثر','متأثر','تحت تاثیر','تحت‌تاثیر','منقلب','دگرگون','دلم لرزید','اشک در چشم','اشکم درآمد']}
 };
-/* The names of Persian classical modes, in Latin and Persian letters. */
-const MODEWORDS = {
-  shur:['shur','shour','shoor','شور'], homayun:['homayun','homayoun','homayon','همایون'], mahur:['mahur','mahoor','mahour','ماهور']
-};
-
 function norm(s){
   return String(s).trim().toLowerCase()
     .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
@@ -240,7 +218,6 @@ const LEX = new Map();
 for(const [emo,langs] of Object.entries(WORDS))
   for(const [lang,list] of Object.entries(langs))
     for(const w of list){ const k = norm(w); if(!LEX.has(k)) LEX.set(k,{emo,lang}); }
-for(const [m,list] of Object.entries(MODEWORDS)) for(const w of list){ const k = norm(w); if(!LEX.has(k)) LEX.set(k,{emo:m,lang:'en',mode:true}); }
 
 function detectLang(raw){
   if(/[\u0600-\u06FF]/.test(raw)) return 'fa';
@@ -282,7 +259,6 @@ function lookup(text){
   }
   if(!found.length) return intensity ? {emo:null,intensity} : null;
   const raw = detectLang(text);
-  if(found[0].mode) return {emo:found[0].emo, mode:true, lang: raw==='fa' ? 'fa' : PAGE_LANG};
   return place({emo:found[0].emo, lang: raw==='fa' ? 'fa' : (raw==='es' ? 'es' : found[0].lang)}, found[1] && found[1].emo, intensity, negated && found.length===1);
 }
 
@@ -322,12 +298,11 @@ function pickStep(contour,progress,r){
 /* Same word + same feeling always gives the same phrase. A 'free' feeling has unmeasured timing
    (some notes held, some run on) and a swell in loudness, like the free-rhythm pieces of the
    study; the others keep a steady beat and a narrow range of loudness, like its reng pieces.
-   A feeling with two scales ('bittersweet') changes scale half-way; an odd take reverses them. */
-function buildPhrase(word,key,v,e,salt){
-  const rnd = mulberry32(fnv(norm(word)+'|'+key+(v ? '|'+v : '')+(salt ? '|L'+salt : '')));
-  const flip = (((v||0)+(salt||0)) % 2) === 1;
-  const eA = e.scale2 ? Object.assign({},e,{scale: flip ? e.scale2 : e.scale}) : e;
-  const eB = e.scale2 ? Object.assign({},e,{scale: flip ? e.scale : e.scale2}) : e;
+   A feeling with two scales ('bittersweet') changes scale half-way. */
+function buildPhrase(word,key,e){
+  const rnd = mulberry32(fnv(norm(word)+'|'+key));
+  const eA = e;
+  const eB = e.scale2 ? Object.assign({},e,{scale: e.scale2}) : e;
   const free = !!e.free, beat = 60/e.bpm, target = e.target || (free ? 9 : 6.5), len = SCALES[e.scale].length;
   const notes = []; let t = 0, deg = e.startDeg, i = 0, switched = false;
   while(t < target - beat){
@@ -349,8 +324,6 @@ function buildPhrase(word,key,v,e,salt){
   if(e.ending==='tonic'){
     const td = Math.round(deg/len)*len;
     fin = degToMidi(td,eB);
-    // On a Shur or Homayun scale the line comes home by way of the quarter-flat second, as a cadence does.
-    if(e.persian && SCALES[eB.scale][1]===1.5){ notes.push({t,dur:beat*1.5,midi:degToMidi(td+1,eB),vel:e.vel[1]*.8}); t += beat*1.5; }
   }
   else if(e.ending==='dominant'){
     let d = deg;
@@ -364,8 +337,7 @@ function buildPhrase(word,key,v,e,salt){
   else if(e.ending==='high') fin = degToMidi(deg>=len ? len*2 : len,eB);
   if(fin!==null){ const d = beat*2; notes.push({t,dur:d,midi:fin,vel:e.vel[1],final:true}); t += d; }
   // The chords take no random numbers, so they never change the melody; the last one is home.
-  // On the Persian side there are no chords: a drone takes their place (see play).
-  const prog = (e.persian || !PROG[key]) ? null : PROG[key], seg = prog ? t/prog.length : 0;
+  const prog = !PROG[key] ? null : PROG[key], seg = prog ? t/prog.length : 0;
   const chords = prog ? prog.map((d,k)=>{
     const r = (k===prog.length-1) ? 0 : d, ee = (k/prog.length < .5) ? eA : eB;
     return {t:k*seg, dur:seg, bass:degToMidi(r,ee)-24, tones:[0,2,4].map(s=>degToMidi(r+s,ee)-12)};
@@ -373,22 +345,11 @@ function buildPhrase(word,key,v,e,salt){
   return {notes,chords,total:t};
 }
 
-/* "Keep listening": five phrases in a row, the first the same as the short one. */
-function makePhrase(c){
-  if(!c.long) return buildPhrase(c.text,c.key,c.v,c.e);
-  const notes = [], chords = []; let off = 0;
-  for(let s=0;s<5;s++){
-    const ph = buildPhrase(c.text,c.key,c.v,c.e,s);
-    ph.notes.forEach(n=>notes.push(Object.assign({},n,{t:n.t+off})));
-    ph.chords.forEach(ch=>chords.push(Object.assign({},ch,{t:ch.t+off})));
-    off += ph.total;
-  }
-  return {notes,chords,total:off};
-}
+function makePhrase(c){ return buildPhrase(c.text,c.key,c.e); }
 
 /* ---------- audio ---------- */
 const $ = id => document.getElementById('taf-' + id);
-let AC=null, master=null, bus=null, playId=0, current=null, timbre='auto', lastArgs=null, pendingLong=false;
+let AC=null, master=null, bus=null, playId=0, current=null;
 const midiHz = m => 440*Math.pow(2,(m-69)/12);
 
 function ensureAudio(){
@@ -430,74 +391,7 @@ function makeFx(e,dest){
   return input;
 }
 
-function fmVoice(e,fx,t0,midi,dur,vel,gainScale){
-  const f = midiHz(midi), hold = Math.max(dur*e.legato,.2), peak = e.gain*vel*(gainScale||1), end = t0+hold+e.release+.05;
-  const g = AC.createGain();
-  g.gain.setValueAtTime(.0001,t0);
-  g.gain.exponentialRampToValueAtTime(peak,t0+e.attack);
-  g.gain.exponentialRampToValueAtTime(peak*e.sustain,t0+e.attack+e.decay);
-  g.gain.setValueAtTime(peak*e.sustain,t0+hold);
-  g.gain.exponentialRampToValueAtTime(.0001,t0+hold+e.release);
-  g.connect(fx);
-  const car = AC.createOscillator(), mod = AC.createOscillator(), mg = AC.createGain();
-  car.type = 'sine'; mod.type = 'sine'; car.frequency.value = f; mod.frequency.value = f;
-  mg.gain.setValueAtTime(f*1.6*vel,t0); mg.gain.exponentialRampToValueAtTime(f*.08,t0+.5);
-  mod.connect(mg); mg.connect(car.frequency); car.connect(g);
-  car.start(t0); mod.start(t0); car.stop(end); mod.stop(end);
-}
-
-let NOISE=null;
-function noiseBuf(){
-  if(NOISE) return NOISE;
-  const len = AC.sampleRate, buf = AC.createBuffer(1,len,AC.sampleRate), rnd = mulberry32(11), d = buf.getChannelData(0);
-  for(let i=0;i<len;i++) d[i] = rnd()*2-1;
-  return NOISE = buf;
-}
-/* Plucked: a strike that dies away, the higher partials first. Exact pitch, so quarter tones are true. */
-function pluckVoice(e,fx,t0,midi,dur,vel,gainScale){
-  const f = midiHz(midi), peak = e.gain*vel*(gainScale||1)*.45;
-  const ring = Math.max(.9,Math.min(2.6,dur*1.6)), H = Math.max(1,Math.min(8,Math.floor(7000/f)));
-  for(let k=1;k<=H;k++){
-    const o = AC.createOscillator(), g = AC.createGain();
-    const a = peak/Math.pow(k,1.15), tau = ring/(1+.55*(k-1));
-    o.type = 'sine'; o.frequency.value = f*k;
-    g.gain.setValueAtTime(.0001,t0);
-    g.gain.exponentialRampToValueAtTime(a,t0+.004);
-    g.gain.exponentialRampToValueAtTime(.0001,t0+.004+tau);
-    o.connect(g); g.connect(fx); o.start(t0); o.stop(t0+.004+tau+.05);
-  }
-}
-/* Breath: a near-pure tone with a thin band of air noise and a vibrato that arrives late. */
-function breathVoice(e,fx,t0,midi,dur,vel,gainScale){
-  const f = midiHz(midi), a = e.attack, hold = Math.max(dur*e.legato,a+.15), peak = e.gain*vel*(gainScale||1);
-  const end = t0+hold+e.release+.05, g = AC.createGain();
-  g.gain.setValueAtTime(.0001,t0);
-  g.gain.exponentialRampToValueAtTime(peak,t0+a);
-  g.gain.setValueAtTime(peak,t0+hold);
-  g.gain.exponentialRampToValueAtTime(.0001,t0+hold+e.release);
-  g.connect(fx);
-  [1,2,3].forEach((k,i)=>{
-    const o = AC.createOscillator(), og = AC.createGain();
-    o.type = 'sine'; o.frequency.value = f*k; og.gain.value = [1,.2,.07][i];
-    if(e.vib){
-      const lfo = AC.createOscillator(), lg = AC.createGain();
-      lfo.frequency.value = e.vib.rate;
-      lg.gain.setValueAtTime(0,t0); lg.gain.linearRampToValueAtTime(e.vib.cents,t0+Math.min(.5,hold));
-      lfo.connect(lg); lg.connect(o.detune); lfo.start(t0); lfo.stop(end);
-    }
-    o.connect(og); og.connect(g); o.start(t0); o.stop(end);
-  });
-  const nb = AC.createBufferSource(), bp = AC.createBiquadFilter(), ng = AC.createGain();
-  nb.buffer = noiseBuf(); nb.loop = true;
-  bp.type = 'bandpass'; bp.frequency.value = Math.min(f*3,6000); bp.Q.value = .9;
-  ng.gain.value = .3;
-  nb.connect(bp); bp.connect(ng); ng.connect(g); nb.start(t0); nb.stop(end);
-}
-
 function voice(e,fx,base,midi,dur,vel,gainScale){
-  if(e.kind==='fm') return fmVoice(e,fx,base,midi,dur,vel,gainScale);
-  if(e.kind==='pluck') return pluckVoice(e,fx,base,midi,dur,vel,gainScale);
-  if(e.kind==='breath') return breathVoice(e,fx,base,midi,dur,vel,gainScale);
   const t0 = base, a = e.attack, hold = Math.max(dur*e.legato, a+e.decay+.02);
   const peak = e.gain*vel*(gainScale||1);
   const g = AC.createGain();
@@ -527,11 +421,78 @@ function voice(e,fx,base,midi,dur,vel,gainScale){
   }
 }
 
+/* ---------- real instruments ---------- */
+/* Each feeling is played by one recorded instrument, with strings under it and a double bass below.
+   The recordings are single notes from VSCO 2 Community Edition (see tools/make_samples.py and
+   _data/instruments.yml). An instrument's notes are fetched and decoded the first time it is needed,
+   which is after the visitor has pressed play, never when the page loads. If they cannot be had, the
+   oscillator voice above plays instead, so the page always makes sound. Which instrument suits which
+   feeling is our choice, not a finding; the brightness filter (makeFx) is what carries the timbre cue. */
+const LEAD = {
+  joy:'piano', sadness:'violin', calm:'flute', fear:'contrabass', anger:'horn', tenderness:'harp', longing:'violin',
+  wonder:'harp', hope:'piano', nostalgia:'piano', power:'trumpet', tension:'violin', transcendence:'flute',
+  playfulness:'xylophone', bittersweet:'violin', moved:'violin'
+};
+const PAD_INST = 'violin', BASS_INST = 'contrabass';
+const SAMPLE_GAIN = 2.5;           // the recordings are levelled quietly; this brings them up to the oscillators' level
+const SAMPLES = new Map();         // instrument name -> promise of {kind, bufs:[{midi, buf}]}, or null
+/* One note, tried twice: a single failed request on a poor connection should not cost the whole instrument. */
+async function loadNote(name,n){
+  for(let tries=0; tries<2; tries++){
+    try{
+      const r = await fetch(DATA.samples + name + '/' + n + '.mp3?v=' + DATA.samplesVersion);
+      if(!r.ok) throw new Error(name + ' ' + n);
+      return {midi:n, buf: await AC.decodeAudioData(await r.arrayBuffer())};
+    }catch(err){}
+  }
+  return null;
+}
+/* An instrument works with some of its notes missing (the nearest one is shifted further); with fewer than
+   three it is not used, and the next press tries again. */
+function loadInstrument(name){
+  if(SAMPLES.has(name)) return SAMPLES.get(name);
+  const spec = DATA.instruments && DATA.instruments[name];
+  const p = !spec ? Promise.resolve(null) : Promise.all(spec.notes.map(n=>loadNote(name,n))).then(list=>{
+    const bufs = list.filter(Boolean);
+    if(bufs.length < 3){ SAMPLES.delete(name); return null; }
+    return {kind:spec.kind, bufs};
+  });
+  SAMPLES.set(name,p);
+  return p;
+}
+/* The nearest recorded note, shifted by a few semitones; a note outside the recorded range comes back
+   in by octaves. A struck note (piano, harp) rings out; a bowed or blown one swells and is released. */
+function sampleVoice(inst,e,fx,t0,midi,dur,vel,gainScale){
+  const notes = inst.bufs, lo = notes[0].midi, hi = notes[notes.length-1].midi;
+  while(midi < lo-3) midi += 12;
+  while(midi > hi+3) midi -= 12;
+  let best = notes[0];
+  for(const n of notes) if(Math.abs(n.midi-midi) < Math.abs(best.midi-midi)) best = n;
+  const rate = Math.pow(2,(midi-best.midi)/12), room = best.buf.duration/rate - .05;
+  const struck = inst.kind==='struck';
+  const a = struck ? .004 : Math.min(Math.max(e.attack,.03),.25);
+  const rel = struck ? (e.legato < .6 ? .25 : .6) : Math.min(e.release,.8);
+  const hold = Math.min(Math.max(dur*e.legato,.15), Math.max(.2,room-rel));
+  const peak = e.gain*vel*(gainScale||1)*SAMPLE_GAIN;
+  const g = AC.createGain();
+  g.gain.setValueAtTime(.0001,t0);
+  g.gain.exponentialRampToValueAtTime(peak,t0+a);
+  g.gain.setValueAtTime(peak,t0+hold);
+  g.gain.exponentialRampToValueAtTime(.0001,t0+hold+rel);
+  const src = AC.createBufferSource();
+  src.buffer = best.buf; src.playbackRate.value = rate;
+  src.connect(g); g.connect(fx);
+  src.start(t0); src.stop(t0+hold+rel+.05);
+}
+const note = (inst,e,fx,t0,midi,dur,vel,gainScale) =>
+  inst ? sampleVoice(inst,e,fx,t0,midi,dur,vel,gainScale) : voice(e,fx,t0,midi,dur,vel,gainScale);
+
 /* The card's one main button shows what pressing it will do: Play when silent, Stop while sounding. */
 function setPlaying(on){
   const b = $('play'), lang = current ? current.lang : PAGE_LANG;
   b.dataset.playing = String(on);
   $('playLabel').textContent = T[lang][on ? 'stop' : 'play'];
+  if(!on) MARK.dataset.pulse = '';
 }
 function fadeOut(){
   if(!bus || !AC) return;
@@ -543,28 +504,34 @@ function fadeOut(){
 function stop(){
   playId++; fadeOut(); setPlaying(false);
   document.querySelectorAll('#taf-roll rect').forEach(r=>r.style.opacity=.55);
+  MARK.querySelectorAll('.feeling-ripple').forEach(r=>r.remove());
 }
 
-function play(){
+async function play(){
   if(!current || !ensureAudio()) return;
-  const {phrase,key,e} = current, lead = leadVoice(e,timbre,key), now = AC.currentTime;
+  const id = ++playId;
   fadeOut();
+  setPlaying(true);                       // Stop shows at once, even while an instrument is still loading
+  const {phrase,key,e} = current, names = [LEAD[key],PAD_INST,BASS_INST];
+  if(names.some(n=>!SAMPLES.has(n))) $('status').textContent = '…';
+  const [leadI,padI,bassI] = await Promise.all(names.map(loadInstrument));
+  if(id!==playId) return;                 // stopped, or another feeling chosen, while it loaded
+  $('status').textContent = '';
   bus = AC.createGain(); bus.connect(master);
-  setPlaying(true);
-  const fx = makeFx(lead,bus), base = now + .1, id = ++playId;
+  const fx = makeFx(e,bus), base = AC.currentTime + .1;
   phrase.notes.forEach(n=>{
-    voice(lead,fx,base+n.t,n.midi,n.dur,n.vel,1);
-    if(n.extra) voice(lead,fx,base+n.t,n.extra,n.dur,n.vel,.6);
+    note(leadI,e,fx,base+n.t,n.midi,n.dur,n.vel,1);
+    if(n.extra) note(leadI,e,fx,base+n.t,n.extra,n.dur,n.vel,.6);
   });
   const padE = Object.assign({},e,{wave:'triangle',attack:.3,decay:.5,sustain:.8,release:.7,legato:1,vib:null,detune:7,
                                    gain:e.gain*.42,pure:true,bright:Math.min(e.bright,1800)});
   const bassE = Object.assign({},e,{wave:'sine',attack:.05,decay:.3,sustain:.8,release:.5,legato:.95,vib:null,detune:0,gain:e.gain*1.1,pure:true});
   phrase.chords.forEach(c=>{
-    c.tones.forEach(m=>voice(padE,fx,base+c.t,m,c.dur,.7,1));
-    voice(bassE,fx,base+c.t,c.bass,c.dur,.8,1);
+    c.tones.forEach(m=>note(padI,padE,fx,base+c.t,m,c.dur,.7,padI ? .4 : 1));
+    note(bassI,bassE,fx,base+c.t,c.bass,c.dur,.8,bassI ? .7 : 1);
   });
-  if(e.drone || e.persian){
-    // A steady note under the melody; on the Persian side a fifth is added, as the strings hold it.
+  if(e.drone){
+    // A steady note under the melody.
     const drone = (midi,peak)=>{
       const o = AC.createOscillator(), g = AC.createGain();
       o.type = 'sine'; o.frequency.value = midiHz(midi);
@@ -574,14 +541,17 @@ function play(){
       g.gain.exponentialRampToValueAtTime(.0001,base+phrase.total+1.5);
       o.connect(g); g.connect(fx); o.start(base); o.stop(base+phrase.total+1.6);
     };
-    drone(e.root-12, e.persian ? .07 : .06);
-    if(e.persian) drone(e.root-5, .035);
+    drone(e.root-12, .06);
   }
+  // The marker beats at the tempo, or breathes slowly when the rhythm is free.
+  if(!REDUCED.matches){ MARK.style.setProperty('--beat',(60/e.bpm).toFixed(3)+'s'); MARK.dataset.pulse = e.free ? 'breathe' : 'beat'; }
   const rects = [...document.querySelectorAll('#taf-roll rect')];
+  let nextRipple = 0;
   (function frame(){
     if(id!==playId) return;
     const t = AC.currentTime - base;
     rects.forEach((r,i)=>{ const n = phrase.notes[i]; r.style.opacity = (t>=n.t && t<n.t+n.dur*.98) ? 1 : .45; });
+    while(nextRipple < phrase.notes.length && t >= phrase.notes[nextRipple].t){ ripple(phrase.notes[nextRipple],phrase); nextRipple++; }
     if(t < phrase.total+1.5) requestAnimationFrame(frame);
     else { rects.forEach(r=>r.style.opacity=.55); setPlaying(false); }
   })();
@@ -604,7 +574,6 @@ async function remoteClassify(text){
 /* ---------- interface ---------- */
 const T = DATA.strings;
 const PAGE_LANG = T[document.documentElement.lang] ? document.documentElement.lang : 'en';
-lens = PAGE_LANG==='fa' ? 'p' : 'w';   // a link or the buttons can change it
 const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
 const localDigits = (s,lang) => lang==='fa' ? String(s).replace(/\d/g,d=>FA_DIGITS[d]) : String(s);
 
@@ -622,25 +591,118 @@ function drawRoll(phrase){
 }
 
 /* ---------- the map ---------- */
-const PAD = $('pad'), MARK = $('mark');
-function moveMarker(p){
-  MARK.style.insetInlineStart = 'auto'; MARK.style.right = 'auto';
-  MARK.style.left = ((p.v+1)/2*100)+'%'; MARK.style.top = ((1-p.a)/2*100)+'%'; MARK.hidden = false;
+const PAD = $('pad'), MARK = $('mark'), GHOST = $('ghost'), PEEK = $('peek');
+const SVGNS = 'http://www.w3.org/2000/svg';
+const REDUCED = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : {matches:false};
+const putAt = (el,p) => { el.style.left = ((p.v+1)/2*100)+'%'; el.style.top = ((1-p.a)/2*100)+'%'; };
+function moveMarker(p){ putAt(MARK,p); MARK.hidden = false; }
+
+/* The glow behind the map: how many of the 13,915 words in the norms fall in each small square of it
+   (_data/feelings.yml, made by tools/make_feelings.py). Only counts are kept: no words, no single ratings.
+   Word ratings bunch in a lens-shaped band, so the glow shows where words live and leaves the rest of
+   the map, where music can still go, dark. */
+const CLOUD = DATA.cloud;
+function cloudAt(p){
+  if(!CLOUD) return 1;
+  const c = Math.min(CLOUD.cols-1,Math.max(0,Math.floor((p.v+1)/2*CLOUD.cols)));
+  const r = Math.min(CLOUD.rows-1,Math.max(0,Math.floor((1-p.a)/2*CLOUD.rows)));
+  return CLOUD.counts[r][c];
 }
-function syncLens(){
-  document.querySelectorAll('#taf-lens button').forEach(b=>b.setAttribute('aria-pressed', String(b.dataset.l===lens)));
-  PAD.classList.toggle('lens-p', lens==='p');
+function drawCloud(){
+  const cv = $('cloud');
+  if(!CLOUD || !cv) return;
+  const ctx = cv.getContext('2d'), max = Math.max(...CLOUD.counts.map(row=>Math.max(...row)));
+  ctx.clearRect(0,0,CLOUD.cols,CLOUD.rows);
+  ctx.fillStyle = getComputedStyle(PAD).color;                       // the text colour, in light or dark
+  CLOUD.counts.forEach((row,y)=>row.forEach((n,x)=>{ if(n){ ctx.globalAlpha = Math.sqrt(n/max); ctx.fillRect(x,y,1,1); } }));
+}
+drawCloud();
+if(window.matchMedia) matchMedia('(prefers-color-scheme: dark)').addEventListener('change',drawCloud);
+
+/* The territories: the part of the map nearest each feeling. The nearest feeling lends the character
+   (instrument, rhythm, contour) to a point; the distance from it moves the cues (see synth). Cells are
+   cut from the square (-1..1) by the line halfway between each pair of feelings. */
+function clip(poly,nx,ny,c){                                          // keep nx*x + ny*y <= c
+  const out = [];
+  for(let i=0;i<poly.length;i++){
+    const A = poly[i], B = poly[(i+1)%poly.length], da = nx*A[0]+ny*A[1]-c, db = nx*B[0]+ny*B[1]-c;
+    if(da<=0) out.push(A);
+    if((da<0 && db>0) || (da>0 && db<0)){ const t = da/(da-db); out.push([A[0]+t*(B[0]-A[0]), A[1]+t*(B[1]-A[1])]); }
+  }
+  return out;
+}
+function territories(){
+  const ids = Object.keys(POS), cells = {};
+  ids.forEach(k=>{
+    let poly = [[-1,-1],[1,-1],[1,1],[-1,1]];
+    ids.forEach(j=>{
+      const nx = POS[j].v-POS[k].v, ny = POS[j].a-POS[k].a;
+      if(j===k || (!nx && !ny)) return;
+      poly = clip(poly,nx,ny,nx*(POS[k].v+POS[j].v)/2 + ny*(POS[k].a+POS[j].a)/2);
+    });
+    cells[k] = poly;
+  });
+  return cells;
+}
+const CELLS = territories(), CELLG = $('cells').firstElementChild, PULL = document.createElementNS(SVGNS,'line');
+Object.keys(CELLS).forEach(k=>{
+  const path = document.createElementNS(SVGNS,'path');
+  path.setAttribute('d','M'+CELLS[k].map(q=>q[0].toFixed(4)+' '+q[1].toFixed(4)).join('L')+'Z');
+  path.dataset.k = k; if(ESTIMATED.has(k)) path.dataset.estimated = '';
+  CELLG.appendChild(path);
+});
+PULL.setAttribute('class','pull'); PULL.style.display = 'none'; CELLG.appendChild(PULL);
+function lightCell(k,cls){
+  CELLG.querySelectorAll('path.'+cls).forEach(p=>p.classList.remove(cls));
+  if(k) CELLG.querySelector('path[data-k="'+k+'"]').classList.add(cls);
+}
+function pullTo(p,k){          // a thin line from a point to the feeling whose sound it borrows
+  if(!p || !k){ PULL.style.display = 'none'; return; }
+  PULL.setAttribute('x1',p.v); PULL.setAttribute('y1',p.a); PULL.setAttribute('x2',POS[k].v); PULL.setAttribute('y2',POS[k].a);
+  PULL.style.display = '';
 }
 Object.keys(POS).forEach(k=>{
   const b = document.createElement('button');
-  b.type = 'button'; b.className = 'taf-dot'; b.dataset.k = k; if(RARE.has(k)) b.dataset.rare = '';
+  b.type = 'button'; b.className = 'taf-dot'; b.dataset.k = k; if(ESTIMATED.has(k)) b.dataset.estimated = '';
   b.style.left = ((POS[k].v+1)/2*100)+'%'; b.style.top = ((1-POS[k].a)/2*100)+'%';
   const name = T[PAGE_LANG].emotions[k].name;
   b.innerHTML = '<span class="taf-dot-name"></span>'; b.firstChild.textContent = name;
-  b.setAttribute('aria-label',name);
-  b.addEventListener('click',ev=>{ ev.stopPropagation(); $('feeling').value = ''; ensureAudio(); showResult(k,{emo:k,lang:PAGE_LANG},true,0); });
+  b.setAttribute('aria-label', ESTIMATED.has(k) ? name + ' (' + T[PAGE_LANG].estimated + ')' : name);
+  b.addEventListener('click',ev=>{ ev.stopPropagation(); $('feeling').value = ''; ensureAudio(); showResult(k,{emo:k,lang:PAGE_LANG},true); });
   PAD.appendChild(b);
 });
+/* The names sit beside their points on whichever side is free of other names and points. Several
+   feelings are rated almost alike, so their points nearly coincide: a name that finds no free side
+   stays hidden and shows when its point is hovered, focused or playing. Needs the map to be open
+   (a folded map has no size), so it runs again when the fold opens, the window changes or fonts load. */
+function declutter(){
+  const pr = PAD.getBoundingClientRect();
+  if(!pr.width) return;
+  const R = 7, dots = [...PAD.querySelectorAll('.taf-dot')];
+  const pts = dots.map(d=>{ const r = d.getBoundingClientRect(), n = d.firstChild; return {d, x:r.left+r.width/2-pr.left, y:r.top+r.height/2-pr.top, w:n.offsetWidth, h:n.offsetHeight}; });
+  const near = p => pts.filter(q=>q!==p && Math.hypot(q.x-p.x,q.y-p.y) < 90).length;
+  const hit = (a,b) => a.l < b.r && a.r > b.l && a.t < b.b && a.b > b.t;
+  const boxes = pts.map(p=>({l:p.x-R-1,r:p.x+R+1,t:p.y-R-1,b:p.y+R+1}));
+  const taken = [];
+  pts.map((p,i)=>({p,i})).sort((u,v)=>near(v.p)-near(u.p)).forEach(({p,i})=>{
+    const cands = {
+      r:{l:p.x+R+4, t:p.y-p.h/2},       l:{l:p.x-R-4-p.w, t:p.y-p.h/2},
+      t:{l:p.x-p.w/2, t:p.y-R-3-p.h},   b:{l:p.x-p.w/2, t:p.y+R+3}
+    };
+    let side = 'x';
+    for(const s of ['r','l','t','b']){
+      const c = cands[s], box = {l:c.l-2, r:c.l+p.w+2, t:c.t-1, b:c.t+p.h+1};
+      if(box.l < 0 || box.t < 0 || box.r > pr.width || box.b > pr.height) continue;
+      if(taken.some(o=>hit(box,o)) || boxes.some((o,j)=>j!==i && hit(box,o))) continue;
+      side = s; taken.push(box); break;
+    }
+    p.d.dataset.side = side;
+  });
+}
+declutter();
+PAD.closest('details').addEventListener('toggle',declutter);
+window.addEventListener('resize',()=>requestAnimationFrame(declutter));
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(declutter);
 function padPoint(x,y){
   const r = PAD.getBoundingClientRect();
   return {v:Math.max(-1,Math.min(1,(x-r.left)/r.width*2-1)), a:Math.max(-1,Math.min(1,1-(y-r.top)/r.height*2))};
@@ -648,90 +710,109 @@ function padPoint(x,y){
 function playPoint(p){
   p = {v:Math.round(p.v*100)/100, a:Math.round(p.a*100)/100};
   $('feeling').value = ''; ensureAudio();
-  showResult('p:'+Math.round(p.v*20)+','+Math.round(p.a*20),{emo:nearest(p.v,p.a),lang:PAGE_LANG},true,0,p);
+  showResult('p:'+Math.round(p.v*20)+','+Math.round(p.a*20),{emo:nearest(p.v,p.a),lang:PAGE_LANG},true,p);
 }
-PAD.addEventListener('click',ev=>playPoint(padPoint(ev.clientX,ev.clientY)));
-// Arrow keys move the point in steps, Enter or Space plays it.
+/* What a point would sound like, in words: scale(s) and tempo (or "free rhythm"). */
+function recipeOf(e,lang){
+  const sc = e.scale2 ? [e.scale,e.scale2] : [e.scale];
+  return sc.map(x=>T[lang].modes[x]).join(' ' + T[lang].then + ' ') + ' · '
+    + (e.free ? T[lang].free_rhythm : localDigits(e.bpm,lang) + ' bpm');
+}
+function updateMeta(){ $('meta').textContent = recipeOf(current.e,current.lang); }
+
+/* Looking before playing. A point under the pointer (or being dragged, or reached by the arrow keys)
+   shows a ghost ring, a thin line to the feeling whose sound it would borrow, that feeling's territory,
+   and one line saying what it would be. Nothing sounds until the pointer is released. With no point,
+   it goes back to the point that is playing. */
+function peek(p){
+  if(!p){
+    GHOST.hidden = true; lightCell(null,'peek');
+    pullTo(current && current.pos, current && current.key);
+    PEEK.textContent = current ? T[PAGE_LANG].emotions[current.key].name + ' · ' + recipeOf(current.e,PAGE_LANG) : '';
+    return;
+  }
+  const k = nearest(p.v,p.a), e = synth(p.v,p.a,k);
+  putAt(GHOST,p); GHOST.hidden = false;
+  lightCell(k,'peek'); pullTo(p,k);
+  PEEK.textContent = T[PAGE_LANG].emotions[k].name + ' · ' + recipeOf(e,PAGE_LANG) + (cloudAt(p) ? '' : ' · ' + T[PAGE_LANG].beyond_short);
+}
+
+/* Each note sends a ring out from the marker: higher notes above it, louder notes wider. */
+function ripple(n,ph){
+  if(REDUCED.matches || !MARK.animate || MARK.childElementCount >= 24) return;
+  if(!ph.pitch){ const m = ph.notes.map(x=>x.midi); ph.pitch = [Math.min(...m),Math.max(...m)]; }
+  const dy = -((n.midi-ph.pitch[0])/Math.max(1,ph.pitch[1]-ph.pitch[0]) - .5)*46, s = 2.4 + n.vel*2.6;
+  const r = document.createElement('span');
+  r.className = 'feeling-ripple'; MARK.appendChild(r);
+  r.animate([{transform:'translateY('+dy+'px) scale(.5)',opacity:.75},{transform:'translateY('+dy+'px) scale('+s+')',opacity:0}],
+            {duration:900,easing:'ease-out'}).onfinish = ()=>r.remove();
+}
+
+/* Pointer: a mouse drags from anywhere; on a touch screen a tap places the point and the marker is the
+   handle to drag, so the page can still be scrolled with a finger anywhere else. The music plays when
+   the pointer is released, a tap included. */
+let drag = null;
+PAD.addEventListener('pointerdown',ev=>{
+  if(ev.button || (ev.target.closest && ev.target.closest('.taf-dot'))) return;
+  if(ev.pointerType==='touch' && ev.target!==MARK){ drag = {id:ev.pointerId, tap:true, x:ev.clientX, y:ev.clientY}; return; }
+  drag = {id:ev.pointerId, tap:false};
+  MARK.style.transition = 'none';                     // the marker follows the pointer, it does not glide behind it
+  try{ PAD.setPointerCapture(ev.pointerId); }catch(err){}
+  const p = padPoint(ev.clientX,ev.clientY); moveMarker(p); peek(p);
+});
+PAD.addEventListener('pointermove',ev=>{
+  if(!drag){ if(ev.pointerType==='mouse') peek(padPoint(ev.clientX,ev.clientY)); return; }
+  if(drag.id!==ev.pointerId) return;
+  if(drag.tap){ if(Math.hypot(ev.clientX-drag.x,ev.clientY-drag.y) > 10) drag = null; return; }   // it is a scroll, not a tap
+  const p = padPoint(ev.clientX,ev.clientY); moveMarker(p); peek(p);
+});
+PAD.addEventListener('pointerup',ev=>{
+  if(!drag || drag.id!==ev.pointerId) return;
+  drag = null; MARK.style.transition = '';
+  try{ PAD.releasePointerCapture(ev.pointerId); }catch(err){}
+  playPoint(padPoint(ev.clientX,ev.clientY));
+  if(ev.pointerType!=='mouse') peek(null);
+});
+PAD.addEventListener('pointercancel',()=>{ drag = null; MARK.style.transition = ''; peek(null); });
+PAD.addEventListener('pointerleave',()=>{ if(!drag) peek(null); });
+
+// Arrow keys move the point in steps, Enter or Space plays it. Only keyboard moves are announced.
 let kp = {v:0,a:0};
 PAD.addEventListener('keydown',ev=>{
   if(ev.target!==PAD) return;
   const s = .15, m = {ArrowLeft:[-s,0],ArrowRight:[s,0],ArrowUp:[0,s],ArrowDown:[0,-s]}[ev.key];
-  if(m){ ev.preventDefault(); kp = {v:Math.max(-1,Math.min(1,kp.v+m[0])),a:Math.max(-1,Math.min(1,kp.a+m[1]))}; moveMarker(kp); }
+  if(m){
+    ev.preventDefault(); kp = {v:Math.max(-1,Math.min(1,kp.v+m[0])),a:Math.max(-1,Math.min(1,kp.a+m[1]))};
+    moveMarker(kp); PEEK.setAttribute('aria-live','polite'); peek(kp);
+  }
   else if(ev.key==='Enter' || ev.key===' '){ ev.preventDefault(); playPoint(kp); }
 });
+PAD.addEventListener('blur',()=>{ PEEK.setAttribute('aria-live','off'); peek(null); });
 
-function updateMeta(){
-  const c = current, lang = c.lang, e = c.e;
-  const sc = e.scale2 ? ((c.v%2) ? [e.scale2,e.scale] : [e.scale,e.scale2]) : [e.scale];
-  $('meta').textContent = sc.map(x=>T[lang].modes[x]).join(' ' + T[lang].then + ' ') + ' · '
-    + (e.free ? T[lang].free_rhythm : localDigits(e.bpm,lang) + ' bpm');
-}
-
-/* "Heard or felt?": the two questions of the listening study, 1 to 5, answered on this page only. */
-const RATE = {heard:0, felt:0};
-function rateNote(){
-  const lang = current ? current.lang : PAGE_LANG;
-  $('rateNote').textContent = (RATE.heard && RATE.felt)
-    ? T[lang][RATE.felt < RATE.heard ? 'rate_less' : RATE.felt > RATE.heard ? 'rate_more' : 'rate_same'] : '';
-}
-document.querySelectorAll('.feeling-scale').forEach(box=>{
-  for(let n=1;n<=5;n++){
-    const b = document.createElement('button');
-    b.type = 'button'; b.setAttribute('role','radio'); b.setAttribute('aria-checked','false'); b.dataset.n = n; b.textContent = n;
-    b.addEventListener('click',()=>{
-      RATE[box.dataset.q] = n;
-      box.querySelectorAll('button').forEach(x=>x.setAttribute('aria-checked', String(+x.dataset.n===n)));
-      rateNote();
-    });
-    box.appendChild(b);
-  }
-});
-
-function showResult(text,hit,autoplay,v,pos){
-  lastArgs = [text,hit,v,pos];
-  const lang = hit.lang, mode = !!hit.mode, at = pos || hit.pos;
-  const p = mode ? {v:0,a:0} : (at || POS[hit.emo]);
-  const key = (mode || hit.keep) ? hit.emo : (at ? nearest(p.v,p.a) : hit.emo);
-  const e = mode ? Object.assign({persian:true},MODES[key]) : synth(p.v,p.a,key);
+function showResult(text,hit,autoplay,pos){
+  const lang = hit.lang, at = pos || hit.pos;
+  const p = at || POS[hit.emo];
+  const key = hit.keep ? hit.emo : (at ? nearest(p.v,p.a) : hit.emo);
+  const e = synth(p.v,p.a,key);
   const names = T[lang].emotions;
   const label = hit.negated ? T[lang].not + ' ' + names[hit.emo].name : hit.second ? names[hit.emo].name + ' + ' + names[hit.second].name : names[key].name;
-  const mod = !mode && !hit.second && hit.intensity ? T[lang][hit.intensity>0 ? 'intense' : 'gentle'] : '';
+  const mod = !hit.second && hit.intensity ? T[lang][hit.intensity>0 ? 'intense' : 'gentle'] : '';
   const box = $('result');
   box.hidden = false; box.lang = lang; box.dir = lang==='fa' ? 'rtl' : 'ltr';
-  current = {text,key,lang,v:v||0,pos:p,e,long:pendingLong};
-  pendingLong = false;
+  current = {text,key,lang,pos:p,e};
   current.phrase = makePhrase(current);
-  if(mode) MARK.hidden = true; else moveMarker(p);
+  moveMarker(p);
   // The nearest feeling on the map is marked, so the map and the answer always agree.
-  document.querySelectorAll('.taf-dot').forEach(d=>d.setAttribute('aria-current', String(!mode && d.dataset.k===key)));
+  document.querySelectorAll('.taf-dot').forEach(d=>d.setAttribute('aria-current', String(d.dataset.k===key)));
+  lightCell(key,'on'); peek(null);
   drawRoll(current.phrase);
   $('emo').textContent = label;
   if(mod){ const m = document.createElement('span'); m.className = 'feeling-emo-mod'; m.textContent = ' · ' + mod; $('emo').appendChild(m); }
   $('cue').textContent = names[key].cue;
-  const rare = !mode && lens==='p' && RARE.has(key);
-  $('rare').hidden = !rare; $('rare').textContent = rare ? T[lang].rare : '';
   updateMeta();
   if(!autoplay){ playId++; setPlaying(false); }
   $('share').textContent = T[lang].share;
-  $('take').textContent = T[lang].take;
-  $('long').textContent = T[lang][current.long ? 'shorter' : 'longer'];
-  $('soundLabel').textContent = T[lang].sound;
   $('why').textContent = T[lang].why;
-  ['auto','keys','strings','plucked','breath'].forEach(k=>{ $('t-'+k).textContent = T[lang]['timbre_'+k]; });
-  document.querySelectorAll('#taf-timbres button').forEach(b=>b.setAttribute('aria-pressed', String(b.dataset.t===timbre)));
-  $('scaleLabel').textContent = T[lang].scales;
-  $('l-w').textContent = T[lang].scale_w; $('l-p').textContent = T[lang].scale_p;
-  $('lensNote').textContent = T[lang].lens_note;
-  syncLens();
-  $('rate').hidden = mode;
-  if(!mode){
-    $('rateSum').textContent = T[lang].rate_sum; $('rateHelp').textContent = T[lang].rate_scale;
-    $('qHeard').textContent = T[lang].rate_heard.replace('%s',names[key].name);
-    $('qFelt').textContent = T[lang].rate_felt.replace('%s',names[key].name);
-    $('rateLocal').textContent = T[lang].rate_local; $('rateNote').textContent = '';
-    RATE.heard = RATE.felt = 0;
-    document.querySelectorAll('.feeling-scale button').forEach(b=>{ b.setAttribute('aria-checked','false'); b.textContent = localDigits(b.dataset.n,lang); });
-  }
   $('shareOut').textContent = '';
   $('status').textContent = '';
   if(autoplay) play();
@@ -740,7 +821,7 @@ function showResult(text,hit,autoplay,v,pos){
   box.scrollIntoView({block:'nearest',behavior:calm?'auto':'smooth'});
 }
 
-async function handle(raw,autoplay=true,localOnly=false,v=0){
+async function handle(raw,autoplay=true,localOnly=false){
   const text = raw.trim().slice(0,40);
   if(!text) return;
   $('status').textContent = '';
@@ -749,7 +830,7 @@ async function handle(raw,autoplay=true,localOnly=false,v=0){
   if(!hit && localOnly){ $('status').textContent = ''; return; }
   if(!hit){
     $('status').textContent = '…';
-    const ai = localOnly ? null : await remoteClassify(text);
+    const ai = await remoteClassify(text);
     if(ai && ai.emotion && EMO[ai.emotion]){
       const l = ['en','es','fa'].includes(ai.lang) ? ai.lang : detectLang(text);
       hit = place({emo:ai.emotion,lang:l}, null, intensity);
@@ -760,7 +841,7 @@ async function handle(raw,autoplay=true,localOnly=false,v=0){
     $('status').textContent = T[PAGE_LANG].unknown;
     return;
   }
-  showResult(text,hit,autoplay,v);
+  showResult(text,hit,autoplay);
 }
 
 $('form').addEventListener('submit',ev=>{ ev.preventDefault(); ensureAudio(); handle($('feeling').value); });
@@ -772,53 +853,26 @@ $('play').addEventListener('click',()=>{
   if($('play').dataset.playing==='true') stop();
   else { ensureAudio(); play(); }
 });
-$('take').addEventListener('click',()=>{
-  if(!current) return;
-  ensureAudio();
-  current.v++; current.phrase = makePhrase(current);
-  updateMeta(); drawRoll(current.phrase); play();
-});
-$('long').addEventListener('click',()=>{
-  if(!current) return;
-  ensureAudio();
-  current.long = !current.long; current.phrase = makePhrase(current);
-  $('long').textContent = T[current.lang][current.long ? 'shorter' : 'longer'];
-  drawRoll(current.phrase); play();
-});
-document.querySelectorAll('#taf-lens button').forEach(b=>b.addEventListener('click',()=>{
-  lens = b.dataset.l; syncLens();
-  if(current && lastArgs){ pendingLong = current.long; ensureAudio(); showResult(lastArgs[0],lastArgs[1],true,lastArgs[2],lastArgs[3]); }
-}));
-document.querySelectorAll('#taf-timbres button').forEach(b=>b.addEventListener('click',()=>{
-  timbre = b.dataset.t;
-  document.querySelectorAll('#taf-timbres button').forEach(x=>x.setAttribute('aria-pressed', String(x===b)));
-  if(current){ ensureAudio(); play(); }
-}));
 $('share').addEventListener('click',async()=>{
   if(!current) return;
-  const url = location.href.split('#')[0] + '#' + (/^p:/.test(current.text) ? 'p=' + Math.round(current.pos.v*100) + ',' + Math.round(current.pos.a*100) : 'f=' + encodeURIComponent(current.text))
-    + (current.v ? '&v='+current.v : '') + (timbre!=='auto' ? '&s='+timbre : '') + '&l=' + lens + (current.long ? '&g=1' : '');
+  const url = location.href.split('#')[0] + '#' + (/^p:/.test(current.text) ? 'p=' + Math.round(current.pos.v*100) + ',' + Math.round(current.pos.a*100) : 'f=' + encodeURIComponent(current.text));
   try{ await navigator.clipboard.writeText(url); $('shareOut').textContent = T[current.lang].copied; }
   catch(err){ $('shareOut').textContent = url; }
 });
 
 /* A shared link opens the result but waits for a tap before making sound. It only uses the
    words the page already knows: an unknown word would need the network, so it waits for the
-   visitor to press the button. */
-syncLens();
+   visitor to press the button. Links made when there were more options (#...&v=, &s=, &l=, &g=)
+   still open; the extra parts are ignored. */
 try{
-  const h = location.hash, m = h.match(/f=([^&]+)/), mp = h.match(/p=(-?\d+),(-?\d+)/), hl = h.match(/[#&]l=(w|p)/);
-  // A link without l= was made before the scales choice existed: it keeps the Western scales.
-  if(m || mp){ lens = hl ? hl[1] : 'w'; pendingLong = /[#&]g=1/.test(h); syncLens(); }
+  const h = location.hash, m = h.match(/f=([^&]+)/), mp = h.match(/p=(-?\d+),(-?\d+)/);
   if(mp){
-    const p = {v:Math.max(-1,Math.min(1,+mp[1]/100)), a:Math.max(-1,Math.min(1,+mp[2]/100))}, ms = h.match(/s=(keys|strings|plucked|breath)/);
-    if(ms) timbre = ms[1];
+    const p = {v:Math.max(-1,Math.min(1,+mp[1]/100)), a:Math.max(-1,Math.min(1,+mp[2]/100))};
     PAD.closest('details').open = true;
-    showResult('p:'+Math.round(p.v*20)+','+Math.round(p.a*20),{emo:nearest(p.v,p.a),lang:PAGE_LANG},false,0,p);
+    showResult('p:'+Math.round(p.v*20)+','+Math.round(p.a*20),{emo:nearest(p.v,p.a),lang:PAGE_LANG},false,p);
   } else if(m){
-    const w = decodeURIComponent(m[1]), mv = h.match(/v=(\d+)/), ms = h.match(/s=(keys|strings|plucked|breath)/);
-    if(ms) timbre = ms[1];
-    $('feeling').value = w; handle(w,false,true,mv ? Math.min(99,+mv[1]) : 0);
+    const w = decodeURIComponent(m[1]);
+    $('feeling').value = w; handle(w,false,true);
   }
 }catch(err){}
 })();

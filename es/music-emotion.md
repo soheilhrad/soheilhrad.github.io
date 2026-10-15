@@ -1,8 +1,8 @@
 ---
 layout: project
 title: Escucha un sentimiento
-description: "Escribe una palabra de un sentimiento en inglés, español o persa y escucha una frase breve de música. Las etiquetas se contrastan con cómo valoraron los oyentes la música clásica persa."
-lede: "Escribe una palabra de un sentimiento y escucha una frase construida con las señales que la investigación asocia a él. Se contrasta con un estudio de escucha de música clásica persa."
+description: "Escribe una palabra de un sentimiento en inglés, español o persa, o toca un mapa de sentimientos, y escucha una frase breve de música. El mapa se coloca a partir de puntuaciones de palabras; las etiquetas se contrastan con cómo valoraron los oyentes la música clásica persa."
+lede: "Escribe una palabra de un sentimiento, o toca el mapa, y escucha una frase construida con las señales que la investigación asocia a él. El mapa se coloca según cómo puntuó la gente las palabras; las etiquetas se contrastan con un estudio de escucha de música clásica persa."
 decision: "Oír una emoción y sentirla no es lo mismo, así que la página las mantiene separadas: lo que dice la música y lo que sientes tú."
 permalink: /es/projects/music-emotion/
 ref: music-emotion
@@ -14,10 +14,9 @@ cta_url: /es/#taf-title
 <details class="fold" markdown="1" open>
 <summary>{{ t.detail_does }}</summary>
 
-- **Una sola entrada.** Escribe un sentimiento en inglés, español o persa, toca el mapa o escribe el nombre de un modo persa como Shur. Suena una frase breve.
-- **Hecha con señales, no con grabaciones.** El modo, el tempo, el registro, el brillo, el ritmo y el volumen forman la música. La misma palabra da siempre la misma frase.
-- **¿Oído o sentido?** Tras cada frase puedes valorar lo que expresa y lo que sientes, como en el estudio. Las respuestas se quedan en la página.
-- **Escalas occidentales o persas.** La persa usa pasos de cuarto de tono bemol, un bordón y voces punteadas o de soplo.
+- **Una entrada y un mapa.** Escribe un sentimiento en inglés, español o persa, o toca o arrastra sobre el mapa: cada punto suena distinto. Al pasar el cursor se ve cómo sería un punto antes de que suene.
+- **Cámbialo escribiendo.** «muy triste» desplaza el punto hacia fuera, «un poco triste» hacia dentro, «no feliz» al otro lado y «triste y esperanzado» cae entre los dos.
+- **Hecha con señales, tocada con instrumentos reales.** El modo, el tempo, el registro, el brillo, el ritmo y el volumen forman la música, y la tocan piano, cuerdas, flauta y otros instrumentos grabados. La misma palabra da siempre la misma frase.
 
 </details>
 
@@ -42,12 +41,16 @@ En un estudio de escucha, 20 personas sin formación musical profesional oyeron 
 <details class="fold" markdown="1">
 <summary>{{ t.detail_built }}</summary>
 
-- **Dos capas.** La página suena a partir de señales publicadas (el mapa de Russell, la Escala Ginebrina de Emociones Musicales, los grupos de Hevner, las revisiones de Juslin y Laukka). El estudio contrasta las etiquetas con grabaciones reales.
-- **Lo que cambió el estudio.** Tristeza, añoranza, nostalgia, conmovido y agridulce suenan en ritmo libre, con una subida y bajada de volumen; alegría y juego mantienen un pulso y un volumen estables. En nuestra medición aproximada de las grabaciones, el volumen se movía entre 8 y 14 dB en las piezas alegres y entre 19 y 48 dB en las tristes. «Agridulce» cambia la tercera de mayor a menor (otra versión lo invierte), como las piezas mixtas del estudio.
-- **No es una prueba del sonido.** Las piezas del estudio eran interpretaciones reales y el sonido de esta página es generado. Un análisis aproximado de altura respaldó los pasos de cuarto de tono en dos de ellas (Homayun y Shur) y no fue concluyente en el resto.
+- **Dos capas.** Dónde está cada sentimiento sale de las puntuaciones de palabras (Warriner, Kuperman y Brysbaert, 2013) sobre el modelo circumplejo de Russell (1980). Cómo suena un punto sigue a Eerola, Friberg y Bresin (2013), y el carácter de cada sentimiento, a la Escala Ginebrina de Emociones Musicales, a los grupos de Hevner y a las revisiones de Juslin y Laukka. El estudio contrasta las etiquetas con grabaciones reales.
+- **Lo que es decisión nuestra.** El valor de cada paso (tempo, semitonos, decibelios), qué instrumento toca cada sentimiento, que «no» cruce al otro lado del centro y aplane el punto, que una mezcla caiga a medio camino entre dos sentimientos, y cuánto desplazan «muy» y «un poco». Que la intensidad sea la distancia al centro sí sigue la lectura de Russell.
+- **Lo que cambió el estudio.** Tristeza, añoranza, nostalgia, conmovido y agridulce suenan en ritmo libre, con una subida y bajada de volumen; alegría y juego mantienen un pulso y un volumen estables. En nuestra medición aproximada de las grabaciones, el volumen se movía entre 8 y 14 dB en las piezas alegres y entre 19 y 48 dB en las tristes. «Agridulce» cambia la tercera de mayor a menor, como las piezas mixtas del estudio.
+- **Instrumentos reales.** Las notas son grabaciones de notas sueltas de VSCO 2 Community Edition (Versilian Studios, publicada como CC0), en la edición web de N. P. Brosowsky (tonejs-instruments, CC BY 3.0). Qué instrumento toca cada sentimiento es decisión nuestra, no un hallazgo. El único vínculo con la investigación es el brillo: en Eerola, Friberg y Bresin (2013) los sonidos más brillantes iban con más activación, así que la página aviva o apaga el sonido según ella.
+- **No es una prueba del sonido.** Las piezas del estudio eran interpretaciones reales; esta página ensambla notas grabadas con reglas. La página no toca modos de la música clásica persa.
 - **El estudio es la investigación de máster de quien firma la página** (sin publicar).
 
 </details>
+
+{% include placement.html %}
 
 <details class="fold" markdown="1">
 <summary>{{ t.detail_limits }}</summary>
