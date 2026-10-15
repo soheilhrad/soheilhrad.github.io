@@ -15,7 +15,7 @@ cta_url: /#taf-title
 <summary>{{ t.detail_does }}</summary>
 
 - **One input.** Type a feeling in English, Spanish or Persian, or touch the map. A short phrase plays.
-- **Built from cues, not recordings.** Mode, tempo, register, brightness, timing and loudness make the music. The same word always gives the same phrase.
+- **Built from cues, played on real instruments.** Mode, tempo, register, brightness, timing and loudness make the music, and recorded piano, strings, flute and others play it. The same word always gives the same phrase.
 
 </details>
 
@@ -42,7 +42,8 @@ In a listening study, 20 people with no professional music training heard nine p
 
 - **Two layers.** The page sounds from published cues (Russell's map, the Geneva Emotional Music Scale, Hevner's clusters, the reviews by Juslin and Laukka). The study checks the labels on real recordings.
 - **What the study changed.** Sadness, longing, nostalgia, being moved and bittersweet play in free rhythm with a swell in loudness; joy and play keep a steady beat and steady loudness. In our own rough measurement of the recordings, loudness moved by about 8 to 14 dB in the happy pieces and by 19 to 48 dB in the sad ones. Bittersweet turns the third from major to minor, as the study's mixed pieces did.
-- **It is not a test of the sound.** The study's pieces were real performances and this page's sound is generated. The page does not play Persian classical modes.
+- **Real instruments.** The notes are single-note recordings from VSCO 2 Community Edition (Versilian Studios, released as CC0), in the web edition by N. P. Brosowsky (tonejs-instruments, CC BY 3.0). Which instrument plays which feeling is our choice, not a finding. The one research link is brightness: in Eerola, Friberg and Bresin (2013) brighter sounds went with higher arousal, so the page brightens or darkens the sound with it.
+- **It is not a test of the sound.** The study's pieces were real performances; this page assembles recorded notes by rules. The page does not play Persian classical modes.
 - **The study is the site author's own master's research** (unpublished).
 
 </details>

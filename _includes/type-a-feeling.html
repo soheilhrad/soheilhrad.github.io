@@ -73,9 +73,10 @@ the cues for the chosen point on the map; there are no sound files.
       <li>Juslin, P. N., &amp; Laukka, P. (2003). Communication of emotions in vocal expression and music performance: Different channels, same code? <i>Psychological Bulletin, 129</i>(5), 770–814.</li>
       <li>Russell, J. A. (1980). A circumplex model of affect. <i>Journal of Personality and Social Psychology, 39</i>(6), 1161–1178.</li>
       <li>Warriner, A. B., Kuperman, V., &amp; Brysbaert, M. (2013). Norms of valence, arousal, and dominance for 13,915 English lemmas. <i>Behavior Research Methods, 45</i>(4), 1191–1207.</li>
+      <li>Instrument sounds: single-note recordings from VSCO 2 Community Edition (Versilian Studios, CC0), in the web edition by Brosowsky, N. P., tonejs-instruments (CC BY 3.0), github.com/nbrosowsky/tonejs-instruments.</li>
       <li>Zentner, M., Grandjean, D., &amp; Scherer, K. R. (2008). Emotions evoked by the sound of music: Characterization, classification, and measurement. <i>Emotion, 8</i>(4), 494–521.</li>
     </ul>
   </details>
 </section>
-<script type="application/json" id="taf-data">{"endpoint": {{ site.classify_endpoint | default: "" | jsonify }}, "feelings": {{ site.data.feelings.feelings | jsonify }}, "strings": {"en": {{ site.data.i18n.en.feeling | jsonify }}, "es": {{ site.data.i18n.es.feeling | jsonify }}, "fa": {{ site.data.i18n.fa.feeling | jsonify }} } }</script>
+<script type="application/json" id="taf-data">{"endpoint": {{ site.classify_endpoint | default: "" | jsonify }}, "feelings": {{ site.data.feelings.feelings | jsonify }}, "instruments": {{ site.data.instruments.instruments | jsonify }}, "samples": {{ '/assets/audio/instruments/' | relative_url | jsonify }}, "samplesVersion": 1, "strings": {"en": {{ site.data.i18n.en.feeling | jsonify }}, "es": {{ site.data.i18n.es.feeling | jsonify }}, "fa": {{ site.data.i18n.fa.feeling | jsonify }} } }</script>
 <script src="{{ '/assets/js/type-a-feeling.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>

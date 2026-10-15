@@ -15,7 +15,7 @@ cta_url: /es/#taf-title
 <summary>{{ t.detail_does }}</summary>
 
 - **Una sola entrada.** Escribe un sentimiento en inglés, español o persa, o toca el mapa. Suena una frase breve.
-- **Hecha con señales, no con grabaciones.** El modo, el tempo, el registro, el brillo, el ritmo y el volumen forman la música. La misma palabra da siempre la misma frase.
+- **Hecha con señales, tocada con instrumentos reales.** El modo, el tempo, el registro, el brillo, el ritmo y el volumen forman la música, y la tocan piano, cuerdas, flauta y otros instrumentos grabados. La misma palabra da siempre la misma frase.
 
 </details>
 
@@ -42,7 +42,8 @@ En un estudio de escucha, 20 personas sin formación musical profesional oyeron 
 
 - **Dos capas.** La página suena a partir de señales publicadas (el mapa de Russell, la Escala Ginebrina de Emociones Musicales, los grupos de Hevner, las revisiones de Juslin y Laukka). El estudio contrasta las etiquetas con grabaciones reales.
 - **Lo que cambió el estudio.** Tristeza, añoranza, nostalgia, conmovido y agridulce suenan en ritmo libre, con una subida y bajada de volumen; alegría y juego mantienen un pulso y un volumen estables. En nuestra medición aproximada de las grabaciones, el volumen se movía entre 8 y 14 dB en las piezas alegres y entre 19 y 48 dB en las tristes. «Agridulce» cambia la tercera de mayor a menor, como las piezas mixtas del estudio.
-- **No es una prueba del sonido.** Las piezas del estudio eran interpretaciones reales y el sonido de esta página es generado. La página no toca modos de la música clásica persa.
+- **Instrumentos reales.** Las notas son grabaciones de notas sueltas de VSCO 2 Community Edition (Versilian Studios, publicada como CC0), en la edición web de N. P. Brosowsky (tonejs-instruments, CC BY 3.0). Qué instrumento toca cada sentimiento es decisión nuestra, no un hallazgo. El único vínculo con la investigación es el brillo: en Eerola, Friberg y Bresin (2013) los sonidos más brillantes iban con más activación, así que la página aviva o apaga el sonido según ella.
+- **No es una prueba del sonido.** Las piezas del estudio eran interpretaciones reales; esta página ensambla notas grabadas con reglas. La página no toca modos de la música clásica persa.
 - **El estudio es la investigación de máster de quien firma la página** (sin publicar).
 
 </details>

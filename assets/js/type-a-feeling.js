@@ -421,6 +421,59 @@ function voice(e,fx,base,midi,dur,vel,gainScale){
   }
 }
 
+/* ---------- real instruments ---------- */
+/* Each feeling is played by one recorded instrument, with strings under it and a double bass below.
+   The recordings are single notes from VSCO 2 Community Edition (see tools/make_samples.py and
+   _data/instruments.yml). An instrument's notes are fetched and decoded the first time it is needed,
+   which is after the visitor has pressed play, never when the page loads. If they cannot be had, the
+   oscillator voice above plays instead, so the page always makes sound. Which instrument suits which
+   feeling is our choice, not a finding; the brightness filter (makeFx) is what carries the timbre cue. */
+const LEAD = {
+  joy:'piano', sadness:'violin', calm:'flute', fear:'contrabass', anger:'horn', tenderness:'harp', longing:'violin',
+  wonder:'harp', hope:'piano', nostalgia:'piano', power:'trumpet', tension:'violin', transcendence:'flute',
+  playfulness:'xylophone', bittersweet:'violin', moved:'violin'
+};
+const PAD_INST = 'violin', BASS_INST = 'contrabass';
+const SAMPLE_GAIN = 2.5;           // the recordings are levelled quietly; this brings them up to the oscillators' level
+const SAMPLES = new Map();         // instrument name -> promise of {kind, bufs:[{midi, buf}]}, or null
+function loadInstrument(name){
+  if(SAMPLES.has(name)) return SAMPLES.get(name);
+  const spec = DATA.instruments && DATA.instruments[name];
+  const p = !spec ? Promise.resolve(null) : Promise.all(spec.notes.map(async n=>{
+    const r = await fetch(DATA.samples + name + '/' + n + '.mp3?v=' + DATA.samplesVersion);
+    if(!r.ok) throw new Error(name + ' ' + n);
+    return {midi:n, buf: await AC.decodeAudioData(await r.arrayBuffer())};
+  })).then(bufs=>({kind:spec.kind, bufs}), ()=>{ SAMPLES.delete(name); return null; });   // try again next time
+  SAMPLES.set(name,p);
+  return p;
+}
+/* The nearest recorded note, shifted by a few semitones; a note outside the recorded range comes back
+   in by octaves. A struck note (piano, harp) rings out; a bowed or blown one swells and is released. */
+function sampleVoice(inst,e,fx,t0,midi,dur,vel,gainScale){
+  const notes = inst.bufs, lo = notes[0].midi, hi = notes[notes.length-1].midi;
+  while(midi < lo-3) midi += 12;
+  while(midi > hi+3) midi -= 12;
+  let best = notes[0];
+  for(const n of notes) if(Math.abs(n.midi-midi) < Math.abs(best.midi-midi)) best = n;
+  const rate = Math.pow(2,(midi-best.midi)/12), room = best.buf.duration/rate - .05;
+  const struck = inst.kind==='struck';
+  const a = struck ? .004 : Math.min(Math.max(e.attack,.03),.25);
+  const rel = struck ? (e.legato < .6 ? .25 : .6) : Math.min(e.release,.8);
+  const hold = Math.min(Math.max(dur*e.legato,.15), Math.max(.2,room-rel));
+  const peak = e.gain*vel*(gainScale||1)*SAMPLE_GAIN;
+  const g = AC.createGain();
+  g.gain.setValueAtTime(.0001,t0);
+  g.gain.exponentialRampToValueAtTime(peak,t0+a);
+  g.gain.setValueAtTime(peak,t0+hold);
+  g.gain.exponentialRampToValueAtTime(.0001,t0+hold+rel);
+  const src = AC.createBufferSource();
+  src.buffer = best.buf; src.playbackRate.value = rate;
+  src.connect(g); g.connect(fx);
+  src.start(t0); src.stop(t0+hold+rel+.05);
+}
+const note = (inst,e,fx,t0,midi,dur,vel,gainScale) =>
+  inst ? sampleVoice(inst,e,fx,t0,midi,dur,vel,gainScale) : voice(e,fx,t0,midi,dur,vel,gainScale);
+
 /* The card's one main button shows what pressing it will do: Play when silent, Stop while sounding. */
 function setPlaying(on){
   const b = $('play'), lang = current ? current.lang : PAGE_LANG;
@@ -439,23 +492,28 @@ function stop(){
   document.querySelectorAll('#taf-roll rect').forEach(r=>r.style.opacity=.55);
 }
 
-function play(){
+async function play(){
   if(!current || !ensureAudio()) return;
-  const {phrase,key,e} = current, lead = e, now = AC.currentTime;
+  const id = ++playId;
   fadeOut();
+  setPlaying(true);                       // Stop shows at once, even while an instrument is still loading
+  const {phrase,key,e} = current, names = [LEAD[key],PAD_INST,BASS_INST];
+  if(names.some(n=>!SAMPLES.has(n))) $('status').textContent = '…';
+  const [leadI,padI,bassI] = await Promise.all(names.map(loadInstrument));
+  if(id!==playId) return;                 // stopped, or another feeling chosen, while it loaded
+  $('status').textContent = '';
   bus = AC.createGain(); bus.connect(master);
-  setPlaying(true);
-  const fx = makeFx(lead,bus), base = now + .1, id = ++playId;
+  const fx = makeFx(e,bus), base = AC.currentTime + .1;
   phrase.notes.forEach(n=>{
-    voice(lead,fx,base+n.t,n.midi,n.dur,n.vel,1);
-    if(n.extra) voice(lead,fx,base+n.t,n.extra,n.dur,n.vel,.6);
+    note(leadI,e,fx,base+n.t,n.midi,n.dur,n.vel,1);
+    if(n.extra) note(leadI,e,fx,base+n.t,n.extra,n.dur,n.vel,.6);
   });
   const padE = Object.assign({},e,{wave:'triangle',attack:.3,decay:.5,sustain:.8,release:.7,legato:1,vib:null,detune:7,
                                    gain:e.gain*.42,pure:true,bright:Math.min(e.bright,1800)});
   const bassE = Object.assign({},e,{wave:'sine',attack:.05,decay:.3,sustain:.8,release:.5,legato:.95,vib:null,detune:0,gain:e.gain*1.1,pure:true});
   phrase.chords.forEach(c=>{
-    c.tones.forEach(m=>voice(padE,fx,base+c.t,m,c.dur,.7,1));
-    voice(bassE,fx,base+c.t,c.bass,c.dur,.8,1);
+    c.tones.forEach(m=>note(padI,padE,fx,base+c.t,m,c.dur,.7,padI ? .4 : 1));
+    note(bassI,bassE,fx,base+c.t,c.bass,c.dur,.8,bassI ? .7 : 1);
   });
   if(e.drone){
     // A steady note under the melody.
