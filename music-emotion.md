@@ -47,6 +47,8 @@ In a listening study, 20 people with no professional music training heard nine p
 
 </details>
 
+{% include placement.html %}
+
 <details class="fold" markdown="1">
 <summary>{{ t.detail_limits }}</summary>
 

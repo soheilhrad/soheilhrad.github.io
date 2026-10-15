@@ -20,6 +20,8 @@ github.com works too. Installing things locally is only for previewing before yo
 | `_data/projects.yml` | The project cards, in all three languages |
 | `_data/i18n.yml` | Menu, buttons and other interface text, in all three languages |
 | `_includes/type-a-feeling.html`, `assets/js/type-a-feeling.js` | The one input on the home page ("Type a feeling"); its text is under `feeling:` in `_data/i18n.yml` |
+| `_data/feelings.yml` | Where each of the 16 feelings sits on the map, with the word ratings it comes from. Generated: don't edit by hand |
+| `tools/make_feelings.py` | Builds `_data/feelings.yml` from the published word norms (Warriner et al. 2013). The norms file goes in `tools/_raw/` and is not committed; see the top of the script |
 | `worker/` | The Cloudflare Worker that classifies words the input doesn't know, and how to deploy it |
 | `_layouts/project.html` | The project page layout: video or button, then folded sections |
 | `assets/js/video.js` | Click-to-load for YouTube videos |

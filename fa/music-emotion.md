@@ -47,6 +47,8 @@ cta_url: /fa/#taf-title
 
 </details>
 
+{% include placement.html %}
+
 <details class="fold" markdown="1">
 <summary>{{ t.detail_limits }}</summary>
 

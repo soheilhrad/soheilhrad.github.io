@@ -82,15 +82,14 @@ const EMO = {
 };
 
 /* Where each feeling sits on the map: valence (dark to bright, left to right) and arousal (calm to
-   intense, bottom to top), after Russell's circumplex. Touching anywhere on the map plays music
-   for that point: tempo, mode, register and brightness follow the position, so there are as many
-   tracks as there are places to touch. */
-const POS = {
-  anger:{v:-.85,a:.88}, tension:{v:-.35,a:.85}, fear:{v:-.62,a:.45}, sadness:{v:-.78,a:-.55}, longing:{v:-.5,a:-.2},
-  nostalgia:{v:0,a:-.45}, calm:{v:.3,a:-.88}, tenderness:{v:.62,a:-.5}, transcendence:{v:.5,a:-.12}, hope:{v:.15,a:.1},
-  wonder:{v:.15,a:.6}, power:{v:.55,a:.92}, joy:{v:.88,a:.55}, playfulness:{v:.72,a:.28},
-  bittersweet:{v:-.22,a:-.32}, moved:{v:-.18,a:.3}
-};
+   intense, bottom to top), on Russell's circumplex (1980). The positions are not set by hand: they
+   are where people rated the word for the feeling in the norms of Warriner, Kuperman & Brysbaert
+   (2013), as (rating - 5) / 4. They come from _data/feelings.yml, made by tools/make_feelings.py,
+   which also says how the few feelings without a rating of their own were placed (ESTIMATED).
+   Touching anywhere on the map plays music for that point: tempo, mode, register and brightness
+   follow the position, so there are as many tracks as there are places to touch. */
+const POS = {}, ESTIMATED = new Set();
+DATA.feelings.forEach(f=>{ POS[f.id] = {v:f.v, a:f.a}; if(f.status==='estimated') ESTIMATED.add(f.id); });
 const DARK_TO_BRIGHT = ['locrian','phrygian','minor','dorian','major','lydian'];
 function nearest(v,a){
   let best = 'calm', bd = 9;
@@ -522,14 +521,46 @@ function moveMarker(p){
 }
 Object.keys(POS).forEach(k=>{
   const b = document.createElement('button');
-  b.type = 'button'; b.className = 'taf-dot'; b.dataset.k = k;
+  b.type = 'button'; b.className = 'taf-dot'; b.dataset.k = k; if(ESTIMATED.has(k)) b.dataset.estimated = '';
   b.style.left = ((POS[k].v+1)/2*100)+'%'; b.style.top = ((1-POS[k].a)/2*100)+'%';
   const name = T[PAGE_LANG].emotions[k].name;
   b.innerHTML = '<span class="taf-dot-name"></span>'; b.firstChild.textContent = name;
-  b.setAttribute('aria-label',name);
+  b.setAttribute('aria-label', ESTIMATED.has(k) ? name + ' (' + T[PAGE_LANG].estimated + ')' : name);
   b.addEventListener('click',ev=>{ ev.stopPropagation(); $('feeling').value = ''; ensureAudio(); showResult(k,{emo:k,lang:PAGE_LANG},true); });
   PAD.appendChild(b);
 });
+/* The names sit beside their points on whichever side is free of other names and points. Several
+   feelings are rated almost alike, so their points nearly coincide: a name that finds no free side
+   stays hidden and shows when its point is hovered, focused or playing. Needs the map to be open
+   (a folded map has no size), so it runs again when the fold opens, the window changes or fonts load. */
+function declutter(){
+  const pr = PAD.getBoundingClientRect();
+  if(!pr.width) return;
+  const R = 7, dots = [...PAD.querySelectorAll('.taf-dot')];
+  const pts = dots.map(d=>{ const r = d.getBoundingClientRect(), n = d.firstChild; return {d, x:r.left+r.width/2-pr.left, y:r.top+r.height/2-pr.top, w:n.offsetWidth, h:n.offsetHeight}; });
+  const near = p => pts.filter(q=>q!==p && Math.hypot(q.x-p.x,q.y-p.y) < 90).length;
+  const hit = (a,b) => a.l < b.r && a.r > b.l && a.t < b.b && a.b > b.t;
+  const boxes = pts.map(p=>({l:p.x-R-1,r:p.x+R+1,t:p.y-R-1,b:p.y+R+1}));
+  const taken = [];
+  pts.map((p,i)=>({p,i})).sort((u,v)=>near(v.p)-near(u.p)).forEach(({p,i})=>{
+    const cands = {
+      r:{l:p.x+R+4, t:p.y-p.h/2},       l:{l:p.x-R-4-p.w, t:p.y-p.h/2},
+      t:{l:p.x-p.w/2, t:p.y-R-3-p.h},   b:{l:p.x-p.w/2, t:p.y+R+3}
+    };
+    let side = 'x';
+    for(const s of ['r','l','t','b']){
+      const c = cands[s], box = {l:c.l-2, r:c.l+p.w+2, t:c.t-1, b:c.t+p.h+1};
+      if(box.l < 0 || box.t < 0 || box.r > pr.width || box.b > pr.height) continue;
+      if(taken.some(o=>hit(box,o)) || boxes.some((o,j)=>j!==i && hit(box,o))) continue;
+      side = s; taken.push(box); break;
+    }
+    p.d.dataset.side = side;
+  });
+}
+declutter();
+PAD.closest('details').addEventListener('toggle',declutter);
+window.addEventListener('resize',()=>requestAnimationFrame(declutter));
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(declutter);
 function padPoint(x,y){
   const r = PAD.getBoundingClientRect();
   return {v:Math.max(-1,Math.min(1,(x-r.left)/r.width*2-1)), a:Math.max(-1,Math.min(1,1-(y-r.top)/r.height*2))};

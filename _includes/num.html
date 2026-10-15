@@ -1,0 +1,7 @@
+{%- comment -%}A number as text; in Persian pages with Persian digits and the Persian decimal mark. Usage: include num.html n=3.5{%- endcomment -%}
+{%- assign n = include.n | append: "" -%}
+{%- if page.lang == "fa" -%}
+{{- n | replace: "0", "۰" | replace: "1", "۱" | replace: "2", "۲" | replace: "3", "۳" | replace: "4", "۴" | replace: "5", "۵" | replace: "6", "۶" | replace: "7", "۷" | replace: "8", "۸" | replace: "9", "۹" | replace: ".", "٫" -}}
+{%- else -%}
+{{- n -}}
+{%- endif -%}

@@ -1,0 +1,27 @@
+{%- comment -%}
+The "Where each feeling sits" fold on the project page: one row per feeling from _data/feelings.yml
+(made by tools/make_feelings.py), the same data the map on the home page uses. Text is in
+_data/i18n.yml under `placement:`. Kept free of blank lines so the Markdown parser leaves the HTML alone.
+{%- endcomment -%}
+{%- assign t = site.data.i18n[page.lang] -%}
+{%- assign pl = t.placement -%}
+<details class="fold">
+<summary>{{ pl.title }}</summary>
+<p>{{ pl.intro }}</p>
+<table>
+<thead><tr>{% for c in pl.cols %}<th scope="col">{{ c }}</th>{% endfor %}</tr></thead>
+<tbody>
+{%- for f in site.data.feelings.feelings %}
+<tr>
+<th scope="row">{{ t.feeling.emotions[f.id].name }}</th>
+<td><span lang="en" dir="ltr">{% for r in f.rated %}{{ r.word }}{% unless forloop.last %}, {% endunless %}{% endfor %}</span>{% assign b = pl.basis[f.status] %}{% if b != "" %}<br><small>{{ b }}</small>{% endif %}</td>
+<td>{% include num.html n=f.rating.valence %}</td>
+<td>{% include num.html n=f.rating.arousal %}</td>
+<td>{% if f.russell %}<span lang="en" dir="ltr">{{ f.russell.word }}</span>: {% include num.html n=f.russell.angle %}°, {% include num.html n=f.russell.norm_angle %}°{% else %}–{% endif %}</td>
+</tr>
+{%- endfor %}
+</tbody>
+</table>
+<p>{{ pl.russell_note }}</p>
+<p>{{ pl.hollow }}</p>
+</details>
