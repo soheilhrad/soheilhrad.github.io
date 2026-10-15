@@ -18,7 +18,7 @@ slides:
   - file: slide5.jpg
     alt: "Why? In April 2025, OpenAI rolled back a ChatGPT update that had made the model 'noticeably more sycophantic'. One reason it gave: user feedback 'can sometimes favor more agreeable responses'."
   - file: slide6.jpg
-    alt: "Agreement is not a second opinion. Try this: ask it what the other person would say."
+    alt: "An AI agreeing with you is not a second opinion. Try this: before you act on its advice, ask it: What would the other person say? Where could I be wrong?"
 ---
 
 {% include slides.html %}
@@ -31,9 +31,7 @@ The researchers also ran three preregistered experiments with 2,405 people. Afte
 
 Why does it happen? In April 2025, OpenAI rolled back a ChatGPT update that had made the model "noticeably more sycophantic". One reason it gave: user feedback "can sometimes favor more agreeable responses".
 
-Try this: when you ask an AI about a conflict, ask it what the other person would say.
-
-Agreement is not a second opinion.
+An AI agreeing with you is not a second opinion. Try this: before you act on its advice, ask it, "What would the other person say? Where could I be wrong?"
 
 Sources:
 
