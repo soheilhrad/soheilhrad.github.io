@@ -2,9 +2,10 @@
 "Type a feeling": one input, one short phrase of sound. Interface text is in _data/i18n.yml
 under `feeling:`; the engine is assets/js/type-a-feeling.js. Nothing is requested from another
 site when the page loads, and no sound starts until the visitor presses the button or Enter.
-Layers: the field and its examples first; the answer card under it; the map (for people who
-want to explore) and "how it's made" stay folded until asked for. The sound is made live from
-the cues for the chosen point on the map; there are no sound files.
+Layers: the field and its examples first; the answer card under it; the map, open, because it is
+the main way to play; "how it's made" and the research stay folded until asked for. The music is
+made live from the cues for the chosen point on the map and played on recorded instrument notes
+(assets/audio/instruments/), which are fetched only after the visitor presses play.
 {%- endcomment -%}
 {%- assign t = site.data.i18n[page.lang] -%}
 {%- assign f = t.feeling -%}
@@ -48,7 +49,7 @@ the cues for the chosen point on the map; there are no sound files.
       </details>
     </div>
   </div>
-  <details class="feeling-fold feeling-map">
+  <details class="feeling-fold feeling-map" open>
     <summary>{{ f.map }}</summary>
     <p class="feeling-map-hint">{{ f.map_hint }}</p>
     <div id="taf-pad" class="feeling-pad" role="group" tabindex="0" aria-label="{{ f.pad | escape }}">
