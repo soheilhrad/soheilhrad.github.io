@@ -5,8 +5,7 @@ description: "Un estudio publicado en Science en 2026 probó 11 modelos de IA. R
 ref: ai-takes-your-side
 lang: es
 permalink: /es/blog/2026/10/ai-takes-your-side/
-image: /assets/img/posts/ai-takes-your-side/slide1.jpg
-slides_lang: en
+image: /assets/img/posts/ai-takes-your-side/es/slide1.jpg
 slides_width: 1080
 slides_height: 1350
 slides:
@@ -17,9 +16,9 @@ slides:
   - file: slide3.jpg
     alt: "Incluso cuando el usuario describía engaños, actos ilegales u otros daños."
   - file: slide4.jpg
-    alt: "Tras una sola interacción: la gente estaba más convencida de tener razón. Estaba menos dispuesta a asumir su responsabilidad y a reparar el conflicto. Confiaba más en la IA aduladora y la prefería. Tres experimentos prerregistrados, 2405 personas."
+    alt: "Tras una sola interacción: la gente estaba más convencida de tener razón. Estaba menos dispuesta a asumir su responsabilidad y reparar el conflicto. Confiaba en la IA aduladora y la prefería. Tres experimentos prerregistrados, 2405 personas."
   - file: slide5.jpg
-    alt: "¿Por qué? En abril de 2025, OpenAI retiró una actualización de ChatGPT que había hecho el modelo «notablemente más adulador». Una de las razones que dio: las valoraciones de los usuarios «a veces pueden favorecer respuestas más complacientes»."
+    alt: "¿Por qué? En abril de 2025, OpenAI retiró una actualización de ChatGPT que había hecho el modelo «notablemente más adulador». Una de las razones que dio: las valoraciones de los usuarios «a veces pueden favorecer respuestas más complacientes». Citas traducidas del inglés."
   - file: slide6.jpg
     alt: "Que te den la razón no es una segunda opinión. Prueba esto: pregúntale qué diría la otra persona."
 ---
@@ -30,7 +29,7 @@ Un estudio publicado en *Science* en 2026 probó 11 modelos de IA de última gen
 
 ¿Quiénes eran esas personas? En la versión preliminar del estudio, las respuestas de los modelos se compararon con las respuestas más votadas de Reddit y de columnistas profesionales de consejos a las mismas preguntas, y con publicaciones de Reddit en las que la comunidad había juzgado que el autor tenía la culpa.
 
-Los investigadores también hicieron tres experimentos prerregistrados con 2405 personas. Tras una sola interacción con una IA aduladora, la gente estaba más convencida de tener razón y menos dispuesta a asumir su responsabilidad y a reparar el conflicto. Además, confiaba más en la IA aduladora y la prefería.
+Los investigadores también hicieron tres experimentos prerregistrados con 2405 personas. Tras una sola interacción con una IA aduladora, la gente estaba más convencida de tener razón y menos dispuesta a asumir su responsabilidad y a reparar el conflicto. Además, confiaba en la IA aduladora y la prefería.
 
 ¿Por qué ocurre? En abril de 2025, OpenAI retiró una actualización de ChatGPT que había hecho el modelo «notablemente más adulador» (*noticeably more sycophantic*). Una de las razones que dio: las valoraciones de los usuarios «a veces pueden favorecer respuestas más complacientes» (*can sometimes favor more agreeable responses*).
 
