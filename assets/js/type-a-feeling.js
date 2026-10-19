@@ -67,10 +67,9 @@ const EMO = {
   playfulness:{
     scale:'major',root:64,bpm:140,wave:'triangle',bright:7000,gain:.2,legato:.3,attack:.004,decay:.05,sustain:.3,release:.08,
     rhythm:[.5,.25,.25,.5,.5,.25,.25,.5],contour:'wander',range:[0,9],startDeg:2,ending:'tonic',vel:[.55,.95],rest:.08},
-  /* Two more, from a listening study of Persian classical music. Its mixed pieces sounded happy and
-     sad at once, so 'bittersweet' turns the third from one colour to the other (another take reverses
-     the order, and with it where the phrase lands). Its sad pieces were unmeasured and swelling, and
-     the sadder a piece sounded the more it moved listeners, so 'moved' is slow, free and swelling. */
+  /* Two more. 'bittersweet' is happy and sad at once, so it turns the third from one colour to the
+     other (another take reverses the order, and with it where the phrase lands). 'moved' is slow,
+     free and swelling. */
   bittersweet:{
     free:true,scale:'major',scale2:'minor',root:53,bpm:80,wave:'triangle',bright:2800,gain:.23,legato:.95,attack:.05,decay:.25,sustain:.65,release:.6,
     rhythm:[.5,.5,1,.5,.5,1,2],contour:'arch',range:[-2,7],startDeg:2,ending:'tonic',vel:[.35,.95],rest:0,
@@ -296,8 +295,8 @@ function pickStep(contour,progress,r){
 }
 
 /* Same word + same feeling always gives the same phrase. A 'free' feeling has unmeasured timing
-   (some notes held, some run on) and a swell in loudness, like the free-rhythm pieces of the
-   study; the others keep a steady beat and a narrow range of loudness, like its reng pieces.
+   (some notes held, some run on) and a swell in loudness; the others keep a steady beat and a
+   narrow range of loudness.
    A feeling with two scales ('bittersweet') changes scale half-way. */
 function buildPhrase(word,key,e){
   const rnd = mulberry32(fnv(norm(word)+'|'+key));

@@ -26,6 +26,9 @@ en:
   detail_built: "How it's built"
   detail_result: What a run shows
   detail_limits: Limits
+  detail_why: Why it sounds that way
+  detail_credits: Sources and credits
+  detail_research: For researchers
   footer_rss: RSS
   nav_label: Main
   ask_for_it: Ask for it
@@ -69,8 +72,6 @@ en:
     references: "References"
     free_rhythm: "free rhythm"
     then: "then"
-    research_study: "A listening study of Persian classical music checks the happy and sad labels on real recordings. It does not test this page's generated sound."
-    research_more: "Read about the study"
     emotions:
       joy:
         name: "Joy"
@@ -119,7 +120,7 @@ en:
         cue: "A major colour that turns minor, or the reverse, in a line with no fixed beat. Happy and sad at once."
       moved:
         name: "Moved"
-        cue: "Slow, with no fixed beat, and swelling: held notes that grow louder and fade, in a minor colour with a long echo. In our study, the sadder a piece sounded, the more it moved listeners."
+        cue: "Slow, with no fixed beat, and swelling: held notes that grow louder and fade, in a minor colour with a long echo."
     modes:
       major: "major"
       minor: "minor"
@@ -164,6 +165,9 @@ es:
   detail_built: "Cómo se construye"
   detail_result: Qué muestra una simulación
   detail_limits: Límites
+  detail_why: Por qué suena así
+  detail_credits: Fuentes y créditos
+  detail_research: Para investigadores
   footer_rss: RSS
   nav_label: Principal
   ask_for_it: Pídelo
@@ -207,8 +211,6 @@ es:
     references: "Referencias"
     free_rhythm: "ritmo libre"
     then: "luego"
-    research_study: "Un estudio de escucha de música clásica persa comprueba las etiquetas de alegre y triste con grabaciones reales. No pone a prueba el sonido generado de esta página."
-    research_more: "Leer sobre el estudio"
     emotions:
       joy:
         name: "Alegría"
@@ -257,7 +259,7 @@ es:
         cue: "Un color mayor que se vuelve menor, o al revés, en una línea sin compás fijo. Alegre y triste a la vez."
       moved:
         name: "Conmovido"
-        cue: "Lento, sin compás fijo y en crescendo: notas largas que suben de volumen y se apagan, en color menor y con un eco largo. En nuestro estudio, cuanto más triste sonaba una pieza, más conmovía a los oyentes."
+        cue: "Lento, sin compás fijo y en crescendo: notas largas que suben de volumen y se apagan, en color menor y con un eco largo."
     modes:
       major: "mayor"
       minor: "menor"
@@ -302,6 +304,9 @@ fa:
   detail_built: "چطور ساخته شده"
   detail_result: یک اجرا چه نشان می‌دهد
   detail_limits: محدودیت‌ها
+  detail_why: چرا این‌طور صدا می‌دهد
+  detail_credits: منابع و قدردانی
+  detail_research: برای پژوهشگران
   footer_rss: RSS
   nav_label: منوی اصلی
   ask_for_it: درخواست دسترسی
@@ -345,8 +350,6 @@ fa:
     references: "منابع"
     free_rhythm: "ریتم آزاد"
     then: "سپس"
-    research_study: "یک پژوهش شنیداری دربارهٔ موسیقی کلاسیک ایرانی برچسب‌های شاد و غمگین را روی ضبط‌های واقعی می‌سنجد. صدای تولیدشدهٔ این صفحه را آزمایش نمی‌کند."
-    research_more: "دربارهٔ پژوهش بخوانید"
     emotions:
       joy:
         name: "شادی"
@@ -395,7 +398,7 @@ fa:
         cue: "رنگ ماژور که مینور می‌شود، یا برعکس، در خطی بی‌ضرب. هم شاد و هم غمگین."
       moved:
         name: "متأثر"
-        cue: "کند، بی‌ضرب و در حال اوج‌گرفتن: نت‌های کشیده که بلندتر می‌شوند و بعد محو می‌شوند، با رنگ مینور و پژواکی بلند. در پژوهش ما هرچه قطعه غمگین‌تر به گوش می‌رسید، شنونده بیشتر متأثر می‌شد."
+        cue: "کند، بی‌ضرب و در حال اوج‌گرفتن: نت‌های کشیده که بلندتر می‌شوند و بعد محو می‌شوند، با رنگ مینور و پژواکی بلند."
     modes:
       major: "ماژور"
       minor: "مینور"
