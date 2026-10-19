@@ -13,13 +13,13 @@
 - slug: acculturation
   en:
     title: Acculturation
-    blurb: A small town simulated in NetLogo, showing when newcomers' settlement leads to integration and when it leads to separation.
+    blurb: A small simulated town that shows when newcomers become part of it and when they stay apart.
   es:
     title: Acculturation
-    blurb: Un pueblo pequeño simulado en NetLogo, que muestra cuándo el asentamiento de los recién llegados lleva a la integración y cuándo a la separación.
+    blurb: Un pueblo pequeño simulado que muestra cuándo los recién llegados pasan a formar parte de él y cuándo se quedan aparte.
   fa:
     title: Acculturation
-    blurb: شهری کوچک، شبیه‌سازی‌شده در NetLogo، که نشان می‌دهد اسکان تازه‌واردها چه زمانی به یکپارچگی می‌انجامد و چه زمانی به جدایی.
+    blurb: یک شهر کوچکِ شبیه‌سازی‌شده که نشان می‌دهد تازه‌واردها چه زمانی بخشی از آن می‌شوند و چه زمانی جدا می‌مانند.
 - slug: tarot-app
   en:
     title: The Digital Tarot Sanctuary
@@ -33,10 +33,10 @@
 - slug: music-emotion
   en:
     title: Hear a feeling
-    blurb: Type a feeling or play a map of feelings placed from word ratings, and hear a short phrase of music built from research cues, checked against how listeners rated Persian classical music.
+    blurb: Type a feeling, or touch a map of feelings, and hear it as a short phrase of music.
   es:
     title: Escucha un sentimiento
-    blurb: Escribe un sentimiento o toca un mapa de sentimientos colocados según puntuaciones de palabras, y escucha una frase breve de música construida con señales de la investigación, contrastada con cómo valoraron los oyentes la música clásica persa.
+    blurb: Escribe un sentimiento, o toca un mapa de sentimientos, y escúchalo como una frase breve de música.
   fa:
     title: یک احساس را بشنوید
-    blurb: یک احساس را بنویسید یا نقشهٔ احساس‌هایی را که از نمرهٔ واژه‌ها جایشان تعیین شده بنوازید، و عبارتی کوتاه از موسیقی را بشنوید که از نشانه‌های پژوهشی ساخته شده و با نمرهٔ شنوندگان به موسیقی کلاسیک ایرانی سنجیده شده است.
+    blurb: یک احساس را بنویسید یا نقشهٔ احساس‌ها را لمس کنید و آن را به‌صورت عبارتی کوتاه از موسیقی بشنوید.

@@ -1,9 +1,9 @@
 ---
 layout: project
 title: Acculturation
-description: Un pueblo pequeño, simulado en NetLogo. Llegan recién llegados, se crean vínculos y la integración o la separación surgen de la receptividad de los vecinos, la preparación individual y la capacidad de los servicios locales.
-lede: "Un pueblo pequeño, simulado en NetLogo. Llega gente nueva, se crean vínculos y el pueblo muestra cuándo el asentamiento lleva a la integración y cuándo a la separación."
-decision: "Los resultados no se asignan ni se puntúan: se leen en la red de cada persona, es decir, con quién está realmente conectada, dentro de su propia comunidad y con la comunidad de acogida."
+description: "Un pueblo pequeño, simulado por ordenador. Llegan recién llegados, crean vínculos, y el pueblo muestra cuándo pasan a formar parte de él y cuándo se quedan aparte."
+lede: "¿Por qué algunos recién llegados pasan a formar parte de un pueblo y otros se quedan aparte? Este pueblo simulado te deja verlo."
+decision: "En el modelo nadie lleva una etiqueta de antemano. Que un recién llegado forme parte del pueblo o se quede aparte se lee en los vínculos que acaba teniendo de verdad."
 permalink: /es/projects/acculturation/
 redirect_from: /es/projects/small-town/
 ref: acculturation
@@ -12,31 +12,37 @@ poster: /assets/img/projects/acculturation-poster.jpg
 image: /assets/img/projects/acculturation-poster.jpg
 ask: true
 related: [wall-of-paper]
-clip_alt: "El modelo Acculturation en NetLogo: los agentes se asientan en el mapa de un pueblo mientras los gráficos muestran cómo sube la integración y baja la separación a lo largo de 500 ticks."
+clip_alt: "La simulación Acculturation en marcha: la gente se asienta en el mapa de un pueblo mientras los gráficos muestran cómo sube la integración y baja la separación."
 ---
 {%- assign t = site.data.i18n[page.lang] -%}
 
 <details class="fold" markdown="1" open>
 <summary>{{ t.detail_does }}</summary>
 
-- **Los recién llegados se asientan entre los vecinos.** Cada persona es un agente que crea vínculos con el tiempo.
-- **Los resultados se leen en la red, no se asignan.** Integración y separación son patrones de vínculos, dentro de la propia comunidad y con la comunidad de acogida.
-- **Tres palancas**: lo receptivo que es el pueblo, lo preparados que llegan y cuánta capacidad tienen los servicios locales.
+- **Un pueblo de personas.** Cada vecino y cada recién llegado se simula como una persona que conoce a otras y crea vínculos con el tiempo.
+- **Dos caminos posibles para un recién llegado.** Integración: vínculos dentro de su propia comunidad y también con los vecinos del pueblo. Separación: vínculos casi solo dentro de su propia comunidad.
+- **Tres cosas que puedes cambiar.** Lo acogedor que es el pueblo, lo preparados que llegan los recién llegados y cuánto aguantan los servicios locales antes de saturarse.
 
 </details>
 
 <details class="fold" markdown="1">
 <summary>{{ t.detail_result }}</summary>
 
-En la simulación de arriba (500 ticks), la integración sube hasta cerca del 95 % de los recién llegados y la separación baja hasta cerca del 5 %, mientras el estrés medio disminuye. Otros ajustes dan otros pueblos, y ese es el sentido del modelo: muestra cuál de las tres palancas mueve el resultado.
+En la simulación del vídeo, la integración sube hasta que unos 95 de cada 100 recién llegados tienen vínculos a ambos lados, unos 5 de cada 100 se quedan aparte, y la tensión media que soportan los recién llegados baja. Si cambias los tres ajustes, obtienes otro pueblo. Para eso sirve el modelo: para ver cuál de los tres marca la diferencia.
 
 </details>
 
 <details class="fold" markdown="1">
 <summary>{{ t.detail_built }}</summary>
 
-- **Basado en teoría**: el modelo de aculturación de Berry, el modelo interactivo de Bourhis, la teoría del contacto y el rechazo-identificación.
-- **Añade dos cosas raras**: estrés aculturativo con amortiguación y servicios que se saturan al crecer la demanda.
-- **Estado**: un modelo en funcionamiento. Estamos preparando su documentación (un protocolo ODD) y un análisis de sensibilidad.
+- **Hecho en NetLogo**, una herramienta para simular a muchas personas a la vez y ver qué patrones surgen de ellas.
+- **Mudarse genera estrés, y el modelo lo tiene en cuenta.** Los vínculos suavizan la tensión, y los servicios locales ayudan menos cuando los necesita más gente de la que pueden atender.
+
+</details>
+
+<details class="fold" markdown="1">
+<summary>{{ t.detail_research }}</summary>
+
+Un modelo basado en agentes que se apoya en el modelo de aculturación de Berry, el modelo interactivo de aculturación de Bourhis, la teoría del contacto y el modelo de rechazo-identificación. Añade estrés aculturativo con amortiguación y una capacidad de los servicios que se satura al crecer la demanda.
 
 </details>

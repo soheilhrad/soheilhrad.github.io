@@ -1,9 +1,9 @@
 ---
 layout: project
 title: Escucha un sentimiento
-description: "Escribe una palabra de un sentimiento en inglés, español o persa, o toca un mapa de sentimientos, y escucha una frase breve de música. El mapa se coloca a partir de puntuaciones de palabras; las etiquetas se contrastan con cómo valoraron los oyentes la música clásica persa."
-lede: "Escribe una palabra de un sentimiento, o toca el mapa, y escucha una frase construida con las señales que la investigación asocia a él. El mapa se coloca según cómo puntuó la gente las palabras; las etiquetas se contrastan con un estudio de escucha de música clásica persa."
-decision: "Oír una emoción y sentirla no es lo mismo, así que la página las mantiene separadas: lo que dice la música y lo que sientes tú."
+description: "Escribe una palabra de un sentimiento en inglés, español o persa, o toca un mapa de sentimientos, y escúchalo como una frase breve de música tocada con instrumentos grabados."
+lede: "Escribe una palabra de un sentimiento, o toca el mapa, y escúchalo como una frase breve de música."
+decision: "Un sentimiento es un lugar, no una etiqueta. Todos los sentimientos están en un mismo mapa, así que los que están cerca suenan parecido, y palabras como «muy», «un poco» y «no» simplemente mueven el punto."
 permalink: /es/projects/music-emotion/
 ref: music-emotion
 cta_label: Pruébalo
@@ -16,45 +16,25 @@ cta_url: /es/#taf-title
 
 - **Una entrada y un mapa.** Escribe un sentimiento en inglés, español o persa, o toca o arrastra sobre el mapa: cada punto suena distinto. Al pasar el cursor se ve cómo sería un punto antes de que suene.
 - **Cámbialo escribiendo.** «muy triste» desplaza el punto hacia fuera, «un poco triste» hacia dentro, «no feliz» al otro lado y «triste y esperanzado» cae entre los dos.
-- **Hecha con señales, tocada con instrumentos reales.** El modo, el tempo, el registro, el brillo, el ritmo y el volumen forman la música, y la tocan piano, cuerdas, flauta y otros instrumentos grabados. La misma palabra da siempre la misma frase.
+- **Tocada con instrumentos reales.** Piano, cuerdas, flauta y otros, grabados nota a nota. La misma palabra da siempre la misma frase.
 
 </details>
 
 <details class="fold" markdown="1">
-<summary>{{ t.detail_result }}</summary>
+<summary>{{ t.detail_why }}</summary>
 
-En un estudio de escucha, 20 personas sin formación musical profesional oyeron nueve piezas de música clásica persa: tres elegidas como alegres, tres como tristes y tres como las dos cosas a la vez, además de seis sonidos de relleno (lluvia, viento, mar y similares). Tras cada pieza valoraron, de 1 a 5, lo que expresaba la música y lo que sentían.
-
-| Tipo de pieza | Oída como alegre | Oída como triste |
-|---|---|---|
-| Alegre | 4,1 | 1,4 |
-| Triste | 1,3 | 4,0 |
-| Mixta | 2,9 | 2,0 |
-
-- **Oír y sentir fueron de la mano.** Oír alegría iba con sentirse alegre (0,86) y con energía (0,82); oír tristeza, con sentirse triste (0,81). Lo que se sentía solía igualar a lo que se oía o quedarse por debajo.
-- **La música más triste fue la que más conmovió** (0,34), y el asombro, la nostalgia y sentirse conmovido formaron una familia propia, poco ligada a lo alegre o lo triste.
-- **La ira, el miedo y la ansiedad casi no aparecieron.** El mundo de lo sentido en esta música era más suave que el de la vida diaria.
-- **Las piezas mixtas provocaron las reacciones más variadas.** La música clara obtuvo una respuesta clara; la ambigua deja espacio al oyente.
+- **Dónde está cada sentimiento.** Miles de palabras inglesas han sido puntuadas por la gente según lo agradables que resultan y lo tranquilas o intensas que son. Cada sentimiento está en el mapa donde se puntuó su palabra: más agradable hacia la derecha, más intenso hacia arriba.
+- **Cómo suena.** Décadas de investigación musical coinciden en unas pocas señales. La música triste suele ser lenta, grave y en modo menor; la alegre, más rápida, más brillante y en modo mayor; la tranquila tiene pocas notas y suaves. Al moverte por el mapa, la página sube y baja esas señales.
+- **Lo que hemos elegido nosotros.** Qué instrumento toca cada sentimiento, cuánto mueven un punto «muy» y «un poco», y el tamaño exacto de cada paso son decisiones de diseño, no hallazgos.
+- **Un boceto, no una prueba.** Está construido a partir de hallazgos publicados y no se ha probado con oyentes. La mayoría de esos hallazgos proceden de oyentes occidentales y de música occidental.
 
 </details>
 
 <details class="fold" markdown="1">
-<summary>{{ t.detail_built }}</summary>
+<summary>{{ t.detail_credits }}</summary>
 
-- **Dos capas.** Dónde está cada sentimiento sale de las puntuaciones de palabras (Warriner, Kuperman y Brysbaert, 2013) sobre el modelo circumplejo de Russell (1980). Cómo suena un punto sigue a Eerola, Friberg y Bresin (2013), y el carácter de cada sentimiento, a la Escala Ginebrina de Emociones Musicales, a los grupos de Hevner y a las revisiones de Juslin y Laukka. El estudio contrasta las etiquetas con grabaciones reales.
-- **Lo que es decisión nuestra.** El valor de cada paso (tempo, semitonos, decibelios), qué instrumento toca cada sentimiento, que «no» cruce al otro lado del centro y aplane el punto, que una mezcla caiga a medio camino entre dos sentimientos, y cuánto desplazan «muy» y «un poco». Que la intensidad sea la distancia al centro sí sigue la lectura de Russell.
-- **Lo que cambió el estudio.** Tristeza, añoranza, nostalgia, conmovido y agridulce suenan en ritmo libre, con una subida y bajada de volumen; alegría y juego mantienen un pulso y un volumen estables. En nuestra medición aproximada de las grabaciones, el volumen se movía entre 8 y 14 dB en las piezas alegres y entre 19 y 48 dB en las tristes. «Agridulce» cambia la tercera de mayor a menor, como las piezas mixtas del estudio.
-- **Instrumentos reales.** Las notas son grabaciones de notas sueltas de VSCO 2 Community Edition (Versilian Studios, publicada como CC0), en la edición web de N. P. Brosowsky (tonejs-instruments, CC BY 3.0). Qué instrumento toca cada sentimiento es decisión nuestra, no un hallazgo. El único vínculo con la investigación es el brillo: en Eerola, Friberg y Bresin (2013) los sonidos más brillantes iban con más activación, así que la página aviva o apaga el sonido según ella.
-- **No es una prueba del sonido.** Las piezas del estudio eran interpretaciones reales; esta página ensambla notas grabadas con reglas. La página no toca modos de la música clásica persa.
-- **El estudio es la investigación de máster de quien firma la página** (sin publicar).
-
-</details>
-
-{% include placement.html %}
-
-<details class="fold" markdown="1">
-<summary>{{ t.detail_limits }}</summary>
-
-Veinte estudiantes de una misma ciudad, de 20 a 30 años, en un laboratorio y con piezas elegidas por el investigador. Toma los resultados de lo alegre y lo triste como sólidos y el resto como primeros indicios. El estado de ánimo de la semana anterior no mostró relación con la intensidad con que se oía o se sentía la emoción, pero la muestra era demasiado pequeña para descartarla.
+- **El mapa:** el modelo circumplejo de Russell (1980), con las puntuaciones de palabras de Warriner, Kuperman y Brysbaert (2013).
+- **El sonido:** las revisiones sobre señales de Juslin y Laukka (2003) y de Gabrielsson y Lindström (2010), y Eerola, Friberg y Bresin (2013). Los sentimientos se apoyan en la Escala Ginebrina de Emociones Musicales (Zentner y colaboradores, 2008) y en los grupos de adjetivos de Hevner (1936). Las referencias completas están en «{{ t.feeling.research }}», en la página de inicio.
+- **Los instrumentos:** grabaciones de notas sueltas de VSCO 2 Community Edition (Versilian Studios, publicadas como CC0), en la edición web de N. P. Brosowsky (tonejs-instruments, CC BY 3.0).
 
 </details>
