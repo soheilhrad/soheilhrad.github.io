@@ -1,6 +1,7 @@
 ---
 layout: post
 title: The Wall of Paper
+seo_title: "The Wall of Paper: structural exclusion and acculturation"
 ref: wall-of-paper
 slides_lang: en
 description: "Sometimes the barrier to belonging isn't emotional. It is structural: the exhaustion of being physically present but structurally excluded."
@@ -18,6 +19,7 @@ slides:
     alt: "We don't adapt. We rebuild. The solution wasn't just to “fit in.” It required me to construct a new layer of self to survive the rejection. Footnote 06, concept: identity reconstruction."
   - file: slide7.jpg
     alt: "Have you felt the split? When did you realize your paper identity didn't match your real self? Footnote 07, concept: narrative integration."
+last_modified_at: 2026-10-04
 ---
 
 I have talked about the emotional journey of belonging before. But sometimes, the barrier

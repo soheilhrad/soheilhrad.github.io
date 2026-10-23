@@ -1,9 +1,11 @@
 ---
 layout: page
 title: About
-description: "dos — Design of سهی is a small platform for creative, AI-powered apps in English, Español and فارسی."
+seo_title: "About Sohi: psychology, migration, computational social science"
+description: "Sohi makes small, creative AI apps in English, Spanish and Persian, drawing on psychology, migration work and computational social science."
 permalink: /about/
 ref: about
+last_modified_at: 2026-10-22
 ---
 
 I'm Sohi, and dos (Design of <span lang="fa" dir="rtl">سهی</span>) is where I make small,

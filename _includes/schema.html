@@ -1,0 +1,74 @@
+{%- comment -%}
+Structured data (schema.org JSON-LD) for every page, as one @graph. jekyll-seo-tag's own JSON-LD
+is switched off in _layouts/default.html, and this replaces it.
+
+Always present: the dos Organization, the WebSite and the Person (Sohi). Facts about Sohi here
+come only from the About page; add to `knowsAbout` only what that page says.
+
+Then, by kind of page:
+  home (ref: home)        WebPage about the Organization
+  about (ref: about)      ProfilePage whose mainEntity is the Person
+  projects / blog index   CollectionPage
+  project pages           WebPage + SoftwareApplication (details from `schema:` in
+                          _data/projects.yml, matched by slug) + BreadcrumbList
+  posts                   BlogPosting (or the post's `schema_type:`, e.g. TechArticle)
+                          + BreadcrumbList; translations point at the English original
+  anything else           WebPage
+{%- endcomment -%}
+{%- assign t = site.data.i18n[page.lang] -%}
+{%- assign home_url = site.url | append: "/" -%}
+{%- assign org_id = site.url | append: "/#dos" -%}
+{%- assign site_id = site.url | append: "/#website" -%}
+{%- assign person_id = site.url | append: "/about/#sohi" -%}
+{%- assign page_url = page.url | absolute_url -%}
+{%- assign local_home = t.prefix | append: "/" | absolute_url -%}
+{%- assign desc = page.description | default: site.description | strip_html | normalize_whitespace -%}
+{%- assign img = page.image | default: "/assets/img/og.png" | absolute_url -%}
+{%- assign name = page.seo_title | default: page.title | default: site.title -%}
+{%- if page.ref == "home" -%}{%- assign kind = "home" -%}
+{%- elsif page.ref == "about" -%}{%- assign kind = "about" -%}
+{%- elsif page.ref == "projects" or page.ref == "blog" -%}{%- assign kind = "collection" -%}
+{%- elsif page.layout == "project" -%}{%- assign kind = "project" -%}
+{%- elsif page.collection == "posts" -%}{%- assign kind = "post" -%}
+{%- else -%}{%- assign kind = "page" -%}{%- endif %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Organization","@id":{{ org_id | jsonify }},"name":{{ site.title | jsonify }},"alternateName":{{ site.full_name | jsonify }},"url":{{ home_url | jsonify }},"logo":{"@type":"ImageObject","url":{{ "/assets/img/brand/dos-icon-512.png" | absolute_url | jsonify }},"width":512,"height":512},"founder":{"@id":{{ person_id | jsonify }}}},
+{"@type":"WebSite","@id":{{ site_id | jsonify }},"url":{{ home_url | jsonify }},"name":{{ site.title | jsonify }},"alternateName":{{ site.full_name | jsonify }},"inLanguage":{{ site.languages | jsonify }},"publisher":{"@id":{{ org_id | jsonify }}}},
+{"@type":"Person","@id":{{ person_id | jsonify }},"name":"Sohi","url":{{ "/about/" | absolute_url | jsonify }},"knowsAbout":["Psychology","Migration","Computational social science","Human–AI attachment","Digital education","Emotion in music"],"sameAs":[{{ "https://github.com/" | append: site.author.github | jsonify }}]}
+{%- case kind -%}
+{%- when "home" %},
+{"@type":"WebPage","@id":{{ page_url | jsonify }},"url":{{ page_url | jsonify }},"name":{{ name | jsonify }},"description":{{ desc | jsonify }},"inLanguage":{{ page.lang | jsonify }},"isPartOf":{"@id":{{ site_id | jsonify }}},"about":{"@id":{{ org_id | jsonify }}},"primaryImageOfPage":{{ img | jsonify }}}
+{%- when "about" %},
+{"@type":"ProfilePage","@id":{{ page_url | jsonify }},"url":{{ page_url | jsonify }},"name":{{ name | jsonify }},"description":{{ desc | jsonify }},"inLanguage":{{ page.lang | jsonify }},"isPartOf":{"@id":{{ site_id | jsonify }}},"mainEntity":{"@id":{{ person_id | jsonify }}}}
+{%- when "collection" %},
+{"@type":"CollectionPage","@id":{{ page_url | jsonify }},"url":{{ page_url | jsonify }},"name":{{ name | jsonify }},"description":{{ desc | jsonify }},"inLanguage":{{ page.lang | jsonify }},"isPartOf":{"@id":{{ site_id | jsonify }}}}
+{%- when "project" -%}
+{%- assign slug = page.url | split: "/projects/" | last | remove: "/" -%}
+{%- assign proj = site.data.projects | where: "slug", slug | first -%}
+{%- assign s = proj.schema -%}
+{%- assign app_url = s.url | default: page.url -%}
+{%- unless app_url contains "://" -%}
+  {%- if app_url == "/" -%}{%- assign app_url = local_home -%}{%- else -%}{%- assign app_url = app_url | absolute_url -%}{%- endif -%}
+{%- endunless %},
+{"@type":"WebPage","@id":{{ page_url | jsonify }},"url":{{ page_url | jsonify }},"name":{{ name | jsonify }},"description":{{ desc | jsonify }},"inLanguage":{{ page.lang | jsonify }},"isPartOf":{"@id":{{ site_id | jsonify }}},"primaryImageOfPage":{{ img | jsonify }},"mainEntity":{"@id":{{ page_url | append: "#app" | jsonify }}},"breadcrumb":{"@id":{{ page_url | append: "#breadcrumb" | jsonify }}}},
+{"@type":{{ s.type | default: "SoftwareApplication" | jsonify }},"@id":{{ page_url | append: "#app" | jsonify }},"name":{{ page.title | jsonify }},"description":{{ desc | jsonify }},"image":{{ img | jsonify }},"url":{{ app_url | jsonify }}
+{%- if s.category %},"applicationCategory":{{ s.category | jsonify }}{% endif -%}
+{%- if s.subcategory %},"applicationSubCategory":{{ s.subcategory | jsonify }}{% endif -%}
+{%- if s.os %},"operatingSystem":{{ s.os | jsonify }}{% endif -%}
+{%- if s.languages %},"inLanguage":{{ s.languages | jsonify }}{% endif -%}
+,"creator":{"@id":{{ person_id | jsonify }}},"publisher":{"@id":{{ org_id | jsonify }}}},
+{"@type":"BreadcrumbList","@id":{{ page_url | append: "#breadcrumb" | jsonify }},"itemListElement":[{"@type":"ListItem","position":1,"name":{{ t.home | jsonify }},"item":{{ local_home | jsonify }}},{"@type":"ListItem","position":2,"name":{{ t.projects | jsonify }},"item":{{ t.prefix | append: "/projects/" | absolute_url | jsonify }}},{"@type":"ListItem","position":3,"name":{{ page.title | jsonify }},"item":{{ page_url | jsonify }}}]}
+{%- when "post" -%}
+{%- assign modified = page.last_modified_at | default: page.date -%}
+{%- assign original = nil -%}
+{%- if page.lang != "en" and page.ref -%}{%- assign original = site.posts | where: "ref", page.ref | where: "lang", "en" | first -%}{%- endif %},
+{"@type":{{ page.schema_type | default: "BlogPosting" | jsonify }},"@id":{{ page_url | append: "#article" | jsonify }},"headline":{{ page.title | truncate: 110 | jsonify }},"description":{{ desc | jsonify }},"image":[{{ img | jsonify }}],"datePublished":{{ page.date | date_to_xmlschema | jsonify }},"dateModified":{{ modified | date_to_xmlschema | jsonify }},"inLanguage":{{ page.lang | jsonify }},"url":{{ page_url | jsonify }},"mainEntityOfPage":{"@id":{{ page_url | jsonify }}},"isPartOf":{"@id":{{ site_id | jsonify }}},"author":{"@id":{{ person_id | jsonify }}},"publisher":{"@id":{{ org_id | jsonify }}}
+{%- if original %},"translationOfWork":{"@id":{{ original.url | absolute_url | append: "#article" | jsonify }}}{% endif -%}
+},
+{"@type":"BreadcrumbList","@id":{{ page_url | append: "#breadcrumb" | jsonify }},"itemListElement":[{"@type":"ListItem","position":1,"name":{{ t.home | jsonify }},"item":{{ local_home | jsonify }}},{"@type":"ListItem","position":2,"name":{{ t.footer_notes | jsonify }},"item":{{ t.prefix | append: "/blog/" | absolute_url | jsonify }}},{"@type":"ListItem","position":3,"name":{{ page.title | jsonify }},"item":{{ page_url | jsonify }}}]}
+{%- else %},
+{"@type":"WebPage","@id":{{ page_url | jsonify }},"url":{{ page_url | jsonify }},"name":{{ name | jsonify }},"description":{{ desc | jsonify }},"inLanguage":{{ page.lang | jsonify }},"isPartOf":{"@id":{{ site_id | jsonify }}}}
+{%- endcase %}
+]}
+</script>

@@ -5,27 +5,54 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {%- comment -%}
-  Titles are "{page title} — dos" (the home page is "dos — Design of سهی"), so the plugin's
-  own <title> is switched off. Its twitter:site and twitter:creator lines are dropped: no
-  handle exists yet, and the plugin would otherwise print an empty "@" and a guessed one.
+  Titles are "{seo_title} | dos — Design of سهی": `seo_title` in the front matter is the
+  keyword-led title for search results and link previews; the visible <h1> stays `title`.
+  Without a `seo_title`, `title` is used. The plugin's own <title>, og:title, twitter:title
+  and JSON-LD are switched off and written below instead (JSON-LD in _includes/schema.html).
+  Its twitter:site and twitter:creator lines are dropped: no handle exists yet, and the
+  plugin would otherwise print an empty "@" and a guessed one.
   {%- endcomment -%}
-  {%- if page.ref == "home" -%}
-    {%- assign full_title = site.title | append: " — " | append: site.full_name -%}
-  {%- elsif page.title -%}
-    {%- assign full_title = page.title | append: " — " | append: site.title -%}
+  {%- assign brand = site.title | append: " — " | append: site.full_name -%}
+  {%- assign share_title = page.seo_title | default: page.title | default: brand -%}
+  {%- if share_title == brand -%}
+    {%- assign full_title = brand -%}
   {%- else -%}
-    {%- assign full_title = site.title -%}
+    {%- assign full_title = share_title | append: " | " | append: brand -%}
   {%- endif %}
   <title>{{ full_title | escape }}</title>
+  {%- if page.noindex %}
+  <meta name="robots" content="noindex">
+  {%- endif %}
   {%- capture newline %}
 {% endcapture -%}
   {%- capture seo_out %}{% seo title=false %}{% endcapture -%}
   {%- assign seo_lines = seo_out | split: newline %}
   {%- for line in seo_lines -%}
-    {%- unless line contains 'name="twitter:site"' or line contains 'name="twitter:creator"' or line == "" %}
-  {{ line | strip }}
+    {%- assign l = line | strip -%}
+    {%- unless l contains 'name="twitter:site"' or l contains 'name="twitter:creator"' or l contains 'property="og:title"' or l contains 'property="twitter:title"' or l contains 'application/ld+json' or l contains '"@context"' or l == "" %}
+  {{ l }}
     {%- endunless -%}
   {%- endfor %}
+  {%- assign share_desc = page.description | default: site.description -%}
+  {%- assign img_alt = page.image_alt | default: page.clip_alt -%}
+  {%- if img_alt == nil and page.slides -%}{%- assign img_alt = page.slides.first.alt -%}{%- endif -%}
+  {%- if img_alt == nil -%}
+    {%- if page.image == "/assets/img/og.png" -%}{%- assign img_alt = brand -%}{%- else -%}{%- assign img_alt = share_title -%}{%- endif -%}
+  {%- endif %}
+  <meta property="og:title" content="{{ share_title | escape }}">
+  <meta name="twitter:title" content="{{ share_title | escape }}">
+  <meta name="twitter:description" content="{{ share_desc | strip_html | normalize_whitespace | escape }}">
+  <meta property="og:image:alt" content="{{ img_alt | strip_html | normalize_whitespace | escape }}">
+  <meta name="twitter:image:alt" content="{{ img_alt | strip_html | normalize_whitespace | escape }}">
+  {%- if page.ref -%}
+  {%- assign twins = site.pages | concat: site.posts | where: "ref", page.ref -%}
+  {%- for twin in twins -%}
+  {%- if twin.lang != page.lang and twin.locale %}
+  <meta property="og:locale:alternate" content="{{ twin.locale }}">
+  {%- endif -%}
+  {%- endfor -%}
+  {%- endif %}
+  {% include schema.html %}
   <link rel="icon" href="{{ '/assets/img/favicon.svg' | relative_url }}" type="image/svg+xml">
   <link rel="apple-touch-icon" href="{{ '/assets/img/apple-touch-icon.png' | relative_url }}">
   <meta name="theme-color" content="#f6f1e7" media="(prefers-color-scheme: light)">

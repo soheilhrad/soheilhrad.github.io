@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Why does a chatbot sound so sure?"
+seo_title: "Why chatbots sound sure: next-word prediction and overconfidence"
 description: "A language model predicts the next word, so it can sound certain when it's wrong."
 ref: why-chatbots-sound-sure
 image: /assets/img/posts/why-chatbots-sound-sure/poster-en.jpg

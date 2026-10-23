@@ -1,6 +1,7 @@
 ---
 layout: project
 title: The Digital Tarot Sanctuary
+seo_title: "The Digital Tarot Sanctuary: tarot con IA en tres idiomas"
 description: Una aplicación de lecturas de tarot con IA en tres idiomas, con las ilustraciones originales Rider-Waite de 1909.
 lede: "Una aplicación de lecturas de tarot con IA en tres idiomas, con las ilustraciones originales Rider-Waite de 1909."
 decision: "Te dice que es una IA antes de que empiece la lectura, y las lecturas anónimas nunca se guardan."
@@ -12,6 +13,7 @@ clip: /assets/video/tarot-demo.mp4
 poster: /assets/img/projects/tarot-poster.jpg
 image: /assets/img/projects/tarot-poster.jpg
 clip_alt: "Una lectura en el Digital Tarot Sanctuary: la interfaz cambia a persa, aparece una tirada de herradura de cinco cartas y se reproduce en voz alta la síntesis escrita de la oráculo."
+last_modified_at: 2026-10-03
 ---
 {%- assign t = site.data.i18n[page.lang] -%}
 

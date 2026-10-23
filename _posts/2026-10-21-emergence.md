@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Do AI abilities really appear suddenly?"
+seo_title: "Emergent abilities in AI: real jumps or a scoring effect?"
 description: "Some researchers see sudden jumps in what AI can do as models grow. Others say the jumps come from how the tests are scored."
 ref: emergence
 image: /assets/img/posts/emergence/poster.jpg

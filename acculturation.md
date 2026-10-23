@@ -1,6 +1,7 @@
 ---
 layout: project
 title: Acculturation
+seo_title: "Acculturation: agent-based model of newcomers in a small town"
 description: "A small town, simulated on a computer. Newcomers arrive and make connections, and the town shows when they become part of it and when they stay apart."
 lede: "Why do some newcomers become part of a town while others stay apart? This simulated small town lets you watch it happen."
 decision: "Nobody in the model is labelled in advance. Whether a newcomer becomes part of the town or stays apart is read from the connections they actually end up with."
@@ -13,6 +14,7 @@ image: /assets/img/projects/acculturation-poster.jpg
 ask: true
 related: [wall-of-paper]
 clip_alt: "The Acculturation simulation running: people settle on a town map while the charts show integration rising and separation falling over the run."
+last_modified_at: 2026-10-19
 ---
 {%- assign t = site.data.i18n[page.lang] -%}
 
