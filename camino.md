@@ -1,6 +1,7 @@
 ---
 layout: project
 title: Camino
+seo_title: "Camino: offline AI Spanish tutor for absolute beginners"
 description: An offline Spanish tutor for absolute beginners. It runs entirely on the learner's own computer, with no account and no internet after setup.
 lede: "An offline Spanish tutor for absolute beginners. Twenty-five lessons, a year in Salamanca, and someone to speak Spanish with."
 decision: "When the model cannot be relied on to produce something, the app produces it instead: conjugations, exercise marking and which language to explain in all come from code, not from the model."
@@ -14,6 +15,7 @@ poster_narrow: /assets/img/projects/camino-poster-phone.jpg
 ask: true
 related: [cut-off]
 clip_alt: "Camino on a phone, three moments side by side: a lesson card on Spanish spelling, the tutor explaining the tilde, and an exercise answered correctly."
+last_modified_at: 2026-10-04
 ---
 {%- assign t = site.data.i18n[page.lang] -%}
 

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "¿Por qué un chatbot suena tan seguro?"
+seo_title: "Por qué los chatbots suenan tan seguros aunque se equivoquen"
 description: "Un modelo de lenguaje predice la siguiente palabra, así que puede sonar seguro cuando se equivoca."
 ref: why-chatbots-sound-sure
 lang: es

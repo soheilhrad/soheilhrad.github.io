@@ -52,6 +52,9 @@ defaults:
       lang: fa
       locale: fa_IR
       description: ابزارهای کوچک برای کسانی که میان زبان‌ها زندگی می‌کنند.
+  # Google's ownership-check file: published, but kept out of sitemap.xml.
+  - scope: { path: "googlebdf80536eba12b7e.html" }
+    values: { sitemap: false }
 
 exclude:
   - README.md

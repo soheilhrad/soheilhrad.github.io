@@ -1,9 +1,11 @@
 ---
 layout: default
 title: "dos — Design of سهی"
+seo_title: "اپلیکیشن‌های چندزبانهٔ هوش مصنوعی، شبیه‌سازی و ابزار صوتی"
 description: "ابزارهای کوچک برای کسانی که میان زبان‌ها زندگی می‌کنند. اپلیکیشن‌ها، شبیه‌سازی‌ها و ابزارها به English، Español و فارسی، طراحی‌شده و ساخته‌شده از ابتدا تا انتها. سفارش‌ها پذیرفته می‌شوند."
 ref: home
 permalink: /fa/
+last_modified_at: 2026-10-21
 ---
 {%- assign t = site.data.i18n[page.lang] -%}
 <section class="intro">

@@ -50,7 +50,13 @@ presses play.
 
 ## Identity
 
-The site is **dos**, in full **Design of سهی**. Titles are `{page title} — dos`. Wrap the
+The site is **dos**, in full **Design of سهی**. Browser titles are `{seo_title} | dos — Design of سهی`:
+every page sets a keyword-led `seo_title` (search results and link previews; unique per page and
+language, about 60 characters before the `|`) next to its `title` (the visible heading), plus
+`last_modified_at` (the date its content last changed; it feeds sitemap.xml). Publishing a note
+changes the home and Notes pages too, so bump their `last_modified_at` in all three languages.
+Structured data is in `_includes/schema.html`; project details for it are under `schema:` in
+`_data/projects.yml`. Wrap the
 Persian in `<span lang="fa" dir="rtl">` inside English and Spanish text. The header holds only
 the wordmark and the language switcher; Notes, About, GitHub and RSS are in the footer. No
 `twitter:site` or `twitter:creator` until a real handle exists. Product names (Camino, Small

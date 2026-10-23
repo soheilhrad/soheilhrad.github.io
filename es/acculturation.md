@@ -1,6 +1,7 @@
 ---
 layout: project
 title: Acculturation
+seo_title: "Acculturation: simulación basada en agentes de un pueblo"
 description: "Un pueblo pequeño, simulado por ordenador. Llegan recién llegados, crean vínculos, y el pueblo muestra cuándo pasan a formar parte de él y cuándo se quedan aparte."
 lede: "¿Por qué algunos recién llegados pasan a formar parte de un pueblo y otros se quedan aparte? Este pueblo simulado te deja verlo."
 decision: "En el modelo nadie lleva una etiqueta de antemano. Que un recién llegado forme parte del pueblo o se quede aparte se lee en los vínculos que acaba teniendo de verdad."
@@ -13,6 +14,7 @@ image: /assets/img/projects/acculturation-poster.jpg
 ask: true
 related: [wall-of-paper]
 clip_alt: "La simulación Acculturation en marcha: la gente se asienta en el mapa de un pueblo mientras los gráficos muestran cómo sube la integración y baja la separación."
+last_modified_at: 2026-10-19
 ---
 {%- assign t = site.data.i18n[page.lang] -%}
 

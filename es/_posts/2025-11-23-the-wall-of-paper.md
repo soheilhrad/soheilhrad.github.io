@@ -1,6 +1,7 @@
 ---
 layout: post
 title: El muro de papel
+seo_title: "El muro de papel: exclusión estructural y aculturación"
 ref: wall-of-paper
 permalink: /es/blog/2025/11/the-wall-of-paper/
 description: "A veces, la barrera para pertenecer no es emocional. Es estructural: el agotamiento de estar presente físicamente pero excluido estructuralmente."
@@ -19,6 +20,7 @@ slides:
     alt: "No nos adaptamos. Nos reconstruimos. La solución no era solo «encajar». Me exigió construir una nueva capa de mí mismo para sobrevivir al rechazo. Nota 06, concepto: reconstrucción de la identidad."
   - file: slide7.jpg
     alt: "¿Has sentido la división? ¿Cuándo te diste cuenta de que tu identidad en papel no coincidía con tu yo real? Nota 07, concepto: integración narrativa."
+last_modified_at: 2026-10-04
 ---
 
 Ya he hablado antes del viaje emocional de la pertenencia. Pero a veces la barrera no es solo

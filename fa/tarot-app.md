@@ -1,6 +1,7 @@
 ---
 layout: project
 title: The Digital Tarot Sanctuary
+seo_title: "The Digital Tarot Sanctuary: فال تاروت با هوش مصنوعی به سه زبان"
 description: اپلیکیشن فال تاروت با هوش مصنوعی به سه زبان، با تصاویر اصلی کارت‌های رایدر-ویت ۱۹۰۹.
 lede: "اپلیکیشن فال تاروت با هوش مصنوعی به سه زبان، با تصاویر اصلی کارت‌های رایدر-ویت ۱۹۰۹."
 decision: "پیش از شروع فال می‌گوید که هوش مصنوعی است، و فال‌های ناشناس هرگز ذخیره نمی‌شوند."
@@ -12,6 +13,7 @@ clip: /assets/video/tarot-demo.mp4
 poster: /assets/img/projects/tarot-poster.jpg
 image: /assets/img/projects/tarot-poster.jpg
 clip_alt: "یک فال در پناهگاه دیجیتال تاروت: رابط به فارسی تغییر می‌کند، چیدمان نعل اسبی پنج‌کارتی ظاهر می‌شود و جمع‌بندی نوشتهٔ فالگیر با صدا خوانده می‌شود."
+last_modified_at: 2026-10-04
 ---
 {%- assign t = site.data.i18n[page.lang] -%}
 

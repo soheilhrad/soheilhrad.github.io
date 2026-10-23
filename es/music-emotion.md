@@ -1,6 +1,7 @@
 ---
 layout: project
 title: Escucha un sentimiento
+seo_title: "Escucha un sentimiento: convierte una emoción en música"
 description: "Escribe una palabra de un sentimiento en inglés, español o persa, o toca un mapa de sentimientos, y escúchalo como una frase breve de música tocada con instrumentos grabados."
 lede: "Escribe una palabra de un sentimiento, o toca el mapa, y escúchalo como una frase breve de música."
 decision: "Un sentimiento es un lugar, no una etiqueta. Todos los sentimientos están en un mismo mapa, así que los que están cerca suenan parecido, y palabras como «muy», «un poco» y «no» simplemente mueven el punto."
@@ -8,6 +9,7 @@ permalink: /es/projects/music-emotion/
 ref: music-emotion
 cta_label: Pruébalo
 cta_url: /es/#taf-title
+last_modified_at: 2026-10-19
 ---
 {%- assign t = site.data.i18n[page.lang] -%}
 

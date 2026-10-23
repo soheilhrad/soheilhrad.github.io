@@ -1,8 +1,10 @@
 ---
 layout: default
 title: "dos — Design of سهی"
+seo_title: "Multilingual AI apps, simulations and audio tools"
 description: "Small tools for people between languages. Apps, simulations and tools in English, Español and فارسی, designed and built end to end. Commissions welcome."
 ref: home
+last_modified_at: 2026-10-21
 ---
 {%- assign t = site.data.i18n[page.lang] -%}
 <section class="intro">

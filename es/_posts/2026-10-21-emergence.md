@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "¿Las capacidades de la IA aparecen de verdad de repente?"
+seo_title: "Capacidades emergentes de la IA: ¿salto real o efecto de medida?"
 description: "Algunos investigadores ven saltos repentinos en lo que puede hacer la IA a medida que crecen los modelos. Otros dicen que los saltos vienen de cómo se puntúan las pruebas."
 ref: emergence
 lang: es

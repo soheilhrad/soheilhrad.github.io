@@ -1,9 +1,11 @@
 ---
 layout: default
 title: "dos — Design of سهی"
+seo_title: "Apps de IA multilingües, simulaciones y herramientas de audio"
 description: "Herramientas pequeñas para gente entre idiomas. Aplicaciones, simulaciones y herramientas en English, Español y فارسی, diseñadas y construidas de principio a fin. Encargos bienvenidos."
 ref: home
 permalink: /es/
+last_modified_at: 2026-10-21
 ---
 {%- assign t = site.data.i18n[page.lang] -%}
 <section class="intro">

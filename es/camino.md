@@ -1,6 +1,7 @@
 ---
 layout: project
 title: Camino
+seo_title: "Camino: tutor de español con IA sin conexión para principiantes"
 description: Un tutor de español sin conexión para principiantes absolutos. Funciona por completo en el ordenador del alumno, sin cuenta y sin internet después de la instalación.
 lede: "Un tutor de español sin conexión para principiantes absolutos. Veinticinco lecciones, un año en Salamanca y alguien con quien hablar español."
 decision: "Cuando no se puede confiar en que el modelo produzca algo, lo produce la aplicación: las conjugaciones, la corrección de los ejercicios y el idioma en que se explica salen del código, no del modelo."
@@ -14,6 +15,7 @@ poster_narrow: /assets/img/projects/camino-poster-phone.jpg
 ask: true
 related: [cut-off]
 clip_alt: "Camino en un móvil, tres momentos en paralelo: una tarjeta de lección sobre ortografía, el tutor explicando la tilde y un ejercicio respondido correctamente."
+last_modified_at: 2026-10-04
 ---
 {%- assign t = site.data.i18n[page.lang] -%}
 

@@ -1,6 +1,7 @@
 ---
 layout: project
 title: The Digital Tarot Sanctuary
+seo_title: "The Digital Tarot Sanctuary: AI tarot readings in 3 languages"
 description: An AI-powered tarot reading app in three languages, with the original 1909 Rider-Waite artwork.
 lede: "An AI-powered tarot reading app in three languages, with the original 1909 Rider-Waite artwork."
 decision: "It tells you it is an AI before the reading starts, and anonymous readings are never stored."
@@ -12,6 +13,7 @@ clip: /assets/video/tarot-demo.mp4
 poster: /assets/img/projects/tarot-poster.jpg
 image: /assets/img/projects/tarot-poster.jpg
 clip_alt: "A reading in the Digital Tarot Sanctuary: the interface switches to Persian, a five-card horseshoe spread appears, and the oracle's written synthesis plays aloud."
+last_modified_at: 2026-10-03
 ---
 {%- assign t = site.data.i18n[page.lang] -%}
 

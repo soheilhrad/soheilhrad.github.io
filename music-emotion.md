@@ -1,6 +1,7 @@
 ---
 layout: project
 title: Hear a feeling
+seo_title: "Hear a feeling: turn an emotion word into music"
 description: "Type a word for a feeling in English, Spanish or Persian, or touch a map of feelings, and hear it as a short phrase of music played on recorded instruments."
 lede: "Type a word for a feeling, or touch the map, and hear it as a short phrase of music."
 decision: "A feeling is a place, not a label. Every feeling sits on one map, so feelings that are close sound alike, and words like “very”, “a bit” and “not” simply move the point."
@@ -8,6 +9,7 @@ permalink: /projects/music-emotion/
 ref: music-emotion
 cta_label: Try it
 cta_url: /#taf-title
+last_modified_at: 2026-10-19
 ---
 {%- assign t = site.data.i18n[page.lang] -%}
 

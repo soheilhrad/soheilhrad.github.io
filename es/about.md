@@ -1,9 +1,11 @@
 ---
 layout: page
 title: Sobre mí
-description: "dos — Design of سهی es una pequeña plataforma de aplicaciones creativas con IA en English, Español y فارسی."
+seo_title: "Sobre Sohi: psicología, migración y ciencias sociales computacionales"
+description: "Sohi hace pequeñas aplicaciones creativas con IA en español, inglés y persa, a partir de la psicología, el trabajo con migración y las ciencias sociales computacionales."
 permalink: /es/about/
 ref: about
+last_modified_at: 2026-10-22
 ---
 
 Soy Sohi, y dos (Design of <span lang="fa" dir="rtl">سهی</span>) es donde hago pequeñas
