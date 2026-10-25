@@ -1,16 +1,16 @@
 ---
 layout: post
-title: "Nobody on this board wanted a divided map"
+title: "Nobody planned a divided map"
 seo_title: "Schelling's segregation model: small choices, big divides"
-description: "In Thomas Schelling's 1971 model, every coin accepts up to half of its neighbours being different. In one worked example, the average person still ends up among neighbours who are 90% their own colour."
+description: "In Thomas Schelling's 1971 model, every coin accepts up to half of its neighbours being different. In one worked example, people still end up in neighbourhoods far more segregated than the preferences that produced them."
 ref: schelling-segregation
 image: /assets/img/posts/schelling-segregation/slide1.jpg
 slides_width: 1080
 slides_height: 1350
 last_modified_at: 2026-10-25
 slides:
-  - file: slide1.jpg
-    alt: "What if a divided world can emerge from reasonable choices? Two kinds of coins stand for two groups. Everyone here accepts up to half of their neighbours being different. If fewer than half are like it, a coin moves to the nearest empty square where it would be content. A 12 by 12 board of dark and gold coins with some empty squares, shown after the moves, with the colours in clumps."
+  - file: slide1.gif
+    alt: "What if a divided world can emerge from ordinary choices? A 12 by 12 board of dark and gold coins with some empty squares. Two kinds of coins stand for two groups. Everyone here accepts up to half of their neighbours being different. If fewer than half are like it, a coin moves to the nearest empty square where it would be content. The coins move one at a time until the colours settle into clumps."
   - file: slide2.jpg
     alt: "More divided than anyone asked for. Each coin only needed half of its neighbours to be like it. In one of Schelling's worked examples, the average person ends up in a neighbourhood that is 90% their own colour, counting themselves. Two boards: the start, with the colours mixed, and after the moves, with the colours in clumps. My own run of the rule on a 12 by 12 board, which ends at 83%."
   - file: slide3.jpg
@@ -18,7 +18,7 @@ slides:
   - file: slide4.jpg
     alt: "Systems can create outcomes that nobody individually intended. Adaptation: people adjust to the people around them. Emergence: a pattern appears that no one was aiming for. Systems: one person's move changes what the next person sees. Unintended consequences: outcomes nobody asked for, from choices that each made sense."
   - file: slide5.jpg
-    alt: "Nobody on this board wanted a divided map. We make moves like these every day: who we sit with, who we follow, what we read, where we feel at ease. Most of them never feel like decisions. If small moves can create patterns nobody chose, what patterns are our own small moves creating today? Which of them might be mine?"
+    alt: "Nobody planned a divided map. We make moves like these every day: who we sit with, who we follow, what we read, where we feel at ease. Most of them never feel like decisions. If small moves can create patterns nobody chose, what patterns are our own small moves creating today? Which of them might be mine?"
 ---
 
 {% include slides.html %}
@@ -27,7 +27,7 @@ Many of us have the same feeling: the world is dividing. In politics, in culture
 
 In 1971, Thomas Schelling published a model of how segregation can arise from individual choices (Schelling, 1971). Picture a board with two kinds of coins for two groups, and some empty squares. A coin's neighbours are the eight squares around it. A coin is content as long as at least half of its neighbours are like it. If not, it moves to the nearest empty square where it would be content.
 
-So every coin accepts up to half of its neighbours being different. Yet in one of Schelling's worked examples, the average person ends up in a neighbourhood that is 90% their own colour, counting themselves. Nobody asked for 90%.
+So every coin accepts up to half of its neighbours being different. Yet in one worked example, people end up in neighbourhoods that are far more segregated than the preferences that produced them.
 
 How does that happen? In Schelling's words: "Nobody in this model anticipates the movements of others." Each move changes the neighbourhood of someone else, and that can set off the next move. What stays with me is how ordinary each step is. One coin moves because it feels a little out of place, and its move changes what its neighbours see, so someone else moves. No one plans a divide, and no one needs to.
 
@@ -68,5 +68,5 @@ The boards on slides 1 and 2 are one run of my own simulation of the rule (a 12 
 
 Sources:
 
-- Schelling, T. C. (1971). Dynamic Models of Segregation. *Journal of Mathematical Sociology*, 1, 143–186. The rule: pp. 154–157. The "nobody anticipates" sentence: p. 149. The 90% example: p. 158. The abstract: p. 143.
+- Schelling, T. C. (1971). Dynamic Models of Segregation. *Journal of Mathematical Sociology*, 1, 143–186. The rule: pp. 154–157. The "nobody anticipates" sentence: p. 149. The worked example (the average person's neighbourhood is 90% their own colour, counting themselves): p. 158. The abstract: p. 143.
 - Wilensky, U. (1997). [NetLogo Segregation model](https://ccl.netlogo.org/netlogo/models/Segregation). Center for Connected Learning and Computer-Based Modeling, Northwestern University.
