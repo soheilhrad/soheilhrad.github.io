@@ -9,16 +9,16 @@ slides_width: 1080
 slides_height: 1350
 last_modified_at: 2026-10-25
 slides:
-  - file: slide1.gif
-    alt: "A board of dark and gold coins with some empty squares, moving step by step until the colours settle into clumps. Everyone here accepts up to half of their neighbours being different. Two kinds of coins stand for two groups. If fewer than half of a coin's neighbours are like it, it moves to the nearest empty square where it would be content."
+  - file: slide1.jpg
+    alt: "What if a divided world can emerge from reasonable choices? Two kinds of coins stand for two groups. Everyone here accepts up to half of their neighbours being different. If fewer than half are like it, a coin moves to the nearest empty square where it would be content. A 12 by 12 board of dark and gold coins with some empty squares, shown after the moves, with the colours in clumps."
   - file: slide2.jpg
-    alt: "Up to half could be different. 90% ended up alike. In one of Schelling's worked examples, the average person ends up in a neighbourhood that is 90% their own colour, counting themselves. Two boards: the start, with the colours mixed, and after the moves, with the colours in clumps. My own run of the rule on a 12 by 12 board, which ends at 83%."
+    alt: "More divided than anyone asked for. Each coin only needed half of its neighbours to be like it. In one of Schelling's worked examples, the average person ends up in a neighbourhood that is 90% their own colour, counting themselves. Two boards: the start, with the colours mixed, and after the moves, with the colours in clumps. My own run of the rule on a 12 by 12 board, which ends at 83%."
   - file: slide3.jpg
-    alt: "One move changes what the next person sees. That is how a rule about half can end at 90%. Three small boards in a row: one coin is not content, so it moves; its arrival changes what a neighbour sees; now that one moves too, and another coin is unhappy. Nobody plans the pattern. It builds up, one move at a time."
+    alt: "The pattern is not the same as the intention. Each move changes what the next person sees. Three small boards in a row: one coin is not content, so it moves; its arrival changes what a neighbour sees; now that one moves too, and another coin is unhappy. On this board, no one has to want a divide for one to form."
   - file: slide4.jpg
-    alt: "When a society splits, look at the system as well as the people in it. Adaptation: each person adjusts to the people around them. Emergence: a pattern appears in the whole group that none of its members was aiming for. Systems: one person's move changes what the next person sees, so our choices are linked. Unintended consequences: results nobody asked for, like 90% alike from a rule that allowed half different. Somewhere you live or work, a pattern nobody chose may be forming from choices that each make sense."
+    alt: "Systems can create outcomes that nobody individually intended. Adaptation: people adjust to the people around them. Emergence: a pattern appears that no one was aiming for. Systems: one person's move changes what the next person sees. Unintended consequences: outcomes nobody asked for, from choices that each made sense."
   - file: slide5.jpg
-    alt: "Nobody on this board wanted a divided map. Each coin made one small move that made sense to it. Together, the moves became a pattern that none of them chose. We make moves like these every day: who we sit with, who we follow, what we read, where we feel at ease. Most of them never feel like decisions. Small moves built this pattern. Small moves are also what each of us has to work with."
+    alt: "Nobody on this board wanted a divided map. We make moves like these every day: who we sit with, who we follow, what we read, where we feel at ease. Most of them never feel like decisions. If small moves can create patterns nobody chose, what patterns are our own small moves creating today? Which of them might be mine?"
 ---
 
 {% include slides.html %}
@@ -31,16 +31,14 @@ So every coin accepts up to half of its neighbours being different. Yet in one o
 
 How does that happen? In Schelling's words: "Nobody in this model anticipates the movements of others." Each move changes the neighbourhood of someone else, and that can set off the next move. What stays with me is how ordinary each step is. One coin moves because it feels a little out of place, and its move changes what its neighbours see, so someone else moves. No one plans a divide, and no one needs to.
 
-## Four ideas, in plain words
+## The lesson behind the model
 
-These four ideas become concrete in a model like this. The plain-words versions are mine, not Schelling's.
+Systems can create outcomes that nobody individually intended. Four ideas become concrete in a model like this. The plain-words versions are mine, not Schelling's.
 
-- **Adaptation:** each person adjusts to the people around them.
-- **Emergence:** a pattern appears in the whole group that none of its members was aiming for.
-- **Systems:** one person's move changes what the next person sees, so our choices are linked.
-- **Unintended consequences:** results nobody asked for, like 90% alike from a rule that allowed half different.
-
-When a society splits, it is worth looking at the system as well as the people in it.
+- **Adaptation:** people adjust to the people around them.
+- **Emergence:** a pattern appears that no one was aiming for.
+- **Systems:** one person's move changes what the next person sees.
+- **Unintended consequences:** outcomes nobody asked for, from choices that each made sense.
 
 ## Why it stays with me
 
