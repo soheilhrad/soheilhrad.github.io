@@ -29,7 +29,7 @@ In 1971, Thomas Schelling published a model of how segregation can arise from in
 
 So every coin accepts up to half of its neighbours being different. Yet in one worked example, people end up in neighbourhoods that are far more segregated than the preferences that produced them.
 
-How does that happen? In Schelling's words: "Nobody in this model anticipates the movements of others." Each move changes the neighbourhood of someone else, and that can set off the next move. What stays with me is how ordinary each step is. One coin moves because it feels a little out of place, and its move changes what its neighbours see, so someone else moves. No one plans a divide, and no one needs to.
+How does that happen? In Schelling's words, from his one-dimensional version of the model: "Nobody in this model anticipates the movements of others." Each move changes the neighbourhood of someone else, and that can set off the next move. What stays with me is how ordinary each step is. One coin moves because it feels a little out of place, and its move changes what its neighbours see, so someone else moves. No one plans a divide, and no one needs to.
 
 ## The lesson behind the model
 
@@ -68,5 +68,5 @@ The boards on slides 1 and 2 are one run of my own simulation of the rule (a 12 
 
 Sources:
 
-- Schelling, T. C. (1971). Dynamic Models of Segregation. *Journal of Mathematical Sociology*, 1, 143–186. The rule: pp. 154–157. The "nobody anticipates" sentence: p. 149. The worked example (the average person's neighbourhood is 90% their own colour, counting themselves): p. 158. The abstract: p. 143.
+- Schelling, T. C. (1971). Dynamic Models of Segregation. *Journal of Mathematical Sociology*, 1, 143–186. The rule: pp. 154–157. The "nobody anticipates" sentence (his one-dimensional version): p. 150. The worked example (the average person's neighbourhood is 90% their own colour, counting themselves): p. 158. The abstract: p. 143.
 - Wilensky, U. (1997). [NetLogo Segregation model](https://ccl.netlogo.org/netlogo/models/Segregation). Center for Connected Learning and Computer-Based Modeling, Northwestern University.
