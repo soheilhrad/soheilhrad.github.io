@@ -1,13 +1,14 @@
 ---
 layout: post
 title: "Sonar humano nunca fue una prueba"
-seo_title: "«AI slop» y el test de Turing: sonar humano no es una prueba"
-description: "Desde ELIZA en 1966 hasta un test de Turing en 2025, hemos juzgado lo «humano» por cómo suena un texto. La investigación dice que esas pistas a menudo nos engañan, y apunta a una pregunta mejor."
+seo_title: "¿Se nota si un texto es de IA? Turing, ELIZA y detectores"
+description: "De ELIZA (1966) a GPT-4.5 en un test de Turing (2025): sonar humano es una prueba débil, y los detectores fallan con quien no escribe en su lengua materna."
 ref: sounds-human
 lang: es
 permalink: /es/blog/2026/10/sounds-human/
 image: /assets/img/posts/sounds-human/robot-under-desk.jpg
-last_modified_at: 2026-10-29
+last_modified_at: 2026-11-14
+related: [why-chatbots-sound-sure, who-pays, ai-takes-your-side]
 ---
 
 ![Una persona con sonrisa satisfecha ante un portátil cuya pantalla dice, en inglés, «Este post se escribió completamente sin IA», mientras un pequeño robot dorado, detrás de la silla, es quien teclea en un teclado conectado al portátil.](/assets/img/posts/sounds-human/robot-under-desk.jpg)
@@ -18,13 +19,13 @@ Sinceramente, uso IA en mi trabajo, también para lo que publico aquí y en Link
 
 Últimamente aparece en mi feed de LinkedIn un tipo nuevo de publicación: gente que dice que cualquier post bien acabado es «AI slop», contenido de relleno hecho con IA. Parte de eso es justo. Hay mucho contenido vacío y generado por ahí. Pero debajo hay una prueba rápida que todos hacemos sin pensar: ¿*suena* a que lo ha escrito una persona? Esa prueba es mucho más antigua que ChatGPT, y nunca ha funcionado muy bien.
 
-## 1966: un programa que le daba la vuelta a tus palabras
+## 1966: ELIZA, un programa que le daba la vuelta a tus palabras
 
 En 1966, Joseph Weizenbaum, del MIT, publicó ELIZA, un programa con el que se podía «hablar» escribiendo. No entendía nada. Buscaba palabras clave en lo que escribías y reconstruía tu frase con reglas fijas. El ejemplo del propio Weizenbaum: a partir de «Estoy muy triste estos días», una regla así puede formar «¿Cuánto tiempo llevas muy triste estos días?». Con su guion más conocido, ELIZA respondía más o menos como lo haría cierto tipo de psicoterapeuta, casi siempre con preguntas.
 
 Aun así, la gente se sentía comprendida. Weizenbaum explicó por qué: quien habla con el programa supone que detrás de las respuestas hay conocimiento y comprensión, y mantiene esa impresión rellenando los huecos. Para él, esa sensación de ser comprendido era una aportación de quien hablaba, no del programa.
 
-## 2025: el mismo modelo, otro personaje
+## 2025, un test de Turing: el mismo modelo, otro personaje
 
 Casi sesenta años después, Cameron Jones y Benjamin Bergen hicieron un test de Turing clásico a tres bandas. Cada participante chateaba a la vez con dos interlocutores, una persona y una IA, durante un máximo de cinco minutos, y después decía cuál era la persona.
 
@@ -40,7 +41,7 @@ El mismo modelo. Lo que cambió fue el personaje que le pidieron interpretar.
 
 Los autores son prudentes sobre lo que esto significa. Un personaje por sí solo no basta: un sistema «no puede tener éxito solo a base de estos trucos» (cita traducida del inglés). Pero también escriben que el test de Turing «no es una prueba directa de inteligencia, sino de parecido humano» (cita traducida del inglés). Y la gente juzgó ese parecido humano sobre todo por la charla trivial y el estilo. Solo un 12 % hizo preguntas de conocimiento o razonamiento como las que Turing tenía en mente. Lo familiarizada que estaba la gente con los chatbots no cambió de forma constante cuánto acertaba.
 
-## Las pistas en las que confiamos nos engañan
+## Las pistas en las que confiamos nos engañan (Jakesch et al., PNAS 2023)
 
 Un estudio de 2023 en *PNAS* pidió a 4.600 personas que distinguieran perfiles escritos por personas (para empleos, citas y alquileres vacacionales) de perfiles escritos por IA. Acertaron más o menos la mitad de las veces, casi como al azar, incluso cuando se les pagaba por acertar o se les decía después de cada respuesta si habían acertado.
 
@@ -50,11 +51,11 @@ Pero no respondían al azar. Compartían las mismas reglas intuitivas. Hablar de
 
 Ese estudio usó modelos más antiguos (GPT-2 y GPT-3), y los autores dicen que las pistas de la gente pueden cambiar. Hay otro resultado que se me ha quedado: cuando se preguntaba simplemente si un texto tenía sentido o se repetía, esas respuestas detectaban mejor los textos de IA que preguntar directamente «¿esto es IA?».
 
-## Las herramientas también se equivocan, y no con todos igual
+## Los detectores de IA también se equivocan, y no con todos igual
 
 El software que dice detectar textos escritos con IA tiene su propio punto ciego. Un estudio de 2023 vio que varios detectores muy utilizados etiquetaban una y otra vez como generados por IA los ensayos de personas que escriben en inglés como segunda lengua, mientras que los de hablantes nativos se juzgaban bien. La redacción más sencilla y limitada les parecía «de máquina». Los detectores se han actualizado desde entonces, pero conviene conocer el riesgo, sobre todo si escribes en tu segunda o tercera lengua.
 
-## Sí, la IA tiene un estilo reconocible
+## Sí, el texto de IA tiene un estilo reconocible (Russell et al., 2025)
 
 Nada de esto significa que la escritura con IA sea invisible. Un estudio de 2025 vio que las personas que usan a menudo herramientas de IA para escribir detectaban muy bien los artículos escritos por IA. Cinco de esas lectoras y lectores, votando juntos, solo fallaron en uno de 300 artículos, incluso cuando el texto de IA se había parafraseado para disimularlo. Captaban el típico «vocabulario de IA», y también lo formal, original y claro que era el texto. Quienes casi no usaban IA lo hacían mal, y con más confianza de la que deberían.
 
@@ -68,11 +69,11 @@ Así que la plantilla existe. Pero reconocerla solo te dice una cosa: que una he
 
 Para mí, ahí está la línea. El contenido de relleno es cuando nadie se tomó el trabajo de pensar.
 
-## Prueba esto
+## Prueba esto: tres preguntas antes de llamarlo «AI slop»
 
 La próxima vez que un post te parezca hecho con IA, antes de decidir, hazte tres preguntas que el estilo no puede responder. ¿Es cierto? ¿Tiene fuentes? ¿Me sirve?
 
-Fuentes (en inglés):
+## Fuentes (en inglés)
 
 - Weizenbaum, J. (1966). ELIZA: A computer program for the study of natural language communication between man and machine. *Communications of the ACM*, 9(1), 36–45. [doi.org/10.1145/365153.365168](https://doi.org/10.1145/365153.365168)
 - Jones, C. R., & Bergen, B. K. Large language models pass a standard three-party Turing test. *PNAS* (2026). [doi.org/10.1073/pnas.2524472123](https://doi.org/10.1073/pnas.2524472123). Consultado en su preprint de 2025, «Large Language Models Pass the Turing Test», [arXiv:2503.23674](https://arxiv.org/abs/2503.23674); las citas y cifras de arriba proceden de esa versión. Originales de las citas: "a young person who is introverted, knowledgeable about internet culture, and uses slang"; "You're a 19 year old who is into internet culture and video games."; "Never use a period at the end of your sentences."; "Most of the time, your responses will be less than 5 words."; "they cannot succeed on the basis of these tricks alone"; "not a direct test of intelligence, but a test of humanlikeness".

@@ -1,0 +1,202 @@
+# The works each note cites, keyed by the note's `ref`, for the `citation` list in its JSON-LD
+# (_includes/schema.html). One list serves all three languages of a note. Copy only what the
+# note's own Sources section says; leave a field out rather than guess it.
+#   type     ScholarlyArticle, Book, Report, WebPage, Article, Legislation, TVSeries or CreativeWork
+#   name     the title       author   a list of names, as the source gives them
+#   year     publication year         journal, volume, issue, pages   for journal articles
+#   publisher                         url      the link the note gives (a DOI link if it has one)
+
+ai-takes-your-side:
+  - type: ScholarlyArticle
+    name: Sycophantic AI decreases prosocial intentions and promotes dependence
+    author: ["Cheng, M.", "Lee, C."]
+    year: 2026
+    journal: Science
+    volume: "391"
+    issue: "6792"
+    pages: eaec8352
+    url: https://doi.org/10.1126/science.aec8352
+  - type: ScholarlyArticle
+    name: "Preprint of Cheng et al. (2026), arXiv:2510.01395"
+    year: 2025
+    url: https://arxiv.org/abs/2510.01395
+  - type: WebPage
+    name: Expanding on what we missed with sycophancy
+    author: ["OpenAI"]
+    year: 2025
+    url: https://openai.com/index/expanding-on-sycophancy/
+
+emergence:
+  - type: ScholarlyArticle
+    name: Emergent Abilities of Large Language Models
+    author: ["Wei, J."]
+    year: 2022
+    journal: Transactions on Machine Learning Research
+    url: https://arxiv.org/abs/2206.07682
+  - type: ScholarlyArticle
+    name: Are Emergent Abilities of Large Language Models a Mirage?
+    author: ["Schaeffer, R.", "Miranda, B.", "Koyejo, S."]
+    year: 2023
+    url: https://arxiv.org/abs/2304.15004
+
+schelling-segregation:
+  - type: ScholarlyArticle
+    name: Dynamic Models of Segregation
+    author: ["Schelling, T. C."]
+    year: 1971
+    journal: Journal of Mathematical Sociology
+    volume: "1"
+    pages: 143–186
+  - type: CreativeWork
+    name: NetLogo Segregation model
+    author: ["Wilensky, U."]
+    year: 1997
+    publisher: Center for Connected Learning and Computer-Based Modeling, Northwestern University
+    url: https://ccl.netlogo.org/netlogo/models/Segregation
+
+sounds-human:
+  - type: ScholarlyArticle
+    name: "ELIZA: A computer program for the study of natural language communication between man and machine"
+    author: ["Weizenbaum, J."]
+    year: 1966
+    journal: Communications of the ACM
+    volume: "9"
+    issue: "1"
+    pages: 36–45
+    url: https://doi.org/10.1145/365153.365168
+  - type: ScholarlyArticle
+    name: Large language models pass a standard three-party Turing test
+    author: ["Jones, C. R.", "Bergen, B. K."]
+    year: 2026
+    journal: PNAS
+    url: https://doi.org/10.1073/pnas.2524472123
+  - type: ScholarlyArticle
+    name: Large Language Models Pass the Turing Test
+    author: ["Jones, C. R.", "Bergen, B. K."]
+    year: 2025
+    url: https://arxiv.org/abs/2503.23674
+  - type: ScholarlyArticle
+    name: Human heuristics for AI-generated language are flawed
+    author: ["Jakesch, M.", "Hancock, J. T.", "Naaman, M."]
+    year: 2023
+    journal: PNAS
+    volume: "120"
+    issue: "11"
+    pages: e2208839120
+    url: https://doi.org/10.1073/pnas.2208839120
+  - type: ScholarlyArticle
+    name: GPT detectors are biased against non-native English writers
+    author: ["Liang, W.", "Yuksekgonul, M.", "Mao, Y.", "Wu, E.", "Zou, J."]
+    year: 2023
+    journal: Patterns
+    volume: "4"
+    issue: "7"
+    pages: "100779"
+    url: https://doi.org/10.1016/j.patter.2023.100779
+  - type: ScholarlyArticle
+    name: People who frequently use ChatGPT for writing tasks are accurate and robust detectors of AI-generated text
+    author: ["Russell, J.", "Karpinska, M.", "Iyyer, M."]
+    year: 2025
+    journal: Proceedings of ACL 2025
+    url: https://arxiv.org/abs/2501.15654
+
+dreamless-solitude:
+  - type: TVSeries
+    name: Arcane
+    publisher: Fortiche and Riot Games, Netflix
+    year: 2021
+  - type: Article
+    name: "Move fast and don't ask permission: techno-optimism in R.U.R. and Arcane"
+    author: ["Jia-Wen, C."]
+    year: 2026
+    journal: Strange Horizons
+    url: https://strangehorizons.com/wordpress/non-fiction/move-fast-and-dont-ask-permission-techno-optimism-in-r-u-r-and-arcane/
+  - type: Report
+    name: "Measuring digital development: Facts and Figures 2025"
+    author: ["ITU"]
+    year: 2025
+    url: https://www.itu.int/hub/publication/D-IND-ICT_MDD-2025-3/
+  - type: Report
+    name: Energy and AI
+    author: ["IEA"]
+    year: 2025
+    url: https://www.iea.org/reports/energy-and-ai/executive-summary
+  - type: Legislation
+    name: EU AI Act (Regulation (EU) 2024/1689), Article 13 (transparency)
+    year: 2024
+    url: https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-13
+  - type: Legislation
+    name: EU AI Act (Regulation (EU) 2024/1689), Article 14 (human oversight)
+    year: 2024
+    url: https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-14
+  - type: ScholarlyArticle
+    name: The off-switch game
+    author: ["Hadfield-Menell, D.", "Dragan, A.", "Abbeel, P.", "Russell, S."]
+    year: 2017
+    journal: Proceedings of IJCAI 2017
+    pages: 220–227
+    url: https://www.ijcai.org/Proceedings/2017/32
+  - type: Book
+    name: Profiles of the Future (revised edition)
+    author: ["Clarke, A. C."]
+    year: 1973
+  - type: CreativeWork
+    name: Notes on the Analytical Engine (Note G)
+    author: ["Lovelace, A."]
+    year: 1843
+  - type: Book
+    name: Frankenstein; or, The Modern Prometheus
+    author: ["Shelley, M."]
+    year: 1818
+  - type: CreativeWork
+    name: R.U.R. (Rossum's Universal Robots)
+    author: ["Čapek, K."]
+    year: 1920
+  - type: CreativeWork
+    name: The question concerning technology
+    author: ["Heidegger, M."]
+    year: 1954
+  - type: Book
+    name: The Imperative of Responsibility
+    author: ["Jonas, H."]
+    year: 1979
+  - type: Book
+    name: "TechGnosis: Myth, Magic, and Mysticism in the Age of Information"
+    author: ["Davis, E."]
+    year: 1998
+  - type: Book
+    name: Man's Search for Meaning
+    author: ["Frankl, V. E."]
+  - type: Book
+    name: Human Compatible
+    author: ["Russell, S."]
+    year: 2019
+
+who-pays:
+  - type: Report
+    name: "Measuring digital development: Facts and Figures 2026"
+    author: ["International Telecommunication Union"]
+    year: 2026
+    url: https://www.itu.int/itu-d/reports/statistics/facts-figures-2026/
+  - type: WebPage
+    name: API supported countries and territories
+    author: ["OpenAI"]
+    url: https://help.openai.com/articles/5347006
+  - type: WebPage
+    name: GitHub and trade controls
+    author: ["GitHub"]
+    url: https://docs.github.com/en/site-policy/other-site-policies/github-and-trade-controls
+  - type: ScholarlyArticle
+    name: GPT detectors are biased against non-native English writers
+    author: ["Liang, W.", "Yuksekgonul, M.", "Mao, Y.", "Wu, E.", "Zou, J."]
+    year: 2023
+    journal: Patterns
+    volume: "4"
+    issue: "7"
+    pages: "100779"
+    url: https://doi.org/10.1016/j.patter.2023.100779
+  - type: WebPage
+    name: Statement on AI Risk
+    author: ["Center for AI Safety"]
+    year: 2023
+    url: https://www.safe.ai/press-release

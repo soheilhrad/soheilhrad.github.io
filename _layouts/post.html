@@ -8,5 +8,29 @@ layout: default
     <p class="meta">{% include date.html date=page.date %}</p>
   </header>
   {{ content }}
+  {%- comment -%}
+  Related notes: the refs listed under `related:` in the front matter, in this page's language,
+  or in English (tagged) when there is no translation. They tie the notes into one cluster for
+  readers and crawlers; every note also links back to the Notes index below and in the crumbs.
+  {%- endcomment -%}
+  {%- if page.related %}
+  <aside class="related-notes" aria-labelledby="related-notes-title">
+    <h2 id="related-notes-title">{{ t.related_notes }}</h2>
+    <ul>
+    {%- for r in page.related %}
+      {%- assign rel = site.posts | where: "ref", r | where: "lang", page.lang | first -%}
+      {%- unless rel %}{% assign rel = site.posts | where: "ref", r | where: "lang", "en" | first %}{% endunless -%}
+      {%- if rel %}
+      <li{% if rel.lang != page.lang %} lang="{{ rel.lang }}" dir="{{ site.data.i18n[rel.lang].dir }}"{% endif %}>
+        <a href="{{ rel.url | relative_url }}"{% if rel.lang != page.lang %} hreflang="{{ rel.lang }}"{% endif %}>{{ rel.title }}</a>{% if rel.lang != page.lang and rel.lang == "en" %} <span class="tag" lang="{{ page.lang }}" dir="{{ t.dir }}">{{ t.in_english }}</span>{% endif %}
+        {%- if rel.description %}
+        <p>{{ rel.description }}</p>
+        {%- endif %}
+      </li>
+      {%- endif %}
+    {%- endfor %}
+    </ul>
+  </aside>
+  {%- endif %}
   <p class="back"><a href="{{ t.prefix | append: '/blog/' | relative_url }}">{{ t.back_arrow }} {{ t.all_posts }}</a></p>
 </article>

@@ -500,3 +500,31 @@ video.project-video { background: #000; }
   .project-clip--narrow { display: block; width: auto; max-width: 100%; max-height: 75vh; margin-inline: auto; }
 }
 .related { margin: var(--space-3) 0 0; color: var(--muted); }
+
+// Related notes at the end of a note (_layouts/post.html).
+.related-notes { margin-top: var(--space-4); }
+.related-notes h2 { margin-top: 0; }
+.related-notes ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+.related-notes li { padding: 0.6rem 0; border-bottom: 1px solid var(--border); }
+.related-notes a { font-weight: 600; }
+.post .related-notes p { margin: 0.2rem 0 0; color: var(--muted); font-size: 0.95rem; line-height: 1.5; }
+
+// "Two ways of scoring" chart in the emergence note (_includes/scoring-toy.html).
+.toy { margin: var(--space-3) 0; padding: var(--space-2); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+.post .toy p { margin: 0 0 var(--space-2); }
+.toy-choice { border: 0; margin: 0 0 var(--space-2); padding: 0; }
+.toy-choice legend { font-weight: 600; padding: 0; margin-bottom: 0.25rem; }
+.toy-choice label { display: flex; gap: 0.5rem; align-items: center; min-height: 44px; cursor: pointer; }
+.toy input[type="radio"], .toy input[type="range"] { accent-color: var(--accent); }
+.toy-range { display: block; font-weight: 600; }
+.toy-range output { font-weight: 400; color: var(--muted); font-variant-numeric: tabular-nums; }
+.toy input[type="range"] { display: block; width: 100%; min-height: 44px; margin: 0; }
+.toy-chart { display: block; width: 100%; height: auto; margin-top: var(--space-1); }
+.post .toy .toy-axis { display: flex; justify-content: space-between; gap: var(--space-2); margin: 0.25rem 0 var(--space-2); color: var(--muted); font-size: 0.85rem; }
+.toy-summary { font-variant-numeric: tabular-nums; }
+.toy-note { margin: 0; color: var(--muted); font-size: 0.85rem; line-height: 1.5; }
+.toy-grid { stroke: var(--border); stroke-width: 1; }
+.toy-tick { fill: var(--muted); font-size: 10px; }
+.toy-line { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linejoin: round; }
+.toy-line.is-off { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 4 4; opacity: 0.6; }
+.toy-dot { fill: var(--accent); }

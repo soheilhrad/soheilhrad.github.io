@@ -12,9 +12,9 @@ clip: /assets/video/acculturation-demo.mp4
 poster: /assets/img/projects/acculturation-poster.jpg
 image: /assets/img/projects/acculturation-poster.jpg
 ask: true
-related: [wall-of-paper]
+related: [wall-of-paper, schelling-segregation]
 clip_alt: "La simulación Acculturation en marcha: la gente se asienta en el mapa de un pueblo mientras los gráficos muestran cómo sube la integración y baja la separación."
-last_modified_at: 2026-10-19
+last_modified_at: 2026-11-14
 ---
 {%- assign t = site.data.i18n[page.lang] -%}
 

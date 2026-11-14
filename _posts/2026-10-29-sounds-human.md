@@ -2,10 +2,11 @@
 layout: post
 title: "Sounding human was never proof"
 seo_title: "AI slop and the Turing test: why sounding human isn't proof"
-description: 'From ELIZA in 1966 to a Turing test in 2025, we have judged "human" by how writing sounds. The research says those clues often mislead us, and points to a better question.'
+description: "ELIZA (1966), GPT-4.5 in a 2025 Turing test and studies of AI-text detection all show that sounding human is weak evidence. Three better questions to ask."
 ref: sounds-human
 image: /assets/img/posts/sounds-human/robot-under-desk.jpg
-last_modified_at: 2026-10-29
+last_modified_at: 2026-11-14
+related: [why-chatbots-sound-sure, who-pays, ai-takes-your-side]
 ---
 
 ![A smug person at a laptop whose screen says "This post was written completely without AI", while a small golden robot behind the chair does the typing on a keyboard plugged into the laptop.](/assets/img/posts/sounds-human/robot-under-desk.jpg)
@@ -16,13 +17,13 @@ Honestly, I use AI in my work, including for my posts here and on LinkedIn. This
 
 Lately my LinkedIn feed has a new kind of post: people saying that every polished post is "AI slop". Some of that is fair. There is a lot of empty, generated content out there. But underneath it sits a quick test we all run without thinking: does this *sound* like a person wrote it? That test is much older than ChatGPT, and it has never worked very well.
 
-## 1966: a program that turned your words around
+## 1966: ELIZA, a program that turned your words around
 
 In 1966, Joseph Weizenbaum at MIT published ELIZA, a program you could "talk" to by typing. It had no understanding at all. It looked for keywords in what you typed and rebuilt your sentence with fixed rules. Weizenbaum's own example: from "I am very unhappy these days", a rule like this can make "How long have you been very unhappy these days?" With its best-known script, ELIZA answered roughly the way a certain kind of psychotherapist would, mostly with questions.
 
 People still felt understood. Weizenbaum explained why: someone talking to it assumes there is knowledge and insight behind the replies, and keeps that impression going by filling in the gaps. In his view, that sense of being understood was the speaker's contribution, not the program's.
 
-## 2025: same model, a different character
+## 2025, a Turing test: same model, a different character
 
 Almost sixty years later, Cameron Jones and Benjamin Bergen ran a classic three-way Turing test. Each participant chatted with two partners at once, one human and one AI, for up to five minutes, and then said which one was the human.
 
@@ -38,7 +39,7 @@ Same model. What changed was the character it was told to play.
 
 The authors are careful about what this means. A character alone isn't enough: a system "cannot succeed on the basis of these tricks alone". But they also write that the Turing test "is not a direct test of intelligence, but a test of humanlikeness". And the way people judged humanlikeness was mostly small talk and style. Only 12% asked the kind of knowledge or reasoning questions Turing had in mind. How familiar people were with chatbots made no consistent difference to how often they were right.
 
-## The clues we trust mislead us
+## The clues we trust mislead us (Jakesch et al., PNAS 2023)
 
 A 2023 study in *PNAS* asked 4,600 people to tell human-written profiles (for jobs, dating and holiday rentals) from AI-written ones. They were right only about half the time, close to guessing, even when they were paid for correct answers or told after each answer whether they had been right.
 
@@ -48,11 +49,11 @@ So, the typos and the family story from the start of this note? They are exactly
 
 That study used older models (GPT-2 and GPT-3), and the authors say people's clues may change. One more finding stays with me: when people were asked simply whether a text made sense or repeated itself, those answers caught the AI texts better than asking them directly "is this AI?".
 
-## The tools get it wrong too, and not equally
+## AI detectors get it wrong too, and not equally
 
 Software that claims to detect AI writing has its own blind spot. A 2023 study found that several widely used detectors kept labelling essays by non-native English writers as AI-generated, while essays by native writers were judged correctly. Simpler, more limited wording looked "machine-like" to them. Detectors have been updated since, but the risk is worth knowing, especially for anyone writing in their second or third language.
 
-## Yes, AI has a recognisable style
+## Yes, AI text has a recognisable style (Russell et al., 2025)
 
 None of this means AI writing is invisible. A 2025 study found that people who often use AI tools for writing became very good at spotting AI-written articles. Five such readers, voting together, got only one of 300 articles wrong, even when the AI text had been paraphrased to hide it. They picked up typical "AI vocabulary", and also how formal, original and clear the writing was. People who rarely used AI were poor at the task, and more confident than they should have been.
 
@@ -66,11 +67,11 @@ So the template is real. But spotting it tells you one thing only: a tool shaped
 
 For me, that's the line. Slop is when nobody did the thinking.
 
-## Try this
+## Try this: three questions before you call it AI slop
 
 Next time a post looks AI-made, before you decide, ask three questions the style can't answer. Is it true? Is it sourced? Is it useful?
 
-Sources:
+## Sources
 
 - Weizenbaum, J. (1966). ELIZA: A computer program for the study of natural language communication between man and machine. *Communications of the ACM*, 9(1), 36–45. [doi.org/10.1145/365153.365168](https://doi.org/10.1145/365153.365168)
 - Jones, C. R., & Bergen, B. K. Large language models pass a standard three-party Turing test. *PNAS* (2026). [doi.org/10.1073/pnas.2524472123](https://doi.org/10.1073/pnas.2524472123). Read here in its 2025 preprint, "Large Language Models Pass the Turing Test", [arXiv:2503.23674](https://arxiv.org/abs/2503.23674); the quotes and figures above come from that version.

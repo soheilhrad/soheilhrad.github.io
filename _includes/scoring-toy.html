@@ -1,0 +1,29 @@
+{%- comment -%}
+"Two ways of scoring": a small chart for the emergence note. Twelve made-up model sizes whose
+chance of getting each word of an answer right rises evenly from 60% to 99%. Pass-or-fail scoring
+(the whole answer must be right) is that chance multiplied by itself once per word, so it looks
+like a sudden jump; partial credit rises evenly. It illustrates the argument in Schaeffer et al.
+(2023) and uses none of their data. Text: _data/i18n.yml under `scoring_toy:`. Engine:
+assets/js/scoring-toy.js. Nothing is loaded from another site. The figure stays hidden until the
+script runs, so nobody sees controls that do nothing. On right-to-left pages the chart runs
+right to left too, smaller models on the right, like the slider.
+{%- endcomment -%}
+{%- assign t = site.data.i18n[page.lang] -%}
+{%- assign s = t.scoring_toy -%}
+<figure class="toy" id="scoring-toy" hidden>
+  <p class="toy-intro">{{ s.intro }}</p>
+  <fieldset class="toy-choice">
+    <legend>{{ s.scoring }}</legend>
+    <label><input type="radio" name="st-mode" value="exact" checked> {{ s.exact }}</label>
+    <label><input type="radio" name="st-mode" value="partial"> {{ s.partial }}</label>
+  </fieldset>
+  <label class="toy-range" for="st-len">{{ s.length }}: <output id="st-len-out" for="st-len"></output></label>
+  <input type="range" id="st-len" min="2" max="30" step="1" value="10">
+  <svg class="toy-chart" id="st-chart" viewBox="0 0 320 170" dir="ltr" role="img" aria-labelledby="st-summary" focusable="false"></svg>
+  <p class="toy-axis"><span>{{ s.smaller }}</span><span>{{ s.bigger }}</span></p>
+  <p class="toy-summary" id="st-summary" aria-live="polite"></p>
+  <figcaption class="toy-note">{{ s.note }}</figcaption>
+  <script type="application/json" id="st-data">{{ s | jsonify }}</script>
+</figure>
+<noscript><p class="toy-note">{{ s.noscript }}</p></noscript>
+<script src="{{ '/assets/js/scoring-toy.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>

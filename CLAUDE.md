@@ -56,7 +56,9 @@ language, about 60 characters before the `|`) next to its `title` (the visible h
 `last_modified_at` (the date its content last changed; it feeds sitemap.xml). Publishing a note
 changes the home and Notes pages too, so bump their `last_modified_at` in all three languages.
 Structured data is in `_includes/schema.html`; project details for it are under `schema:` in
-`_data/projects.yml`. Wrap the
+`_data/projects.yml`, and the works each note cites are in `_data/citations.yml` under its `ref`
+(copied from its Sources section, never guessed). Every note lists two or three related notes under
+`related:`, and its Sources line is a `## Sources` heading (`## Fuentes`, `## منابع`). Wrap the
 Persian in `<span lang="fa" dir="rtl">` inside English and Spanish text. The header holds only
 the wordmark and the language switcher; Notes, About, GitHub and RSS are in the footer. No
 `twitter:site` or `twitter:creator` until a real handle exists. Product names (Camino, Small
