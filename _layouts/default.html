@@ -58,6 +58,9 @@
   <meta name="theme-color" content="#f6f1e7" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#14110e" media="(prefers-color-scheme: dark)">
   {% feed_meta %}
+  {%- if page.lang != "en" %}
+  <link type="application/atom+xml" rel="alternate" hreflang="{{ page.lang }}" href="{{ '/feed/' | append: page.lang | append: '.xml' | absolute_url }}" title="{{ site.title }} ({{ t.name }})">
+  {%- endif %}
   {%- if page.ref -%}
   {%- assign twins = site.pages | concat: site.posts | where: "ref", page.ref -%}
   {%- for twin in twins %}

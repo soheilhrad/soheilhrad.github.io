@@ -19,7 +19,8 @@ slides:
     alt: "We don't adapt. We rebuild. The solution wasn't just to “fit in.” It required me to construct a new layer of self to survive the rejection. Footnote 06, concept: identity reconstruction."
   - file: slide7.jpg
     alt: "Have you felt the split? When did you realize your paper identity didn't match your real self? Footnote 07, concept: narrative integration."
-last_modified_at: 2026-10-04
+last_modified_at: 2026-11-14
+related: [schelling-segregation]
 ---
 
 I have talked about the emotional journey of belonging before. But sometimes, the barrier

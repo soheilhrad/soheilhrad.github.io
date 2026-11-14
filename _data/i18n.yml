@@ -34,6 +34,23 @@ en:
   ask_for_it: Ask for it
   ask_subject: "Request from the dos website:"
   related_note: Related note
+  related_notes: Related notes
+  # The "two ways of scoring" chart in the emergence note (_includes/scoring-toy.html).
+  # %n words in the answer, %a smallest model's score, %b largest's, %m first model at 10% or more, %t models.
+  scoring_toy:
+    intro: "Each step to the right is a bigger model. Its chance of getting any one word of the answer right rises evenly, from 60% to 99%. Choose how the test is scored and how long the answer is."
+    scoring: Scoring
+    exact: "Pass or fail: the whole answer must be right"
+    partial: "Partial credit: each right word counts"
+    length: Answer length
+    words: "%n words"
+    smaller: Smaller models
+    bigger: Bigger models
+    sum_jump: "Pass or fail, %n-word answers: the smallest model scores %a and the largest %b. The score stays under 10% until model %m of %t, then climbs fast."
+    sum_steady: "Pass or fail, %n-word answers: from %a for the smallest model to %b for the largest, a gradual rise."
+    sum_partial: "Partial credit: the same models score from %a to %b, rising by the same amount at each step."
+    note: "An illustration of the argument in Schaeffer et al. (2023), not data from their paper. The models are made up: per-word accuracy rises evenly from 60% to 99% across 12 sizes, and a pass-or-fail score is that accuracy multiplied by itself once for every word of the answer."
+    noscript: "This chart needs JavaScript."
   home_notes: Latest notes
   read_note: Read the note
   write_to_us: Write to us
@@ -173,6 +190,21 @@ es:
   ask_for_it: Pídelo
   ask_subject: "Solicitud desde el sitio de dos:"
   related_note: Nota relacionada
+  related_notes: Notas relacionadas
+  scoring_toy:
+    intro: "Cada paso a la derecha es un modelo más grande. Su probabilidad de acertar cada palabra de la respuesta sube de forma constante, del 60 % al 99 %. Elige cómo se puntúa la prueba y cuánto mide la respuesta."
+    scoring: Puntuación
+    exact: "Aprobado o suspenso: toda la respuesta tiene que estar bien"
+    partial: "Puntuación parcial: cuenta cada palabra acertada"
+    length: Longitud de la respuesta
+    words: "%n palabras"
+    smaller: Modelos más pequeños
+    bigger: Modelos más grandes
+    sum_jump: "Aprobado o suspenso, respuestas de %n palabras: el modelo más pequeño saca un %a y el más grande un %b. La puntuación no llega al 10 % hasta el modelo %m de %t, y luego sube deprisa."
+    sum_steady: "Aprobado o suspenso, respuestas de %n palabras: del %a del modelo más pequeño al %b del más grande, una subida gradual."
+    sum_partial: "Puntuación parcial: los mismos modelos van del %a al %b y suben lo mismo en cada paso."
+    note: "Una ilustración del argumento de Schaeffer et al. (2023), no datos de su artículo. Los modelos son inventados: la precisión por palabra sube por igual del 60 % al 99 % en 12 tamaños, y la nota de aprobado o suspenso es esa precisión multiplicada por sí misma una vez por cada palabra de la respuesta."
+    noscript: "Este gráfico necesita JavaScript."
   home_notes: Últimas notas
   read_note: Leer la nota
   write_to_us: Escríbenos
@@ -312,6 +344,21 @@ fa:
   ask_for_it: درخواست دسترسی
   ask_subject: "درخواست از سایت dos:"
   related_note: یادداشت مرتبط
+  related_notes: یادداشت‌های مرتبط
+  scoring_toy:
+    intro: "هر قدم به سمت چپ، مدلی بزرگ‌تر است. احتمالِ اینکه هر واژهٔ پاسخ را درست بگوید یکنواخت بالا می‌رود، از ۶۰٪ تا ۹۹٪. انتخاب کنید آزمون چطور نمره بدهد و پاسخ چقدر بلند باشد."
+    scoring: نمره‌دهی
+    exact: "قبول یا رد: کلِ پاسخ باید درست باشد"
+    partial: "نمرهٔ جزئی: هر واژهٔ درست حساب می‌شود"
+    length: طولِ پاسخ
+    words: "%n واژه"
+    smaller: مدل‌های کوچک‌تر
+    bigger: مدل‌های بزرگ‌تر
+    sum_jump: "قبول یا رد، پاسخ‌های %n واژه‌ای: کوچک‌ترین مدل %a می‌گیرد و بزرگ‌ترین %b. نمره تا مدلِ %m از %t زیرِ ۱۰٪ می‌ماند و بعد تند بالا می‌رود."
+    sum_steady: "قبول یا رد، پاسخ‌های %n واژه‌ای: از %a برای کوچک‌ترین مدل تا %b برای بزرگ‌ترین، با بالا رفتنی تدریجی."
+    sum_partial: "نمرهٔ جزئی: همان مدل‌ها از %a تا %b می‌گیرند و در هر قدم به یک اندازه بالا می‌روند."
+    note: "این تصویری از استدلالِ Schaeffer و همکاران (۲۰۲۳) است، نه داده‌های مقالهٔ آن‌ها. مدل‌ها ساختگی‌اند: دقتِ هر واژه در ۱۲ اندازه یکنواخت از ۶۰٪ تا ۹۹٪ بالا می‌رود، و نمرهٔ قبول یا رد همان دقت است که به ازای هر واژهٔ پاسخ یک بار در خودش ضرب می‌شود."
+    noscript: "این نمودار به جاوااسکریپت نیاز دارد."
   home_notes: تازه‌ترین یادداشت‌ها
   read_note: خواندن یادداشت
   write_to_us: برای ما بنویسید

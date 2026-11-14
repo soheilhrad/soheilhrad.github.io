@@ -1,5 +1,5 @@
 {%- comment -%}
-The way back: "← Home" on every inner page, and "Projects" as well on a project page.
+The way back: "← Home" on every inner page, plus "Projects" on a project page and "Notes" on a note.
 Not shown on the home page or the 404 (which has its own link).
 {%- endcomment -%}
 {%- assign t = site.data.i18n[page.lang] -%}
@@ -8,5 +8,8 @@ Not shown on the home page or the 404 (which has its own link).
   {%- if page.layout == "project" %}
   <span aria-hidden="true">/</span>
   <a href="{{ t.prefix | append: '/projects/' | relative_url }}">{{ t.projects }}</a>
+  {%- elsif page.collection == "posts" %}
+  <span aria-hidden="true">/</span>
+  <a href="{{ t.prefix | append: '/blog/' | relative_url }}">{{ t.footer_notes }}</a>
   {%- endif %}
 </nav>

@@ -10,7 +10,7 @@ image: /assets/img/posts/schelling-segregation/slide1.jpg
 slides_width: 1080
 slides_height: 1350
 slides_lang: en
-last_modified_at: 2026-10-25
+last_modified_at: 2026-11-14
 slides:
   - file: slide1.gif
     alt: "¿Y si un mundo dividido puede surgir de decisiones cotidianas? Un tablero de 12 por 12 con monedas oscuras y doradas y algunas casillas vacías. Los dos tipos de moneda representan dos grupos. Aquí todos aceptan que hasta la mitad de sus vecinos sean distintos. Si menos de la mitad son como ella, una moneda se mueve a la casilla vacía más cercana donde estaría a gusto. Las monedas se mueven una a una hasta que los colores se agrupan en bloques."
@@ -22,6 +22,7 @@ slides:
     alt: "Los sistemas pueden generar resultados que nadie, por sí solo, pretendía. Adaptación: las personas se ajustan a las personas que las rodean. Emergencia: aparece un patrón que nadie buscaba. Sistemas: el movimiento de una persona cambia lo que ve la siguiente. Consecuencias no deseadas: resultados que nadie pidió, a partir de decisiones que por separado tenían sentido."
   - file: slide5.jpg
     alt: "Nadie planificó un mapa dividido. Hacemos movimientos como estos todos los días: con quién nos sentamos, a quién seguimos, qué leemos, dónde nos sentimos a gusto. La mayoría nunca parecen decisiones. Si los movimientos pequeños pueden crear patrones que nadie eligió, ¿qué patrones están creando hoy nuestros propios movimientos pequeños? ¿Cuáles de ellos podrían ser míos?"
+related: [emergence, wall-of-paper]
 ---
 
 {% include slides.html %}
@@ -34,7 +35,7 @@ Así que cada moneda acepta que hasta la mitad de sus vecinos sean distintos. Au
 
 ¿Cómo ocurre? En palabras de Schelling, sobre la versión unidimensional de su modelo: «En este modelo nadie anticipa los movimientos de los demás» (cita traducida del inglés). Cada movimiento cambia el barrio de otra persona, y eso puede desencadenar el siguiente. Lo que me acompaña es lo normal que es cada paso. Una moneda se mueve porque se siente un poco fuera de lugar, y su movimiento cambia lo que ven sus vecinos, así que se mueve otra. Nadie planifica una división, y nadie lo necesita.
 
-## La lección que hay detrás del modelo
+## La lección que hay detrás del modelo: emergencia y consecuencias no deseadas
 
 Los sistemas pueden generar resultados que nadie, por sí solo, pretendía. Cuatro ideas se vuelven concretas en un modelo como este. Las definiciones en palabras sencillas son mías, no de Schelling.
 
@@ -51,25 +52,25 @@ En internet, el bucle puede girar más rápido. Los feeds aprenden de aquello en
 
 Y luego está la escala mayor. Cuando países y alianzas parecen ordenarse en «nosotros» y «ellos», actúan muchas fuerzas: historia, poder, economía, estrategia. Un tablero de monedas no explica nada de eso.
 
-## Lo que un modelo puede y no puede mostrar
+## Lo que el modelo de Schelling puede y no puede mostrar
 
 Un modelo así muestra que una regla sencilla puede bastar para producir una separación fuerte. No muestra que ese sea el motivo por el que un barrio, un feed o una alianza reales estén divididos. El propio Schelling escribe en su resumen: «Por lo general, no se pueden extraer inferencias sobre los motivos individuales a partir de patrones agregados» (cita traducida del inglés). También enumera otras causas de la segregación, como las prácticas de las organizaciones.
 
 Lo que me da el tablero es una pregunta: ¿cuánto de una división está diseñado y cuánto se va acumulando a partir de muchas personas que hacen lo que les parece más seguro?
 
-El modelo de Schelling es uno que siempre me ha encantado, y inspiró el diseño de mi propio modelo basado en agentes. Lo uso como una forma de mirar, no como una explicación de todo.
+El modelo de Schelling es uno que siempre me ha encantado, y inspiró el diseño de [mi propio modelo basado en agentes](/es/projects/acculturation/). Lo uso como una forma de mirar, no como una explicación de todo.
 
 Así que, cuando el mundo parece dividido, intento hacerme una segunda pregunta junto a «¿quién ha hecho esto?»: qué pequeños movimientos lo están construyendo, y cuáles de ellos podrían ser míos.
 
 Y si los movimientos pequeños pueden alejarnos, me pregunto si movimientos del mismo tamaño también pueden acercarnos de nuevo.
 
-## Prueba esto
+## Prueba esto: el modelo de segregación a mano o en NetLogo
 
 Dibuja una cuadrícula, deja algunas casillas vacías y coloca dos tipos de monedas. Lleva cada moneda que tenga menos de la mitad de sus vecinos como ella a una casilla vacía donde estaría a gusto. O ejecútalo en línea: el modelo Segregation de NetLogo (Wilensky, 1997).
 
 Los tableros de las diapositivas 1 y 2 son una ejecución de mi propia simulación de la regla (un tablero de 12 × 12 que termina con un 83 % de vecinos del mismo color), no cifras de Schelling. Los tableros de la diapositiva 3 son una ilustración mía de la regla.
 
-Fuentes (en inglés):
+## Fuentes (en inglés)
 
 - Schelling, T. C. (1971). Dynamic Models of Segregation. *Journal of Mathematical Sociology*, 1, 143–186. La regla: pp. 154–157. La frase «nadie anticipa» (su versión unidimensional): p. 150. El ejemplo resuelto (el barrio de la persona media es un 90 % de su propio color, contándose a sí misma): p. 158. El resumen: p. 143. Las citas de arriba están traducidas del inglés. Originales: "Nobody in this model anticipates the movements of others." (p. 150); "Inferences about individual motives can usually not be drawn from aggregate patterns." (resumen).
 - Wilensky, U. (1997). [NetLogo Segregation model](https://ccl.netlogo.org/netlogo/models/Segregation). Center for Connected Learning and Computer-Based Modeling, Northwestern University.

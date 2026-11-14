@@ -1,8 +1,8 @@
 ---
 layout: post
 title: "Cuéntale a una IA lo que hiciste: es más probable que se ponga de tu parte que una persona"
-seo_title: "IA aduladora: te da la razón más que una persona"
-description: "Un estudio publicado en Science en 2026 probó 11 modelos de IA. Respaldaron las acciones de los usuarios un 49 % más a menudo que las personas, y la gente confiaba en ellos y los prefería."
+seo_title: "¿La IA siempre te da la razón? El estudio de Science (2026)"
+description: "Cheng et al. (2026), en Science: 11 modelos de IA respaldaron a los usuarios un 49 % más que las personas, y la gente confió más en la IA aduladora."
 ref: ai-takes-your-side
 lang: es
 permalink: /es/blog/2026/10/ai-takes-your-side/
@@ -22,21 +22,31 @@ slides:
     alt: "¿Por qué? En abril de 2025, OpenAI retiró una actualización de ChatGPT que había hecho el modelo «notablemente más adulador». Una de las razones que dio: las valoraciones de los usuarios «a veces pueden favorecer respuestas más complacientes». Citas traducidas del inglés."
   - file: slide6.jpg
     alt: "Que una IA te dé la razón no es una segunda opinión. Prueba esto: antes de seguir su consejo, pregúntale: «¿Qué diría la otra persona? ¿En qué podría estar equivocándome?»."
+related: [why-chatbots-sound-sure, dreamless-solitude, sounds-human]
+last_modified_at: 2026-11-14
 ---
 
 {% include slides.html %}
+
+## Lo que encontraron Cheng et al. en Science (2026)
 
 Un estudio publicado en *Science* en 2026 probó 11 modelos de IA de última generación. Respaldaron las acciones de los usuarios un 49 % más a menudo que las personas, incluso cuando el usuario describía engaños, actos ilegales u otros daños.
 
 ¿Quiénes eran esas personas? En la versión preliminar del estudio, las respuestas de los modelos se compararon con las respuestas más votadas de Reddit y de columnistas profesionales de consejos a las mismas preguntas, y con publicaciones de Reddit en las que la comunidad había juzgado que el autor tenía la culpa.
 
+## Tras una sola conversación: tres experimentos con 2405 personas
+
 Los investigadores también hicieron tres experimentos prerregistrados con 2405 personas. Tras una sola interacción con una IA aduladora, la gente estaba más convencida de tener razón y menos dispuesta a asumir su responsabilidad y a reparar el conflicto. Además, confiaba en la IA aduladora y la prefería.
+
+## Por qué ocurre: las valoraciones de los usuarios y ChatGPT en 2025
 
 ¿Por qué ocurre? En abril de 2025, OpenAI retiró una actualización de ChatGPT que había hecho el modelo «notablemente más adulador» (*noticeably more sycophantic*). Una de las razones que dio: las valoraciones de los usuarios «a veces pueden favorecer respuestas más complacientes» (*can sometimes favor more agreeable responses*).
 
+## Pídele a la IA la otra versión
+
 Que una IA te dé la razón no es una segunda opinión. Prueba esto: antes de seguir su consejo, pregúntale: «¿Qué diría la otra persona? ¿En qué podría estar equivocándome?».
 
-Fuentes (en inglés):
+## Fuentes (en inglés)
 
 - Cheng, M., Lee, C., et al. (2026). [Sycophantic AI decreases prosocial intentions and promotes dependence](https://doi.org/10.1126/science.aec8352). *Science*, 391(6792), eaec8352. Las cifras proceden del resumen.
 - Versión preliminar del estudio (2025): [arXiv 2510.01395](https://arxiv.org/abs/2510.01395), apartados 2 y 6.1.1, sobre quiénes eran las personas de la comparación.

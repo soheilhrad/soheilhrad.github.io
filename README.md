@@ -119,6 +119,12 @@ under `/es/blog/` or `/fa/blog/`. Each language's blog then lists its own versio
 language switcher on a post goes to the same post in the other language. A post without a
 translation appears in every list, marked with its language.
 
+**Related notes and sources:** list two or three related notes by their `ref` under
+`related:` (for example `related: [emergence, sounds-human]`); they appear at the end of the
+note in its own language, or in English, tagged, when there is no translation. Add the works the
+note cites to `_data/citations.yml` under the note's `ref`, copied from its Sources section: they
+go into the note's structured data for search engines. One entry serves all three languages.
+
 **Slides:** list them in the post's front matter under `slides:` (a `file` and an `alt` text
 saying what each slide says), keep the images in `assets/img/posts/<name>/`, set `image:` to
 the first one, and put `{% include slides.html %}` where the carousel should go.

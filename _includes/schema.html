@@ -12,7 +12,8 @@ Then, by kind of page:
   project pages           WebPage + SoftwareApplication (details from `schema:` in
                           _data/projects.yml, matched by slug) + BreadcrumbList
   posts                   BlogPosting (or the post's `schema_type:`, e.g. TechArticle)
-                          + BreadcrumbList; translations point at the English original
+                          + BreadcrumbList; translations point at the English original;
+                          `citation` lists the works in _data/citations.yml under the post's ref
   anything else           WebPage
 {%- endcomment -%}
 {%- assign t = site.data.i18n[page.lang] -%}
@@ -65,6 +66,27 @@ Then, by kind of page:
 {%- if page.lang != "en" and page.ref -%}{%- assign original = site.posts | where: "ref", page.ref | where: "lang", "en" | first -%}{%- endif %},
 {"@type":{{ page.schema_type | default: "BlogPosting" | jsonify }},"@id":{{ page_url | append: "#article" | jsonify }},"headline":{{ page.title | truncate: 110 | jsonify }},"description":{{ desc | jsonify }},"image":[{{ img | jsonify }}],"datePublished":{{ page.date | date_to_xmlschema | jsonify }},"dateModified":{{ modified | date_to_xmlschema | jsonify }},"inLanguage":{{ page.lang | jsonify }},"url":{{ page_url | jsonify }},"mainEntityOfPage":{"@id":{{ page_url | jsonify }}},"isPartOf":{"@id":{{ site_id | jsonify }}},"author":{"@id":{{ person_id | jsonify }}},"publisher":{"@id":{{ org_id | jsonify }}}
 {%- if original %},"translationOfWork":{"@id":{{ original.url | absolute_url | append: "#article" | jsonify }}}{% endif -%}
+{%- assign cites = site.data.citations[page.ref] -%}
+{%- if cites %},"citation":[
+{%- for c in cites -%}
+{%- capture container -%}
+  {%- if c.journal -%}
+    {%- capture periodical -%}{"@type":"Periodical","name":{{ c.journal | jsonify }}}{%- endcapture -%}
+    {%- if c.volume -%}{%- capture periodical -%}{"@type":"PublicationVolume","volumeNumber":{{ c.volume | jsonify }},"isPartOf":{{ periodical }}}{%- endcapture -%}{%- endif -%}
+    {%- if c.issue -%}{%- capture periodical -%}{"@type":"PublicationIssue","issueNumber":{{ c.issue | jsonify }},"isPartOf":{{ periodical }}}{%- endcapture -%}{%- endif -%}
+    {{ periodical }}
+  {%- endif -%}
+{%- endcapture -%}
+{"@type":{{ c.type | default: "CreativeWork" | jsonify }},"name":{{ c.name | jsonify }}
+{%- if c.author %},"author":[{% for a in c.author %}{"@type":"{% if a contains ", " %}Person{% else %}Organization{% endif %}","name":{{ a | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}]{% endif -%}
+{%- if c.year %},"datePublished":{{ c.year | append: "" | jsonify }}{% endif -%}
+{%- if container != "" %},"isPartOf":{{ container }}{% endif -%}
+{%- if c.pages %},"pagination":{{ c.pages | append: "" | jsonify }}{% endif -%}
+{%- if c.publisher %},"publisher":{"@type":"Organization","name":{{ c.publisher | jsonify }}}{% endif -%}
+{%- if c.url %},"url":{{ c.url | jsonify }}{% endif -%}
+}{% unless forloop.last %},{% endunless %}
+{%- endfor -%}
+]{%- endif -%}
 },
 {"@type":"BreadcrumbList","@id":{{ page_url | append: "#breadcrumb" | jsonify }},"itemListElement":[{"@type":"ListItem","position":1,"name":{{ t.home | jsonify }},"item":{{ local_home | jsonify }}},{"@type":"ListItem","position":2,"name":{{ t.footer_notes | jsonify }},"item":{{ t.prefix | append: "/blog/" | absolute_url | jsonify }}},{"@type":"ListItem","position":3,"name":{{ page.title | jsonify }},"item":{{ page_url | jsonify }}}]}
 {%- else %},

@@ -1,11 +1,12 @@
 ---
 layout: post
 title: "Fields of dreamless solitude"
-seo_title: "Arcane and AI guardrails: fields of dreamless solitude"
-description: "What Arcane's Hextech, Z-Drive and Hexcore say about AI: old myths, the alignment problem, who pays for the magic, and four questions to ask before you rely on an AI tool."
+seo_title: "Arcane, Viktor and the Hexcore: what the show says about AI"
+description: "Arcane's Hextech, Hexcore and Z-Drive as a story about AI: the alignment problem, reward hacking, who pays for the magic, and four guardrails. Spoilers."
 ref: dreamless-solitude
 image: /assets/img/posts/dreamless-solitude/hook.jpg
-last_modified_at: 2026-11-03
+last_modified_at: 2026-11-14
+related: [who-pays, ai-takes-your-side, emergence]
 ---
 
 > "I thought I could bring an end to the world's suffering. But when every equation was solved, all that remained were fields of dreamless solitude."
@@ -34,7 +35,7 @@ Its world is two cities built on top of each other: **Piltover**, the rich, adva
 - **The Anomaly**: an unstable mass of raw magic that forms in the Hexgates' failsafe system in season 2 and throws several characters into other worlds.
 - **Ekko** and the **Z-Drive**: Ekko is a young man from Zaun who leads the Firelights, a group of young people resisting in Zaun. The Z-Drive is a device he builds that turns time back by just four seconds.
 
-## 1. From formula to magic
+## 1. From formula to magic: Clarke's third law
 
 The science-fiction writer Arthur C. Clarke has a line known as Clarke's third law: "Any sufficiently advanced technology is indistinguishable from magic." It first appeared in a letter to *Science* in 1968 and was later added to the 1973 revised edition of his book *Profiles of the Future*. Its reverse has also become a saying: "Any sufficiently analysed magic is indistinguishable from science."
 
@@ -44,7 +45,7 @@ The Hexcore reverses the direction. **It is science becoming magic again.** It i
 
 To me, this is the same shift we have seen in AI: from programs whose rules people wrote line by line, to systems that learn from data and show abilities nobody programmed directly. Even the words we use for these tools are starting to sound like magic. We write prompts like spells, we say a model "hallucinated", and we ask it for answers. When we don't understand how something works, we treat it like magic.
 
-## 2. Four old myths in one laboratory
+## 2. Prometheus, the Golem, Faust: four old myths in one laboratory
 
 For me, the story of Viktor and the Hexcore brings several old myths to life at once: the myths we have used for centuries to think about creation and power.
 
@@ -56,7 +57,7 @@ For me, the story of Viktor and the Hexcore brings several old myths to life at 
 
 **Digital Gnosticism.** The ancient Gnostics saw the material world and the body as a flawed prison, and salvation as escape from it. In *TechGnosis* (1998), Erik Davis shows that part of today's fascination with technology, with "the singularity" and merging mind and machine, continues that old dream of escaping the body. Season 2's Viktor becomes exactly such a prophet: he sees illness, the body and emotion as "flaws", and salvation in merging all minds into one.
 
-## 3. A good goal, a terrible solution
+## 3. A good goal, a terrible solution: alignment and reward hacking
 
 In AI safety research, the "alignment problem" is how to make sure a system pursues what we *meant*, not just what we *said*. A related idea is "instrumental convergence": almost any goal-directed system, whatever its goal, arrives at a few shared sub-goals on the way, such as not being switched off, gaining more resources and keeping its goal intact. Stuart Russell put it briefly: you can't fetch the coffee if you're dead.
 
@@ -75,7 +76,7 @@ Most of all, the "evolution" itself, which the show calls the Glorious Evolution
 
 The goal never changes: ending suffering. What changes is what Viktor sees as its cause: first illness, then pain, and finally people themselves, because, in his words, "emotion clashes with reason". In AI this is sometimes called "specification gaming" or "reward hacking": a system meets its goal to the letter, by the shortest route, and that route destroys something we had taken for granted. If suffering comes from human will and feeling, the most efficient way to remove suffering is to remove will and feeling.
 
-## 4. Fields of dreamless solitude
+## 4. Fields of dreamless solitude: Frankl's existential vacuum
 
 In the last episode we learn that the unknown mage who saved Jayce as a child and gave him the rune stone was a version of Viktor from another future: a Viktor who carried the Glorious Evolution all the way and got everything he wanted. This is where he says that line:
 
@@ -89,7 +90,7 @@ The show's answer comes from Jayce, in their last conversation:
 
 > "You've always wanted to cure what you thought were weaknesses. Your leg. Your disease. But you were never broken, Viktor. There is beauty in imperfections. They made you who you are."
 
-## 5. Who pays for the magic?
+## 5. Who pays for the magic? The energy, access and labour behind AI
 
 Piltover shines and Zaun breathes beneath it. The German philosopher Martin Heidegger saw modern technology not as a neutral tool but as a way of seeing that reduces everything, from nature to people, to a "standing reserve", a resource ready to be used. He called it *Gestell*. That is how Piltover looks at magic: a force for trade, gates and progress, with nobody asking what the force is.
 
@@ -103,7 +104,7 @@ To me this mirrors today's AI: a tool that looks clean and weightless on a phone
 
 ![Slide titled "Who pays for the magic?": a glowing gate over the city above, marked "the profit", with dashed lines falling to the undercity, marked "the cost". Three cards: turned against them, out of reach, poisoned ground.](/assets/img/posts/dreamless-solitude/who-pays.jpg)
 
-## 6. The third way: Ekko
+## 6. The third way: Ekko and the Z-Drive
 
 *Arcane* doesn't show only two paths: total caution and doing nothing (Heimerdinger in season 1), or speed without limits (Viktor). There is a third way, in Ekko.
 
@@ -111,7 +112,7 @@ In season 2, Ekko and Heimerdinger are thrown through the Anomaly into a paralle
 
 For me, the difference between the Z-Drive and the Hexcore sums up the show's message. The Hexcore has no limits and swallows everything; the Z-Drive has a limit. The Hexcore races forward; the Z-Drive lets you go back and repair a mistake. Jia-Wen notes that Ekko's technology doesn't replace politics and community; it serves them, serving "the slow process of community building, of resistance". In the final battle, when Viktor's robots have seized Ekko to put him into a trance, he pushes the Z-Drive past its four-second limit. It becomes unstable, he throws it at Viktor, and the blast splits open Viktor's face and stops him. In the dream space that follows, Jayce reaches him, not with a weapon but with a promise: "Because I promised you." The small, limited tool doesn't win by being stronger than the Hexcore. It wins by opening a gap in which two people can talk again.
 
-## 7. Four guardrails
+## 7. Four guardrails for AI tools
 
 The distance from early Hextech, magic harnessed with formulas and rules, to the Hexcore, a core that learns on its own and outruns its makers' understanding, is the same distance we see between rule-based software and today's AI. When we deal with a system that learns from human data and whose behaviour can't be fully predicted, we can't rely only on the good intentions of the people who built it. We need guardrails.
 
@@ -146,7 +147,7 @@ For me, *Arcane* isn't about robots rising up. It's about a quieter temptation: 
 
 And if it were up to you, which would you build: Hextech, the Z-Drive or the Hexcore? Or what do you think AI systems should be?
 
-Sources:
+## Sources
 
 - *Arcane*, seasons 1 (2021) and 2 (2024), Fortiche and Riot Games, Netflix. Quotes from the episode scripts of season 2, episodes 8 and 9: [springfieldspringfield.co.uk](https://www.springfieldspringfield.co.uk/view_episode_scripts.php?tv-show=arcane-2021&episode=s02e09)
 - Episode summaries, League of Legends Wiki: [Happy Progress Day!](https://wiki.leagueoflegends.com/en-us/Happy_Progress_Day!) (S1E4), [Oil and Water](https://wiki.leagueoflegends.com/en-us/Oil_and_Water) (S1E8), [The Monster You Created](https://wiki.leagueoflegends.com/en-us/The_Monster_You_Created) (S1E9), [Watch It All Burn](https://wiki.leagueoflegends.com/en-us/Watch_It_All_Burn) (S2E2), [The Dirt Under Your Nails](https://wiki.leagueoflegends.com/en-us/Universe:Arcane_(TV_Series)/Season_2/Episode_9) (S2E9)
