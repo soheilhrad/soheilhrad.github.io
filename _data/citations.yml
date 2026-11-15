@@ -200,3 +200,14 @@ who-pays:
     author: ["Center for AI Safety"]
     year: 2023
     url: https://www.safe.ai/press-release
+
+ney-nava:
+  - type: MusicRecording
+    name: "Ney Nava / Darâmad"
+    author: ["Alizadeh, H."]
+    year: 2006
+    url: https://open.spotify.com/track/4wfn8715AHkpf2ws6thquz
+  - type: Book
+    name: Masnavi
+    author: ["Rumi, J."]
+    url: https://ganjoor.net/t6e?p=7893
